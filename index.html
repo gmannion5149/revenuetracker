@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Revenue Tracker · GM</title>
 <style>
-/* ————— Gerald Miller P.A. · Case Revenue Tracker v2 · navy / gold / platinum ————— */
+/* ————— Gerard W. Mannion · Case Revenue Tracker v2 · navy / gold / platinum ————— */
 :root{
   --navy:#04080F; --navy-2:#0A1226; --navy-3:#101B38; --navy-4:#182647;
   --gold:#D4AF37; --gold-hi:#F0CC52; --gold-soft:#E8C96A; --gold-dim:#A8892A; --gold-pale:#FFE8A8;
@@ -45,7 +45,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 /* ————— Lock screen ————— */
 #lock-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .lock-card{background:var(--gb-2);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);border:1px solid rgba(210,220,235,.2);box-shadow:var(--sh-pop);border-radius:var(--r-l);padding:46px 54px;width:400px;text-align:center;animation:popIn .5s cubic-bezier(.2,.9,.3,1.2)}
-.lock-logo{width:84px;height:84px;border-radius:50%;margin:0 auto 22px;display:block;border:2px solid rgba(212,175,55,.5);box-shadow:0 0 0 5px rgba(212,175,55,.09),0 8px 28px rgba(0,0,0,.5);object-fit:cover}
+
 .lock-title{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:5px}
 .lock-sub{font-size:12.5px;color:var(--plat-dim);margin-bottom:26px;line-height:1.6}
 .pin-row{display:flex;gap:11px;justify-content:center;margin:8px 0 4px}
@@ -60,7 +60,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 /* ————— Shell / header ————— */
 #app{display:none;max-width:1640px;margin:0 auto;padding:18px 22px 90px}
 .hdr{display:flex;align-items:center;gap:18px;padding:16px 22px;border-radius:var(--r-l);margin-bottom:14px;animation:fadeUp .4s}
-.hdr-logo{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(212,175,55,.55);box-shadow:0 0 0 4px rgba(212,175,55,.08);object-fit:cover}
+
 .hdr-title{font-size:21px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
 .hdr-firm{font-size:11.5px;color:var(--plat-dim);letter-spacing:.6px;margin-top:2px}
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:16px}
@@ -407,15 +407,157 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
 .cal-gev{border-style:dashed!important;opacity:.9}
 .gcal-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#7FD4FF;box-shadow:0 0 7px rgba(127,212,255,.85);margin-right:6px;vertical-align:middle;cursor:help}
 .gcal-dot:hover{box-shadow:0 0 11px rgba(127,212,255,1)}
+
+/* ═════════════════ 3D CONTROLS ═════════════════
+   Every control sits on a visible edge and physically depresses when
+   pressed. Three layers do the work: a vertical gradient for the face,
+   inset highlight/shadow for the bevel, and a hard offset shadow that
+   acts as the side of the key. Pressing collapses the offset and flips
+   the bevel inward, so the motion reads as travel rather than a colour
+   change. */
+.btn,.icon-btn,.chip,.sync-pill,.x-btn,.btn-clio{
+  position:relative;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.03) 42%,rgba(0,0,0,.20) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(0,0,0,.42),
+    0 2px 0 rgba(3,7,13,.9),
+    0 5px 12px rgba(0,0,0,.45);
+  text-shadow:0 1px 1px rgba(0,0,0,.55);
+  transition:transform .12s cubic-bezier(.2,.8,.3,1),box-shadow .12s ease,
+             background-color .18s,border-color .18s,color .18s;
+  will-change:transform;
+}
+.btn:hover,.icon-btn:hover,.chip:hover,.sync-pill:hover,.x-btn:hover,.btn-clio:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -1px 0 rgba(0,0,0,.44),
+    0 4px 0 rgba(3,7,13,.9),
+    0 10px 22px rgba(0,0,0,.5);
+}
+.btn:active,.icon-btn:active,.chip:active,.sync-pill:active,.x-btn:active,.btn-clio:active{
+  transform:translateY(2px);
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,.68),
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 0 0 rgba(0,0,0,0),
+    0 1px 3px rgba(0,0,0,.35);
+}
+.btn:focus-visible,.icon-btn:focus-visible,.chip:focus-visible,
+.sync-pill:focus-visible,.x-btn:focus-visible,.btn-clio:focus-visible,.tab:focus-visible{
+  outline:none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 2px 0 rgba(3,7,13,.9),
+    0 5px 12px rgba(0,0,0,.45),
+    0 0 0 3px rgba(212,175,55,.38);
+}
+.btn:disabled,.btn[disabled],.icon-btn:disabled{
+  transform:none;opacity:.5;cursor:not-allowed;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.14));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 1px 0 rgba(3,7,13,.7);
+}
+
+/* Gold gets a warmer bevel and a faint glow, so the primary action still
+   reads as primary once everything else has depth too. */
+.btn-gold{
+  background-image:linear-gradient(180deg,rgba(244,214,124,.40) 0%,rgba(212,175,55,.20) 45%,rgba(112,86,18,.34) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,240,190,.48),
+    inset 0 -1px 0 rgba(54,40,6,.6),
+    0 2px 0 rgba(72,54,10,.95),
+    0 6px 16px rgba(212,175,55,.16),
+    0 6px 14px rgba(0,0,0,.45);
+}
+.btn-gold:hover{
+  background-image:linear-gradient(180deg,rgba(250,224,142,.5) 0%,rgba(212,175,55,.28) 45%,rgba(112,86,18,.34) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,244,200,.55),
+    inset 0 -1px 0 rgba(54,40,6,.6),
+    0 4px 0 rgba(72,54,10,.95),
+    0 11px 26px rgba(212,175,55,.22),
+    0 10px 20px rgba(0,0,0,.5);
+}
+.btn-gold:active{
+  box-shadow:
+    inset 0 3px 9px rgba(46,33,2,.7),
+    inset 0 1px 0 rgba(255,240,190,.12),
+    0 1px 3px rgba(0,0,0,.35);
+}
+
+/* Tabs are flush until selected, then pop out like a pressed key that
+   latched. */
+.tab{
+  transition:transform .12s cubic-bezier(.2,.8,.3,1),box-shadow .12s ease,color .18s,background-color .18s;
+  text-shadow:0 1px 1px rgba(0,0,0,.5);
+}
+.tab:hover{transform:translateY(-1px)}
+.tab:active{transform:translateY(1px)}
+.tab.on,.tab[aria-selected="true"]{
+  background-image:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.16));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    inset 0 -1px 0 rgba(0,0,0,.4),
+    0 2px 0 rgba(3,7,13,.85),
+    0 5px 12px rgba(0,0,0,.42);
+}
+
+/* A selected chip is a latched key: pressed in, not raised. */
+.chip.on{
+  background-image:linear-gradient(180deg,rgba(0,0,0,.22),rgba(255,255,255,.05));
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.55),
+    inset 0 -1px 0 rgba(255,255,255,.07),
+    0 1px 0 rgba(3,7,13,.6);
+  transform:translateY(1px);
+}
+.chip.on:hover{transform:translateY(0)}
+
+/* Clio Connect — steel blue so it never competes with the gold primary. */
+.btn-clio{
+  height:38px;padding:0 13px;font-size:10.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;border-radius:10px;line-height:1;box-sizing:border-box;
+  border:1px solid rgba(96,168,255,.30);
+  color:#A9C8EE;
+  background-color:rgba(38,104,196,.11);
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.btn-clio:hover{border-color:rgba(120,186,255,.6);color:#E2EEFF;background-color:rgba(45,120,220,.24)}
+.btn-clio.on{border-color:rgba(46,204,113,.6);color:#A8F3C6;background-color:rgba(46,204,113,.16)}
+.btn-clio.busy{opacity:.65;pointer-events:none}
+.btn-clio svg{flex:none}
+@media(max-width:820px){
+  .btn-clio span{display:none}
+  .btn-clio{padding:8px 10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .btn,.icon-btn,.chip,.sync-pill,.x-btn,.btn-clio,.tab{transition:none}
+  .btn:hover,.icon-btn:hover,.chip:hover,.sync-pill:hover,.x-btn:hover,
+  .btn-clio:hover,.tab:hover,.btn:active,.icon-btn:active,.tab:active{transform:none}
+}
+
+/* ═════════════════ CASE REVIEWS & CHECK-INS ═════════════════ */
+.cal-split > .card{margin-bottom:0;min-width:0}
+.cal-split .agd-row{grid-template-columns:74px 1fr auto}
+.cal-split .agd-n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:1000px){ .cal-split{grid-template-columns:1fr !important} }
+.rv-list{margin-top:4px}
+.rv-row{cursor:default}
+.rv-row[data-case]{cursor:pointer}
+.rv-row[data-case]:hover{background:rgba(200,162,255,.09)}
+.rv-past{opacity:.62}
+.rv-sep{font-size:10px;letter-spacing:1.2px;color:var(--plat-faint);margin:11px 0 4px;
+        padding-bottom:4px;border-bottom:1px solid rgba(210,220,235,.07)}
 </style>
 </head>
 
-<body>
+<body class="clickup-chrome-ext_installed">
 
 <!-- ═════════ LOCK SCREEN ═════════ -->
 <div id="lock-screen" style="display: none;">
   <div class="lock-card">
-    <img class="lock-logo" id="lock-logo" alt="Gerald Miller P.A." src="data:image/jpeg;base64,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">
     <div class="lock-title">Case Revenue Tracker</div>
     <div class="lock-sub" id="lock-sub">Enter your 4-digit PIN.</div>
     <div class="pin-row" id="pin-row">
@@ -434,45 +576,45 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
   <div class="print-head" id="print-head"></div>
 
   <header class="hdr glass">
-    <img class="hdr-logo" alt="" src="data:image/jpeg;base64,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">
     <div>
       <div class="hdr-title gold-text">Case Revenue Tracker</div>
-      <div class="hdr-firm" id="hdr-firm">GERALD MILLER P.A.</div>
+      <div class="hdr-firm" id="hdr-firm">GERARD W. MANNION</div>
     </div>
     <div class="hdr-right">
       <div class="hdr-clockwrap">
-        <div class="hdr-date" id="hdr-date">Wed · Jul 15, 2026</div>
-        <div class="hdr-clock" id="hdr-clock">11:28:47 <small>AM</small></div>
-        <div class="hdr-wx" id="hdr-wx">Minneapolis 90°F · CLEAR</div>
+        <div class="hdr-date" id="hdr-date">Tue · Aug 18, 2026</div>
+        <div class="hdr-clock" id="hdr-clock">10:26:42 <small>PM</small></div>
+        <div class="hdr-wx" id="hdr-wx">Minneapolis 69°F · CLEAR</div>
       </div>
-      <button class="sync-pill err" id="sync-pill" title="Cloud sync on — click to sync now (auto every 60s)"><span class="sd"></span><span id="sync-pill-txt">sync error</span></button>
-      <button class="icon-btn" id="btn-lock" title="Lock (L)">
+      <button class="sync-pill busy" id="sync-pill" title="Cloud sync on — click to sync now (auto every 60s)" fdprocessedid="3rczv"><span class="sd"></span><span id="sync-pill-txt">syncing…</span></button>
+      <button class="btn btn-clio" id="btn-clio" title="Connect this tracker to Clio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg><span id="btn-clio-txt">Clio Connect</span></button>
+      <button class="icon-btn" id="btn-lock" title="Lock (L)" fdprocessedid="1o4ygf">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
       </button>
-      <button class="icon-btn" id="btn-settings" title="Settings">
+      <button class="icon-btn" id="btn-settings" title="Settings" fdprocessedid="gxvl7p">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
     </div>
   </header>
 
   <div class="actions-row">
-    <button class="btn btn-gold" id="btn-add">+ Add Case <span class="kbd">N</span></button>
-    <button class="btn btn-green" id="btn-pay">$ Log Payment <span class="kbd">P</span></button>
-    <button class="btn" id="btn-palette">Search <span class="kbd">Ctrl K</span></button>
+    <button class="btn btn-gold" id="btn-add" fdprocessedid="smg2of">+ Add Case <span class="kbd">N</span></button>
+    <button class="btn btn-green" id="btn-pay" fdprocessedid="eg8hxq">$ Log Payment <span class="kbd">P</span></button>
+    <button class="btn" id="btn-palette" fdprocessedid="j5p66u">Search <span class="kbd">Ctrl K</span></button>
     <span style="flex:1"></span>
-    <button class="btn btn-ghost" id="btn-import">Import</button>
-    <button class="btn btn-ghost" id="btn-export">Backup</button>
-    <button class="btn btn-ghost" id="btn-csv">CSV</button>
-    <button class="btn btn-ghost" id="btn-cal">Calendar</button>
-    <button class="btn btn-ghost" id="btn-print">Print</button>
+    <button class="btn btn-ghost" id="btn-import" fdprocessedid="7d230ap">Import</button>
+    <button class="btn btn-ghost" id="btn-export" fdprocessedid="qtwzxg">Backup</button>
+    <button class="btn btn-ghost" id="btn-csv" fdprocessedid="sxxktc">CSV</button>
+    <button class="btn btn-ghost" id="btn-cal" fdprocessedid="oibt">Calendar</button>
+    <button class="btn btn-ghost" id="btn-print" fdprocessedid="1mkth9">Print</button>
   </div>
 
-  <div class="kpis" id="kpis"></div>
+  <div class="kpis" id="kpis"><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.6)"><div class="kpi-label">Billed (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="600937" data-m="1">$600,937</div><div class="kpi-sub">fees booked · incl. baseline</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.55)"><div class="kpi-label">Collected (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="585050" data-m="1">$585,050</div><div class="kpi-sub">97% of billed</div></div><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.45)"><div class="kpi-label">Case Avg (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="4301.838235294118" data-m="1">$4,302</div><div class="kpi-sub">136 cases opened</div></div><div class="kpi glass" style="--kpi-c:rgba(230,126,34,.55)"><div class="kpi-label">Outstanding <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="67650" data-m="1">$67,650</div><div class="kpi-sub">receivable</div></div><div class="kpi glass" style="--kpi-c:rgba(59,158,222,.55)"><div class="kpi-label">Active</div><div class="kpi-val" data-v="118" data-m="0">118</div><div class="kpi-sub">cases in play</div></div><div class="kpi glass" style="--kpi-c:rgba(155,89,182,.5)"><div class="kpi-label">Closed Cases</div><div class="kpi-val" data-v="42" data-m="0">42</div><div class="kpi-sub">resolved</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.45)"><div class="kpi-label">Payments (2026)</div><div class="kpi-val" data-v="286" data-m="0">286</div><div class="kpi-sub">received</div></div><div class="kpi glass" style="--kpi-c:rgba(200,205,214,.4)"><div class="kpi-label">Total Cases</div><div class="kpi-val" data-v="160" data-m="0">160</div><div class="kpi-sub">all time</div></div></div>
 
-  <nav class="tabs glass" id="tabs"></nav>
+  <nav class="tabs glass" id="tabs"><button class="tab on" data-tab="dash" fdprocessedid="57jp3i">Dashboard</button><button class="tab" data-tab="active" fdprocessedid="axn32">Active<span class="n">118</span></button><button class="tab" data-tab="resolved" fdprocessedid="orxtyf">Resolved<span class="n">42</span></button><button class="tab" data-tab="payments" fdprocessedid="6opf65">Payments</button><button class="tab" data-tab="calendar" fdprocessedid="lngvxf">Calendar<span class="n">45</span></button><button class="tab" data-tab="analytics" fdprocessedid="th1398">Analytics</button><button class="tab" data-tab="goals" fdprocessedid="gldzi">Goals</button><button class="tab" data-tab="income" fdprocessedid="q3jxk">Income</button></nav>
 
   <div id="notice-slot"></div>
-  <main id="view" class="view"><div style="padding:70px;text-align:center;color:#7A8492;letter-spacing:2px;font-size:12px">LOADING…</div></main>
+  <main id="view" class="view"><div class="pulse"><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5v22M22.5 9.5c-1.4-1.9-3.8-2.8-6.5-2.8-3.6 0-6.5 1.9-6.5 5s2.7 4.3 6.5 5 7 2 7 5.3-3.1 5-7 5c-3 0-5.6-1-7-3"></path></svg><div><div class="p-label">August Revenue</div><div class="p-num p-green">$11,900</div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="21" rx="3"></rect><path d="M5 13h22M11 4v6M21 4v6"></path><circle cx="16" cy="20" r="2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Upcoming Hearings</div><div class="p-num ">45<small>next 14 days</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a3 3 0 0 1 3-3h6l3 4h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"></path><path d="M4 14h28"></path></svg><div><div class="p-label">Discovery Status</div><div class="p-num ">44<small>outstanding</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29C16 29 6 19.5 6 12.5a10 10 0 0 1 20 0c0 7-10 16.5-10 16.5Z"></path><circle cx="16" cy="12.5" r="3.5"></circle></svg><div><div class="p-label">Active Counties</div><div class="p-num ">26<small>counties</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 16 4l12 8"></path><line x1="4" y1="12" x2="28" y2="12"></line><line x1="8" y1="15.5" x2="8" y2="25"></line><line x1="16" y1="15.5" x2="16" y2="25"></line><line x1="24" y1="15.5" x2="24" y2="25"></line><line x1="3" y1="28" x2="29" y2="28"></line></svg><div><div class="p-label">Trial Watch</div><div class="p-num ">7<small>cases</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22.5a11 11 0 0 1 22 0"></path><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"></line><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Annual Pace</div><div class="p-num "><span class="p-green">$928,449</span></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div><div class="card ai-card"><div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Financial Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div><div class="ai-grid"><div class="ai-big"><div class="ai-big-label">August projected close</div><div class="ai-big-num">$20,494</div><div class="ai-bar"><i class="proj" style="width:19.0%"></i><i style="width:11.0%"></i><em style="left:57.9%"></em><em style="left:78.7%"></em><em style="left:92.6%"></em></div><div class="ai-big-sub">$11,900 collected · goals $62,500 / $85,000 / $100,000</div></div><div class="ai-big"><div class="ai-big-label">Year-end projection</div><div class="ai-big-num cyan">$928,449</div><div class="ai-bar"><i class="proj cy" style="width:94.3%"></i><i class="cy" style="width:59.4%"></i><em style="left:76.2%"></em></div><div class="ai-big-sub">$585,050 banked · goal $750,000 · <b style="color:#7FE8AC">on track</b></div></div><div class="ai-rows"><div class="ai-row risk" style="animation-delay:0ms"><span class="dot"></span><span><b>August</b> is pacing to close at <b>$20,494</b> — below the <b>$62,500 minimum</b> — needs ~<b>$3,893/day</b> the rest of the month.</span></div><div class="ai-row risk" style="animation-delay:70ms"><span class="dot"></span><span><b>4</b> payment plans are past due (<b>$1,500</b>) — a reminder call usually recovers these fastest.</span></div><div class="ai-row risk" data-jump="calendar" style="animation-delay:140ms;cursor:pointer"><span class="dot"></span><span><b>84</b> hearings are past their dates with no outcome recorded — <b>hearing dates need updating</b>: Martin, Shawn Matthew (43d ago), Marube, Winner Omweno (42d ago), Mooney, Karla Jean (42d ago) +81 more. Click to review the calendar.</span></div><div class="ai-row risk" style="animation-delay:210ms"><span class="dot"></span><span>Cloud sync is failing: <b>Failed to fetch</b>. If it mentions 401 or an invalid token, the token was deleted or expired — make a new one with the <b>gist</b> scope and reconnect in Settings.</span></div><div class="ai-row warn" style="animation-delay:280ms"><span class="dot"></span><span><b>$49,550</b> outstanding across <b>28</b> open balances — largest: Gusita, Armando-Valentin ($4,850). Collecting it covers <b>7%</b> of the annual goal.</span></div><div class="ai-row warn" style="animation-delay:350ms"><span class="dot"></span><span>Momentum: this month projects <b>-78%</b> vs your 3-month average of $95,233.</span></div></div></div><div class="ai-foot">◈ On-device intelligence engine — recalculates live from your cases, payments, plans &amp; goals. Nothing leaves this browser.</div></div><div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"><svg width="100%" height="210" viewBox="0 0 885 210"><defs><lineargradient id="ggd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC52"></stop><stop offset="100%" stop-color="#8C6E1C"></stop></lineargradient><lineargradient id="ggdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ECC71"></stop><stop offset="100%" stop-color="#14532D"></stop></lineargradient><lineargradient id="ggdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8E99A8"></stop><stop offset="100%" stop-color="#3A4250"></stop></lineargradient></defs><line x1="46" x2="879" y1="12" y2="12" stroke="rgba(210,220,235,.07)"></line><text x="39" y="15" fill="#525C6B" font-size="8.5" text-anchor="end">$119k</text><line x1="46" x2="879" y1="70.66666666666666" y2="70.66666666666666" stroke="rgba(210,220,235,.07)"></line><text x="39" y="73.66666666666666" fill="#525C6B" font-size="8.5" text-anchor="end">$79k</text><line x1="46" x2="879" y1="129.33333333333331" y2="129.33333333333331" stroke="rgba(210,220,235,.07)"></line><text x="39" y="132.33333333333331" fill="#525C6B" font-size="8.5" text-anchor="end">$40k</text><line x1="46" x2="879" y1="188" y2="188" stroke="rgba(210,220,235,.07)"></line><text x="39" y="191" fill="#525C6B" font-size="8.5" text-anchor="end">$0k</text><g class="bargroup" data-i="0" style="cursor:default"><rect x="62.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="82.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="45.99999999999999" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="80.54166666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Sep 25</text></g><g class="bargroup" data-i="1" style="cursor:default"><rect x="131.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="151.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="115.08333333333334" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="149.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Oct</text></g><g class="bargroup" data-i="2" style="cursor:default"><rect x="200.20833333333331" y="138.1160639192599" width="17" height="49.88393608074011" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="220.20833333333331" y="119.90916736753574" width="17" height="68.09083263246426" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="184.16666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="218.70833333333331" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Nov</text></g><g class="bargroup" data-i="3" style="cursor:default"><rect x="269.2916666666667" y="40.716568544995795" width="17" height="147.2834314550042" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="289.2916666666667" y="93.26492851135407" width="17" height="94.73507148864593" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="253.25000000000003" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="287.7916666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Dec</text></g><g class="bargroup" data-i="4" style="cursor:default"><rect x="338.375" y="68.39697224558452" width="17" height="119.60302775441548" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="358.375" y="107.32716568544996" width="17" height="80.67283431455004" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="322.3333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="356.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jan 26</text></g><g class="bargroup" data-i="5" style="cursor:default"><rect x="407.4583333333333" y="56.03700588730024" width="17" height="131.96299411269976" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="427.4583333333333" y="122.12952060555088" width="17" height="65.87047939444912" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="391.41666666666663" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="425.9583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Feb</text></g><g class="bargroup" data-i="6" style="cursor:default"><rect x="476.5416666666667" y="53.668629100084104" width="17" height="134.3313708999159" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="496.5416666666667" y="87.34398654331372" width="17" height="100.65601345668628" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="460.5" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="495.0416666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Mar</text></g><g class="bargroup" data-i="7" style="cursor:default"><rect x="545.6249999999999" y="43.973086627417985" width="17" height="144.02691337258202" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="565.6249999999999" y="85.12363330529857" width="17" height="102.87636669470143" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="529.5833333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="564.1249999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Apr</text></g><g class="bargroup" data-i="8" style="cursor:default"><rect x="614.7083333333333" y="51.30025231286797" width="17" height="136.69974768713203" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="634.7083333333333" y="96.22539949537428" width="17" height="91.77460050462572" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="598.6666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="633.2083333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">May</text></g><g class="bargroup" data-i="9" style="cursor:default"><rect x="683.7916666666666" y="12" width="17" height="176" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="703.7916666666666" y="51.07821698906645" width="17" height="136.92178301093355" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="667.75" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="702.2916666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jun</text></g><g class="bargroup" data-i="10" style="cursor:default"><rect x="752.8749999999999" y="77.79646761984861" width="17" height="110.20353238015139" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="772.8749999999999" y="92.080740117746" width="17" height="95.919259882254" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="736.8333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="771.3749999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jul</text></g><g class="bargroup" data-i="11" style="cursor:default"><rect x="821.9583333333333" y="170.3851976450799" width="17" height="17.6148023549201" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="841.9583333333333" y="166.7038519764508" width="17" height="21.2961480235492" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="805.9166666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="840.4583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Aug</text></g></svg></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div><div class="card glass"><div class="card-title">Collection Rate (2026)</div><div id="dash-ring"><div style="position:relative;width:168px;height:168px;margin:0 auto"><svg width="168" height="168"><circle cx="84" cy="84" r="77" fill="none" stroke="rgba(210,220,235,.09)" stroke-width="9"></circle><circle cx="84" cy="84" r="77" fill="none" stroke="#D4AF37" stroke-width="9" stroke-linecap="round" stroke-dasharray="483.80526865282815" stroke-dashoffset="12.790382857250405" transform="rotate(-90 84 84)" style="filter:drop-shadow(0 0 6px #D4AF3744);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"></circle></svg><div class="ring-center"><div style="font-size:32.30769230769231px;font-weight:800">97%</div><div style="font-size:9.5px;color:var(--plat-dim);letter-spacing:.6px">collected / billed</div></div></div></div><div class="stat-row"><span class="k">Billed</span><span class="v">$600,937</span></div><div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">$585,050</span></div><div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">$67,650</span></div></div></div><div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Next Hearings <span class="more" data-jump="calendar">calendar →</span></div><div class="mini-list" id="dash-hearings"><div class="mrow" data-case="ea2245b3-d284-4c97-aace-c030258e0883"><span class="md">08/18/2026 9a</span><span class="mn">Scales, Dakota Trent</span><span class="mv">Omnibus · today</span></div><div class="mrow" data-case="02eac6f6-fe4e-4e19-a413-7306e4de132f"><span class="md">08/18/2026 10:30a</span><span class="mn">Peterson, Jesse Aaron</span><span class="mv">Omnibus · today</span></div><div class="mrow" data-case="120d1c91-eb35-487a-862e-7d8a3d5eb0d2"><span class="md">08/18/2026 1:30p</span><span class="mn">Lee, Nancy</span><span class="mv">Probation Violation · today</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">08/19/2026</span><span class="mn">Zobel, Tyler Robert</span><span class="mv">Jury Trial · in 1d</span></div><div class="mrow" data-case="4bdc1b04-98ac-4751-a21a-3d2afdd35ee3"><span class="md">08/19/2026 8:30a</span><span class="mn">Haq, Zia Ul</span><span class="mv">Pretrial · in 1d</span></div><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md">08/19/2026 9a</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">First Appearance · in 1d</span></div><div class="mrow" data-case="db57eee4-117e-4e0a-b4f7-41e098f0ead6"><span class="md">08/19/2026 1p</span><span class="mn">Miller, Jeremy Paul</span><span class="mv">Settlement Conference · in 1d</span></div><div class="mrow" data-case="cdcb79f7-18c5-454c-9dc8-072ac7dc4870"><span class="md">08/19/2026 2:30p</span><span class="mn">Brill, Matthew Travis</span><span class="mv">Omnibus · in 1d</span></div></div></div><div class="card glass"><div class="card-title">Payment Plans Due</div><div class="mini-list"><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">$250 <b style="color:var(--red)">17d late</b></span></div><div class="mrow" data-case="5dbe0748-a2af-44a5-b35e-4ea358e0886d"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Chang, Khai</span><span class="mv">$500 <b style="color:var(--red)">17d late</b></span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">McCurry, Vanessa Ferreira</span><span class="mv">$500 <b style="color:var(--red)">3d late</b></span></div><div class="mrow" data-case="4b6cc386-e8ab-4be6-ba97-5206b9e67e4e"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">Kroll, Hunter Joseph</span><span class="mv">$250 <b style="color:var(--red)">3d late</b></span></div><div class="mrow" data-case="32c2fb13-36d3-48de-a3cc-4d12314e7a44"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">McCorkell, Jonathan Michael</span><span class="mv">$250 in 28d</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Makiya, Brian</span><span class="mv">$250 in 28d</span></div></div></div><div class="card glass"><div class="card-title">Discovery Outstanding <span class="more" data-filter-disc="">view all →</span></div><div class="mini-list"><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="mn">Acuna-Nino, Clark Kent</span><span class="mv">Scott</span></div><div class="mrow" data-case="6b312aa2-3b0f-4be7-b431-70f5004b72b0"><span class="mn">Amaya Martinez, Eliezer Gerald</span><span class="mv">Olmsted</span></div><div class="mrow" data-case="1e293880-6be6-4847-beb2-d344d6a15987"><span class="mn">Anderson, Caleb Frederick</span><span class="mv">Winona</span></div><div class="mrow" data-case="e255c2a8-1a28-48fa-bbb2-0a4e6fb8b94d"><span class="mn">Calhoun, Mitchell Moore</span><span class="mv">Crow Wing</span></div><div class="mrow" data-case="eaec65b5-91e8-479e-bffd-02a49177d325"><span class="mn">Chorolec, Helen Olga</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="mn">Clasen, Anthony Michael</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="1a298b31-9551-44b5-aabc-d05356e524f7"><span class="mn">Collette, Jennifer Elizabeth</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="e292c7f2-c140-4303-a7ce-8d82ba99851d"><span class="mn">Gusita, Armando-Valentin</span><span class="mv">Hennepin</span></div></div></div></div><div class="grid" style="grid-template-columns:1.3fr 1fr 1.2fr"><div class="card glass"><div class="card-title">Top Counties · active fees</div><div class="bars-h"><div class="brow"><span style="color:var(--plat)">Hennepin</span><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bval">$170,500</span></div><div class="brow"><span style="color:var(--plat)">Anoka</span><div class="btrack"><div class="bfill" style="width:30.498533724340177%"></div></div><span class="bval">$52,000</span></div><div class="brow"><span style="color:var(--plat)">Ramsey</span><div class="btrack"><div class="bfill" style="width:29.03225806451613%"></div></div><span class="bval">$49,500</span></div><div class="brow"><span style="color:var(--plat)">Scott</span><div class="btrack"><div class="bfill" style="width:24.34017595307918%"></div></div><span class="bval">$41,500</span></div><div class="brow"><span style="color:var(--plat)">Dakota</span><div class="btrack"><div class="bfill" style="width:19.35483870967742%"></div></div><span class="bval">$33,000</span></div><div class="brow"><span style="color:var(--plat)">Wright</span><div class="btrack"><div class="bfill" style="width:18.181818181818183%"></div></div><span class="bval">$31,000</span></div><div class="brow"><span style="color:var(--plat)">Washington</span><div class="btrack"><div class="bfill" style="width:15.542521994134898%"></div></div><span class="bval">$26,500</span></div><div class="brow"><span style="color:var(--plat)">St. Louis</span><div class="btrack"><div class="bfill" style="width:12.609970674486803%"></div></div><span class="bval">$21,500</span></div></div></div><div class="card glass"><div class="card-title">Charge Mix · active</div><div id="dash-donut"><svg width="158" height="158" style="display:block;margin:0 auto"><circle cx="79" cy="79" r="73" fill="none" stroke="#D4AF37" stroke-width="11" stroke-dasharray="353.1013115541495 105.57121586996027" stroke-dashoffset="0" transform="rotate(-90 79 79)" opacity=".9"><title>Driving While Impaired · 72</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#3B9EDE" stroke-width="11" stroke-dasharray="27.59177596284579 431.08075146126396" stroke-dashoffset="-355.1013115541495" transform="rotate(-90 79 79)" opacity=".9"><title>Assault · 6</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#2ECC71" stroke-width="11" stroke-dasharray="22.659813302371493 436.01271412173827" stroke-dashoffset="-384.69308751699526" transform="rotate(-90 79 79)" opacity=".9"><title>Failure to Report Collision · 5</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#9B59B6" stroke-width="11" stroke-dasharray="17.727850641897195 440.9446767822126" stroke-dashoffset="-409.3529008193667" transform="rotate(-90 79 79)" opacity=".9"><title>Criminal Vehicular Operation · 4</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E67E22" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-429.0807514612639" transform="rotate(-90 79 79)" opacity=".9"><title>Reckless Driving · 3</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E74C3C" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-443.8766394426868" transform="rotate(-90 79 79)" opacity=".9"><title>Careless Driving · 3</title></circle></svg></div><div class="legend" style="margin-top:10px;justify-content:center"><span><i style="background:#D4AF37"></i>Driving While Impaired (72)</span><span><i style="background:#3B9EDE"></i>Assault (6)</span><span><i style="background:#2ECC71"></i>Failure to Report Col… (5)</span><span><i style="background:#9B59B6"></i>Criminal Vehicular Op… (4)</span><span><i style="background:#E67E22"></i>Reckless Driving (3)</span><span><i style="background:#E74C3C"></i>Careless Driving (3)</span></div></div><div class="card glass"><div class="card-title">Recent Activity</div><div class="mini-list"><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md">08/18/2026</span><span class="mn">Updated Makiya, Brian</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md">08/18/2026</span><span class="mn">Added case Makiya, Brian</span></div><div class="mrow" data-case="86e9323f-fa14-4c11-af58-42698500fdb7"><span class="md">08/12/2026</span><span class="mn">Added case Rosenlund, Nicholas Jay</span></div><div class="mrow" data-case="08706430-3cde-4be0-b2af-8100d166f321"><span class="md">08/10/2026</span><span class="mn">Unflagged trial watch — Mykhailiuk, Yevhenii</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="md">08/10/2026</span><span class="mn">Unflagged trial watch — Clasen, Anthony Michael</span></div><div class="mrow" data-case="597705fe-2f20-4a40-af26-4a120783a76f"><span class="md">08/06/2026</span><span class="mn">Payment $250 — Zarza, Daniel Lazaro</span></div><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="md">08/06/2026</span><span class="mn">Payment $1,250 — Walker, Ronald</span></div><div class="mrow" data-case="closed-25-CR-25-2856"><span class="md">08/03/2026</span><span class="mn">Payment $250 — Bock, Jeremy</span></div><div class="mrow" data-case="96fa81a1-0d3f-4d75-a5b3-bb22740c28e5"><span class="md">07/31/2026</span><span class="mn">Added case Kuhns, Jeremy Allen</span></div></div></div></div></main>
 </div>
 
 <!-- ═════════ OVERLAYS ═════════ -->
@@ -516,7 +658,7 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
   <div class="pal-list" id="pal-list"></div>
 </div></div>
 
-<div id="toasts"></div>
+<div id="toasts"><div class="toast"><span>It's been a while since your last backup — hit <b>Backup</b> to download one</span></div></div>
 <div id="confetti"></div>
 <div class="chart-tip" id="chart-tip" style="display: none; left: 1114px; top: 427px;"></div>
 <input type="file" id="file-input" accept=".json,application/json" style="display:none">
@@ -555,7 +697,7 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
 function defaultSettings(){ return {
-  firm:'Gerald Miller P.A.', user:'GM',
+  firm:'Gerard W. Mannion', user:'GWM',
   goalYear:{}, salary:50000, legacyDating:'openMonth',
   commission:{ base:10, referral:20, returning:15, on:'collected' },
   weather:true, confetti:true, defaultTab:'dash',
@@ -572,6 +714,9 @@ function load(){
   migrateDB(); persist();
 }
 function migrateDB(){
+  /* One-time rename: a device that already stored the old firm name
+     would keep showing it, because defaults only apply on first run. */
+  if(DB.settings && DB.settings.firm === 'Gerald Miller P.A.') DB.settings.firm = 'Gerard W. Mannion';
   if(!DB.meta) DB.meta = {rev:1, savedAt:new Date().toISOString()};
   if(!DB.deleted) DB.deleted = {};
   if(!DB.calLinks) DB.calLinks = {};
@@ -1688,7 +1833,7 @@ function renderDash(v){
   const topCharge = Object.entries(chargeAgg).sort((a,b)=>b[1]-a[1]).slice(0,6);
 
   v.innerHTML =
-    '<div class="pulse">' + pulse.map(p=>'<div class="pcard glass" data-go>'+pIcon(p.i)+'<div><div class="p-label">'+p.l+'</div><div class="p-num '+(p.cls||'')+'">'+p.n+'</div><div class="dashes">'+'<span></span>'.repeat(7)+'</div></div></div>').join('') + '</div>' + aiPanelHtml() + calDashHtml() +
+    '<div class="pulse">' + pulse.map(p=>'<div class="pcard glass" data-go>'+pIcon(p.i)+'<div><div class="p-label">'+p.l+'</div><div class="p-num '+(p.cls||'')+'">'+p.n+'</div><div class="dashes">'+'<span></span>'.repeat(7)+'</div></div></div>').join('') + '</div>' + aiPanelHtml() + calRowHtml() +
     '<div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px">' +
       '<div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div>' +
       '<div class="card glass"><div class="card-title">Collection Rate ('+k.yr+')</div><div id="dash-ring"></div>' +
@@ -2595,7 +2740,7 @@ function doPrint(){
 /* ═════════════════ BOOT / EVENTS ═════════════════ */
 function boot(){
   load();
-  $('#hdr-firm').textContent = (DB.settings.firm||'Gerald Miller P.A.').toUpperCase();
+  $('#hdr-firm').textContent = (DB.settings.firm||'Gerard W. Mannion').toUpperCase();
   curTab = DB.settings.defaultTab && TABS.some(t=>t.id===DB.settings.defaultTab) ? DB.settings.defaultTab : 'dash';
   tickClock(); setInterval(tickClock, 1000);
   loadWeather(); setInterval(loadWeather, 15*60e3);
@@ -2705,7 +2850,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 <div class="overlay" id="ov-cal"><div class="modal" style="width:min(1040px,97vw)" role="dialog" aria-modal="true">
-  <div class="modal-h"><div><div class="t">Google Calendar &rarr; Client Files</div><div style="font-size:11px;color:var(--plat-dim);margin-top:3px" id="cal-sub"></div></div><button class="x-btn" data-close="ov-cal">&times;</button></div>
+  <div class="modal-h"><div><div class="t">Google Calendar → Client Files</div><div style="font-size:11px;color:var(--plat-dim);margin-top:3px" id="cal-sub"></div></div><button class="x-btn" data-close="ov-cal">×</button></div>
   <div class="modal-b" id="cal-body" style="padding:16px 20px"></div>
 </div></div>
 <script>
@@ -2731,7 +2876,13 @@ const CAL_TYPES = [
   [/trial management|\btmc\b/i,'Trial Management Conference','court'],
   [/\bofp\b|no contact|harassment restraining/i,'Other','court'],
   [/brief due|\bdue\b|deadline|file by/i,'Deadline','task'],
-  [/case review|check ?in|meeting|phone call|consult|triage|\bzoom\b|\bphone\b/i,'Meeting','meeting'],
+  /* Case reviews and check-ins are tracked separately on the dashboard,
+     so they get their own labels rather than collapsing into 'Meeting'.
+     Both keep kind 'meeting' so existing colour and naming still work.
+     These sit after the court rules, so 'Review Hearing' is unaffected. */
+  [/case\s*review/i,'Case Review','meeting'],
+  [/check[\s\-]?in\b/i,'Check-In','meeting'],
+  [/meeting|phone call|consult|triage|\bzoom\b|\bphone\b/i,'Meeting','meeting'],
   [/hear(ing)?|hrg|court|motion|conference/i,'Other','court']
 ];
 const CAL_TYPEWORD = /\b(pt|oh|sc|jt|ic|fa|pv|tmc|ofp|arraign\w*|plea|omnibus|pre-?trial|sentenc\w*|hearing|hrg\.?|trial|review|bail|conf\.?|sched\w*\.?|due|brief|meeting|call|zoom|phone|check|consult|triage|1st|first)\b/i;
@@ -2756,6 +2907,18 @@ function calParse(ev){
   const ti = client.search(CAL_TYPEWORD);
   if(ti > 0) client = client.slice(0, ti).trim();
   o.client = client.replace(/[.;:]+$/,'').trim();
+  /* Reviews and check-ins put the client after the type word, not
+     before it, so the generic 'first part is the name' rule picks up
+     the type instead. Strip the type and connectors and use what is
+     left, when anything is left. */
+  if(o.type === 'Case Review' || o.type === 'Check-In'){
+    const rest = bare
+      .replace(/\b(case\s*review|check[\s\-]?in)\b/ig, ' ')
+      .replace(/\b(with|w\/|for|re)\b/ig, ' ')
+      .replace(/[-–—:|,]+/g, ' ')
+      .replace(/\s+/g, ' ').trim();
+    if(rest) o.client = rest.replace(/[.;:]+$/,'').trim();
+  }
   return o;
 }
 function calNameKeys(raw){
@@ -2902,6 +3065,99 @@ function calCaseHtml(id){
     + (past.length ? '<div style="font-size:10px;letter-spacing:1px;color:var(--plat-faint);margin:9px 0 3px">EARLIER</div>' + past.map(e => row(e, true)).join('') : '')
     + '</div>';
 }
+/* ═════════════════ CASE REVIEWS & CHECK-INS ═════════════════
+   Everything on the Google Calendar labelled "case review" or "check in",
+   pulled into one place so the cadence is visible. Upcoming first, then
+   the most recent past ones — knowing the last check-in was six weeks
+   ago is usually the more useful half. */
+const REVIEW_RX = /case\s*review|check[\s\-]?in\b/i;
+
+function reviewKind(e){
+  return /case\s*review/i.test(e.title || '') ? 'Case Review' : 'Check-In';
+}
+function reviewEvents(){
+  return CAL
+    .filter(e => e.status !== 'cancelled' && REVIEW_RX.test(e.title || ''))
+    .sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+}
+
+function reviewDashHtml(){
+  const cfg = calCfg();
+  if(!cfg.on) return '';
+  const today = todayISO();
+  const all = reviewEvents();
+  const up = all.filter(e => e.date >= today);
+  const past = all.filter(e => e.date < today).slice(-6).reverse();
+
+  const row = (e, isPast) => {
+    const m = calMatch(e);
+    const c = m.caseId ? DB.cases.find(x => x.id === m.caseId) : null;
+    const kind = reviewKind(e);
+    const dd = daysUntil(e.date);
+    const when = isPast
+      ? (dd === -1 ? 'yesterday' : Math.abs(dd) + 'd ago')
+      : (dd === 0 ? 'today' : dd === 1 ? 'tomorrow' : 'in ' + dd + 'd');
+    const dot = kind === 'Case Review' ? '#C8A2FF' : '#7FD4FF';
+    return '<div class="agd-row rv-row' + (isPast ? ' rv-past' : '') + '"'
+      + (c ? ' data-case="' + esc(c.id) + '"' : '') + '>'
+      + '<span class="agd-t">' + esc(usDate(e.date).slice(0, 5)) + (e.time ? ' ' + esc(tShort(e.time)) : '') + '</span>'
+      + '<span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;'
+      + 'background:' + dot + ';box-shadow:0 0 7px ' + dot + '"></span> '
+      + (c ? '<b>' + esc(displayName(c)) + '</b>' : esc(e.client || e.title))
+      + '<span class="agd-ty">' + kind + '</span></span>'
+      + '<span class="agd-l">' + esc(when) + '</span></div>';
+  };
+
+  let body;
+  if(!CAL.length){
+    body = '<div class="empty" style="padding:18px;font-size:11.5px;line-height:1.7">'
+         + 'No calendar feed on this device yet. Once Google Calendar is feeding in, '
+         + 'anything titled <b>case review</b> or <b>check in</b> lands here automatically.</div>';
+  }else if(!all.length){
+    body = '<div class="empty" style="padding:18px;font-size:11.5px;line-height:1.7">'
+         + 'Nothing on the calendar titled <b>case review</b> or <b>check in</b>. '
+         + 'Name an event either way and it shows up here.</div>';
+  }else{
+    body = '<div class="rv-list">'
+      + (up.length
+          ? up.slice(0, 12).map(e => row(e, false)).join('')
+          : '<div style="font-size:11.5px;color:var(--plat-faint);padding:8px 2px">None scheduled ahead.</div>')
+      + (past.length
+          ? '<div class="rv-sep">EARLIER</div>' + past.map(e => row(e, true)).join('')
+          : '')
+      + '</div>';
+  }
+
+  /* The cadence line: how many are booked, and how cold the last one is. */
+  let foot = '';
+  if(all.length){
+    const lastPast = all.filter(e => e.date < today).slice(-1)[0];
+    const gap = lastPast ? Math.abs(daysUntil(lastPast.date)) : null;
+    foot = '<div style="font-size:9.5px;color:var(--plat-faint);margin-top:10px">'
+         + up.length + ' upcoming'
+         + (up.length > 12 ? ' (showing 12)' : '')
+         + (gap != null ? ' · last one ' + gap + 'd ago' : '')
+         + ' · ' + all.filter(e => reviewKind(e) === 'Case Review').length + ' reviews, '
+         + all.filter(e => reviewKind(e) === 'Check-In').length + ' check-ins'
+         + '</div>';
+  }
+
+  return '<div class="card glass"><div class="card-title">Case Reviews &amp; Check-Ins'
+    + '<span class="more" data-jump="calsync">open calendar →</span></div>'
+    + body + foot + '</div>';
+}
+
+/* The calendar card and the reviews card share one row, so the calendar
+   is half the width it used to be. If only one has anything to show it
+   takes the full width rather than leaving a gap. */
+function calRowHtml(){
+  const a = calDashHtml(), b = reviewDashHtml();
+  if(!a && !b) return '';
+  if(!a || !b) return '<div style="margin-bottom:12px">' + (a || b) + '</div>';
+  return '<div class="grid cal-split" style="grid-template-columns:1fr 1fr;margin-bottom:12px">'
+       + a + b + '</div>';
+}
+
 function calDashHtml(){
   const cfg = calCfg();
   if(!cfg.on) return '';
@@ -3046,5 +3302,94 @@ function renderCal(){
     toast(v === 'ignore' ? 'Event ignored' : v ? 'Linked — this client’s future dates follow automatically' : 'Link cleared');
   });
 }
+</script>
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
+<script>
+'use strict';
+/* ═════════════════ CLIO CONNECT ═════════════════
+   Single entry point for wiring this page to Clio.
+
+   Clio's API is a confidential OAuth client and sends no CORS headers,
+   so a browser cannot talk to it directly — the handshake has to start
+   on a server holding the client secret. Point the two constants below
+   at that server and this button does the rest.
+
+   Until then the button explains itself rather than failing silently,
+   and makes no network requests it knows will fail. */
+const CLIO_CONNECT_URL = '/clio/connect';     // starts the OAuth handshake
+const CLIO_STATUS_URL  = '/api/clio/status';  // reports { connected: true|false }
+
+function clioBtn(){ return document.getElementById('btn-clio') }
+
+function clioPaintBtn(state, label){
+  const b = clioBtn(); if(!b) return;
+  b.classList.toggle('on', state === 'connected');
+  b.classList.toggle('busy', state === 'busy');
+  const t = document.getElementById('btn-clio-txt');
+  if(t) t.textContent = label || (state === 'connected' ? 'Clio Connected' : 'Clio Connect');
+  b.title = state === 'connected'
+    ? 'Clio is connected. Click to re-authorise.'
+    : 'Connect this tracker to Clio';
+}
+
+function clioSay(msg){
+  if(typeof toast === 'function') toast(msg, null, 9000);
+  else alert(msg.replace(/<[^>]+>/g, ''));
+}
+
+/* Returns { httpStatus, body }. httpStatus 0 means nothing answered.
+   The body is always drained: an unread response stream holds the
+   connection open and stops the page ever going network-idle. */
+async function clioProbe(){
+  /* A page opened from disk has no origin to call. Asking anyway just
+     logs a CORS error before failing in exactly the way we predicted. */
+  if(location.protocol === 'file:') return { httpStatus: 0, body: null };
+  try{
+    const r = await fetch(CLIO_STATUS_URL, { credentials:'same-origin', cache:'no-store' });
+    if(!r.ok){ try{ await r.arrayBuffer() }catch(e){} return { httpStatus: r.status, body: null } }
+    return { httpStatus: r.status, body: await r.json() };
+  }catch(e){ return { httpStatus: 0, body: null } }
+}
+
+async function clioRefresh(){
+  const { httpStatus, body } = await clioProbe();
+  if(httpStatus === 200) clioPaintBtn(body && body.connected ? 'connected' : 'idle');
+  return body;
+}
+
+/* Only probe when the page already knows it has a signed-in backend
+   session. Anywhere else the request is guaranteed to fail, and a
+   guaranteed-failing request is just console noise. */
+function clioAutoRefresh(){
+  if(typeof AUTH !== 'object' || !AUTH || AUTH.signedIn !== true) return;
+  clioRefresh();
+}
+
+async function clioConnect(){
+  clioPaintBtn('busy', 'Checking…');
+  const { httpStatus, body } = await clioProbe();
+
+  if(httpStatus === 0){
+    clioPaintBtn('idle');
+    clioSay('Clio is not wired up to this page yet. When it is, point '
+          + '<b>CLIO_CONNECT_URL</b> in this file at the endpoint that starts '
+          + 'the OAuth handshake and this button will do the rest.');
+    return;
+  }
+  if(httpStatus === 401){
+    clioPaintBtn('idle');
+    clioSay('Sign in first — Clio connects to your account, not to this browser.');
+    return;
+  }
+  clioPaintBtn(body && body.connected ? 'connected' : 'idle');
+  window.location.href = CLIO_CONNECT_URL;
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const b = clioBtn();
+  if(b) b.addEventListener('click', clioConnect);
+  clioAutoRefresh();
+  setInterval(clioAutoRefresh, 60000);
+});
 </script>
 </body></html>
