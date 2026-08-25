@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)https://gmannion5149.github.io/revenuetracker/ -->
+<!-- saved from url=(0073)file:///C:/Users/gerar/Downloads/Case%20Revenue%20Tracker%20%20GWM_8.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -550,6 +550,88 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
 .rv-past{opacity:.62}
 .rv-sep{font-size:10px;letter-spacing:1.2px;color:var(--plat-faint);margin:11px 0 4px;
         padding-bottom:4px;border-bottom:1px solid rgba(210,220,235,.07)}
+
+/* ═══════════ v8 — MINIMALIST SHELL, HEADER MENU, FIT-WIDTH TABLE ═══════════ */
+
+/* header action cluster */
+.hdr-acts{display:flex;align-items:center;gap:7px}
+.hdr{gap:14px;padding:13px 18px}
+.hdr-title{font-size:19px}
+.icon-btn{width:36px;height:36px;border-radius:10px}
+.actions-row{display:none!important}
+.sync-pill{display:none!important}
+
+/* header dropdown */
+.hmenu-wrap{position:relative}
+.hmenu{position:fixed;z-index:400;min-width:232px;
+  background:#0C1530;border:1px solid rgba(212,175,55,.26);border-radius:13px;
+  box-shadow:0 22px 60px rgba(0,0,0,.62);padding:7px;display:none}
+.hmenu.show{display:block;animation:popIn .13s}
+.hmenu-hd{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--plat-faint);padding:7px 11px 5px}
+.hmi{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:0;
+  color:var(--plat);font-size:12.5px;padding:9px 11px;border-radius:9px;cursor:pointer;transition:background .13s,color .13s}
+.hmi:hover{background:rgba(212,175,55,.1);color:var(--gold-pale)}
+.hmi-i{display:inline-flex;width:16px;justify-content:center;color:var(--plat-dim);flex:none}
+.hmi:hover .hmi-i{color:var(--gold-hi)}
+.hmi .tag{margin-left:auto;font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--plat-faint)}
+.hmi .tag.on{color:var(--green)}
+.hsep{height:1px;background:var(--ge);margin:5px 9px}
+
+/* no more priority colour coding */
+.pdot{display:none!important}
+
+/* ── case table: everything on one screen, nothing overlapping ── */
+.tblwrap{overflow-x:hidden;overflow-y:auto;max-height:calc(100vh - 150px)}
+table.tbl{table-layout:fixed;width:100%;font-size:12px}
+.tbl thead th{padding:9px 9px;font-size:9.5px;letter-spacing:1px;white-space:normal;line-height:1.3}
+.tbl tbody td{padding:9px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+.tbl .idx{width:30px;padding-left:4px;padding-right:4px;vertical-align:top}
+.tbl .rowmenu{width:28px;padding-left:0;padding-right:4px}
+
+/* column widths for the 10-column case grid */
+.tbl.cases col.c-idx{width:2.4%}
+.tbl.cases col.c-name{width:19.5%}
+.tbl.cases col.c-no{width:11%}
+.tbl.cases col.c-chg{width:16.5%}
+.tbl.cases col.c-cty{width:8%}
+.tbl.cases col.c-date{width:7.5%}
+.tbl.cases col.c-hear{width:14.5%}
+.tbl.cases col.c-fee{width:10.5%}
+.tbl.cases col.c-disc{width:8%}
+.tbl.cases col.c-menu{width:2.1%}
+
+/* let the long text columns wrap instead of forcing a sideways scroll */
+.cname{white-space:normal;line-height:1.35;align-items:flex-start;gap:5px;font-size:12.5px}
+.caption{white-space:normal;line-height:1.3;margin-top:3px;font-size:9.5px}
+.casenum{white-space:normal;font-size:12.5px;display:inline-block;line-height:1.3}
+.chg-main{white-space:normal;line-height:1.35;font-size:11.5px}
+.chg-lv{line-height:1.3;font-size:10.5px}
+.cty{font-size:11.5px;line-height:1.35}
+.hz{white-space:normal;line-height:1.45}
+.hz .t{margin-left:5px;display:inline-block}
+.hz .cd{margin-left:5px;display:inline-block;margin-top:2px}
+.fee-cell{min-width:0;white-space:normal}
+.disc{white-space:normal;font-size:10.5px;line-height:1.4;display:inline-block}
+.disc .drv{margin-left:0;display:block;margin-top:1px}
+.subcaret{width:13px;font-size:9px}
+@media(max-width:1180px){
+  .tbl.cases col.c-cty{width:7%}
+  .tbl.cases col.c-disc{width:7%}
+  table.tbl{font-size:11.5px}
+}
+/* narrow screens: drop back to a scrollable grid rather than crushing it */
+@media(max-width:880px){
+  table.tbl{table-layout:auto}
+  .tblwrap{overflow-x:auto}
+}
+@media print{ .tblwrap{overflow:visible} table.tbl{table-layout:auto} }
+
+/* toolbar trimmed down */
+.toolbar{gap:7px;margin-bottom:10px}
+.chip{padding:5px 11px;font-size:11px}
+select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
+.tb-search input{padding:8px 12px 8px 32px;font-size:12.5px}
+
 </style>
 </head>
 
@@ -582,39 +664,29 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
     </div>
     <div class="hdr-right">
       <div class="hdr-clockwrap">
-        <div class="hdr-date" id="hdr-date">Tue · Aug 18, 2026</div>
-        <div class="hdr-clock" id="hdr-clock">10:26:42 <small>PM</small></div>
-        <div class="hdr-wx" id="hdr-wx">Minneapolis 69°F · CLEAR</div>
+        <div class="hdr-date" id="hdr-date">Tue · Aug 25, 2026</div>
+        <div class="hdr-clock" id="hdr-clock">6:45:01 <small>PM</small></div>
+        <div class="hdr-wx" id="hdr-wx">Minneapolis 80°F · CLEAR</div>
       </div>
-      <button class="sync-pill busy" id="sync-pill" title="Cloud sync on — click to sync now (auto every 60s)" fdprocessedid="3rczv"><span class="sd"></span><span id="sync-pill-txt">syncing…</span></button>
-      <button class="btn btn-clio" id="btn-clio" title="Connect this tracker to Clio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg><span id="btn-clio-txt">Clio Connect</span></button>
-      <button class="icon-btn" id="btn-lock" title="Lock (L)" fdprocessedid="1o4ygf">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-      </button>
-      <button class="icon-btn" id="btn-settings" title="Settings" fdprocessedid="gxvl7p">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-      </button>
+      <button class="sync-pill busy" id="sync-pill" style="display:none" tabindex="-1" aria-hidden="true" title="Cloud sync on — click to sync now (auto every 60s)"><span class="sd"></span><span id="sync-pill-txt">syncing…</span></button>
+      <div class="hdr-acts">
+        <button class="icon-btn" id="btn-add" title="Add case  ·  N" aria-label="Add case"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+        <button class="icon-btn" id="btn-pay" title="Log payment  ·  P" aria-label="Log payment"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v18.8"></path><path d="M16.5 7.2c-.9-1.3-2.6-2-4.5-2-2.5 0-4.4 1.3-4.4 3.4 0 2.1 1.8 2.9 4.4 3.5 2.7.6 4.6 1.5 4.6 3.7 0 2.2-2 3.5-4.6 3.5-2.1 0-3.9-.8-4.8-2.2"></path></svg></button>
+        <button class="icon-btn" id="btn-palette" title="Search  ·  Ctrl K" aria-label="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg></button>
+        <div class="hmenu-wrap">
+          <button class="icon-btn" id="btn-more" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="actions-row">
-    <button class="btn btn-gold" id="btn-add" fdprocessedid="smg2of">+ Add Case <span class="kbd">N</span></button>
-    <button class="btn btn-green" id="btn-pay" fdprocessedid="eg8hxq">$ Log Payment <span class="kbd">P</span></button>
-    <button class="btn" id="btn-palette" fdprocessedid="j5p66u">Search <span class="kbd">Ctrl K</span></button>
-    <span style="flex:1"></span>
-    <button class="btn btn-ghost" id="btn-import" fdprocessedid="7d230ap">Import</button>
-    <button class="btn btn-ghost" id="btn-export" fdprocessedid="qtwzxg">Backup</button>
-    <button class="btn btn-ghost" id="btn-csv" fdprocessedid="sxxktc">CSV</button>
-    <button class="btn btn-ghost" id="btn-cal" fdprocessedid="oibt">Calendar</button>
-    <button class="btn btn-ghost" id="btn-print" fdprocessedid="1mkth9">Print</button>
-  </div>
+  <div class="kpis" id="kpis"><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.6)"><div class="kpi-label">Billed (2026)</div><div class="kpi-val" data-v="510487" data-m="1">$510,487</div><div class="kpi-sub">fees booked</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.55)"><div class="kpi-label">Collected (2026)</div><div class="kpi-val" data-v="534250" data-m="1">$534,250</div><div class="kpi-sub">105% of billed</div></div><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.45)"><div class="kpi-label">Case Avg (2026)</div><div class="kpi-val" data-v="3928.3088235294117" data-m="1">$3,928</div><div class="kpi-sub">136 cases opened</div></div><div class="kpi glass" style="--kpi-c:rgba(230,126,34,.55)"><div class="kpi-label">Outstanding</div><div class="kpi-val" data-v="67650" data-m="1">$67,650</div><div class="kpi-sub">receivable</div></div><div class="kpi glass" style="--kpi-c:rgba(59,158,222,.55)"><div class="kpi-label">Active</div><div class="kpi-val" data-v="118" data-m="0">118</div><div class="kpi-sub">cases in play</div></div><div class="kpi glass" style="--kpi-c:rgba(155,89,182,.5)"><div class="kpi-label">Closed Cases</div><div class="kpi-val" data-v="42" data-m="0">42</div><div class="kpi-sub">resolved</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.45)"><div class="kpi-label">Payments (2026)</div><div class="kpi-val" data-v="201" data-m="0">201</div><div class="kpi-sub">received</div></div><div class="kpi glass" style="--kpi-c:rgba(200,205,214,.4)"><div class="kpi-label">Total Cases</div><div class="kpi-val" data-v="160" data-m="0">160</div><div class="kpi-sub">all time</div></div></div>
 
-  <div class="kpis" id="kpis"><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.6)"><div class="kpi-label">Billed (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="600937" data-m="1">$600,937</div><div class="kpi-sub">fees booked · incl. baseline</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.55)"><div class="kpi-label">Collected (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="585050" data-m="1">$585,050</div><div class="kpi-sub">97% of billed</div></div><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.45)"><div class="kpi-label">Case Avg (2026) <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="4301.838235294118" data-m="1">$4,302</div><div class="kpi-sub">136 cases opened</div></div><div class="kpi glass" style="--kpi-c:rgba(230,126,34,.55)"><div class="kpi-label">Outstanding <span class="cf" title="Includes carry-forward baseline from your legacy tracker (resolved cases &amp; payment history were not itemized in the saved file). Adjust or clear in Settings → Legacy baseline.">°</span></div><div class="kpi-val" data-v="67650" data-m="1">$67,650</div><div class="kpi-sub">receivable</div></div><div class="kpi glass" style="--kpi-c:rgba(59,158,222,.55)"><div class="kpi-label">Active</div><div class="kpi-val" data-v="118" data-m="0">118</div><div class="kpi-sub">cases in play</div></div><div class="kpi glass" style="--kpi-c:rgba(155,89,182,.5)"><div class="kpi-label">Closed Cases</div><div class="kpi-val" data-v="42" data-m="0">42</div><div class="kpi-sub">resolved</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.45)"><div class="kpi-label">Payments (2026)</div><div class="kpi-val" data-v="286" data-m="0">286</div><div class="kpi-sub">received</div></div><div class="kpi glass" style="--kpi-c:rgba(200,205,214,.4)"><div class="kpi-label">Total Cases</div><div class="kpi-val" data-v="160" data-m="0">160</div><div class="kpi-sub">all time</div></div></div>
-
-  <nav class="tabs glass" id="tabs"><button class="tab on" data-tab="dash" fdprocessedid="57jp3i">Dashboard</button><button class="tab" data-tab="active" fdprocessedid="axn32">Active<span class="n">118</span></button><button class="tab" data-tab="resolved" fdprocessedid="orxtyf">Resolved<span class="n">42</span></button><button class="tab" data-tab="payments" fdprocessedid="6opf65">Payments</button><button class="tab" data-tab="calendar" fdprocessedid="lngvxf">Calendar<span class="n">45</span></button><button class="tab" data-tab="analytics" fdprocessedid="th1398">Analytics</button><button class="tab" data-tab="goals" fdprocessedid="gldzi">Goals</button><button class="tab" data-tab="income" fdprocessedid="q3jxk">Income</button></nav>
+  <nav class="tabs glass" id="tabs"><button class="tab on" data-tab="dash">Dashboard</button><button class="tab" data-tab="active">Active<span class="n">118</span></button><button class="tab" data-tab="resolved">Resolved<span class="n">42</span></button><button class="tab" data-tab="payments">Payments</button><button class="tab" data-tab="calendar">Calendar<span class="n">31</span></button><button class="tab" data-tab="analytics">Analytics</button><button class="tab" data-tab="goals">Goals</button><button class="tab" data-tab="income">Income</button></nav>
 
   <div id="notice-slot"></div>
-  <main id="view" class="view"><div class="pulse"><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5v22M22.5 9.5c-1.4-1.9-3.8-2.8-6.5-2.8-3.6 0-6.5 1.9-6.5 5s2.7 4.3 6.5 5 7 2 7 5.3-3.1 5-7 5c-3 0-5.6-1-7-3"></path></svg><div><div class="p-label">August Revenue</div><div class="p-num p-green">$11,900</div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="21" rx="3"></rect><path d="M5 13h22M11 4v6M21 4v6"></path><circle cx="16" cy="20" r="2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Upcoming Hearings</div><div class="p-num ">45<small>next 14 days</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a3 3 0 0 1 3-3h6l3 4h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"></path><path d="M4 14h28"></path></svg><div><div class="p-label">Discovery Status</div><div class="p-num ">44<small>outstanding</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29C16 29 6 19.5 6 12.5a10 10 0 0 1 20 0c0 7-10 16.5-10 16.5Z"></path><circle cx="16" cy="12.5" r="3.5"></circle></svg><div><div class="p-label">Active Counties</div><div class="p-num ">26<small>counties</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 16 4l12 8"></path><line x1="4" y1="12" x2="28" y2="12"></line><line x1="8" y1="15.5" x2="8" y2="25"></line><line x1="16" y1="15.5" x2="16" y2="25"></line><line x1="24" y1="15.5" x2="24" y2="25"></line><line x1="3" y1="28" x2="29" y2="28"></line></svg><div><div class="p-label">Trial Watch</div><div class="p-num ">7<small>cases</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22.5a11 11 0 0 1 22 0"></path><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"></line><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Annual Pace</div><div class="p-num "><span class="p-green">$928,449</span></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div><div class="card ai-card"><div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Financial Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div><div class="ai-grid"><div class="ai-big"><div class="ai-big-label">August projected close</div><div class="ai-big-num">$20,494</div><div class="ai-bar"><i class="proj" style="width:19.0%"></i><i style="width:11.0%"></i><em style="left:57.9%"></em><em style="left:78.7%"></em><em style="left:92.6%"></em></div><div class="ai-big-sub">$11,900 collected · goals $62,500 / $85,000 / $100,000</div></div><div class="ai-big"><div class="ai-big-label">Year-end projection</div><div class="ai-big-num cyan">$928,449</div><div class="ai-bar"><i class="proj cy" style="width:94.3%"></i><i class="cy" style="width:59.4%"></i><em style="left:76.2%"></em></div><div class="ai-big-sub">$585,050 banked · goal $750,000 · <b style="color:#7FE8AC">on track</b></div></div><div class="ai-rows"><div class="ai-row risk" style="animation-delay:0ms"><span class="dot"></span><span><b>August</b> is pacing to close at <b>$20,494</b> — below the <b>$62,500 minimum</b> — needs ~<b>$3,893/day</b> the rest of the month.</span></div><div class="ai-row risk" style="animation-delay:70ms"><span class="dot"></span><span><b>4</b> payment plans are past due (<b>$1,500</b>) — a reminder call usually recovers these fastest.</span></div><div class="ai-row risk" data-jump="calendar" style="animation-delay:140ms;cursor:pointer"><span class="dot"></span><span><b>84</b> hearings are past their dates with no outcome recorded — <b>hearing dates need updating</b>: Martin, Shawn Matthew (43d ago), Marube, Winner Omweno (42d ago), Mooney, Karla Jean (42d ago) +81 more. Click to review the calendar.</span></div><div class="ai-row risk" style="animation-delay:210ms"><span class="dot"></span><span>Cloud sync is failing: <b>Failed to fetch</b>. If it mentions 401 or an invalid token, the token was deleted or expired — make a new one with the <b>gist</b> scope and reconnect in Settings.</span></div><div class="ai-row warn" style="animation-delay:280ms"><span class="dot"></span><span><b>$49,550</b> outstanding across <b>28</b> open balances — largest: Gusita, Armando-Valentin ($4,850). Collecting it covers <b>7%</b> of the annual goal.</span></div><div class="ai-row warn" style="animation-delay:350ms"><span class="dot"></span><span>Momentum: this month projects <b>-78%</b> vs your 3-month average of $95,233.</span></div></div></div><div class="ai-foot">◈ On-device intelligence engine — recalculates live from your cases, payments, plans &amp; goals. Nothing leaves this browser.</div></div><div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"><svg width="100%" height="210" viewBox="0 0 885 210"><defs><lineargradient id="ggd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC52"></stop><stop offset="100%" stop-color="#8C6E1C"></stop></lineargradient><lineargradient id="ggdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ECC71"></stop><stop offset="100%" stop-color="#14532D"></stop></lineargradient><lineargradient id="ggdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8E99A8"></stop><stop offset="100%" stop-color="#3A4250"></stop></lineargradient></defs><line x1="46" x2="879" y1="12" y2="12" stroke="rgba(210,220,235,.07)"></line><text x="39" y="15" fill="#525C6B" font-size="8.5" text-anchor="end">$119k</text><line x1="46" x2="879" y1="70.66666666666666" y2="70.66666666666666" stroke="rgba(210,220,235,.07)"></line><text x="39" y="73.66666666666666" fill="#525C6B" font-size="8.5" text-anchor="end">$79k</text><line x1="46" x2="879" y1="129.33333333333331" y2="129.33333333333331" stroke="rgba(210,220,235,.07)"></line><text x="39" y="132.33333333333331" fill="#525C6B" font-size="8.5" text-anchor="end">$40k</text><line x1="46" x2="879" y1="188" y2="188" stroke="rgba(210,220,235,.07)"></line><text x="39" y="191" fill="#525C6B" font-size="8.5" text-anchor="end">$0k</text><g class="bargroup" data-i="0" style="cursor:default"><rect x="62.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="82.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="45.99999999999999" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="80.54166666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Sep 25</text></g><g class="bargroup" data-i="1" style="cursor:default"><rect x="131.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="151.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="115.08333333333334" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="149.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Oct</text></g><g class="bargroup" data-i="2" style="cursor:default"><rect x="200.20833333333331" y="138.1160639192599" width="17" height="49.88393608074011" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="220.20833333333331" y="119.90916736753574" width="17" height="68.09083263246426" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="184.16666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="218.70833333333331" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Nov</text></g><g class="bargroup" data-i="3" style="cursor:default"><rect x="269.2916666666667" y="40.716568544995795" width="17" height="147.2834314550042" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="289.2916666666667" y="93.26492851135407" width="17" height="94.73507148864593" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="253.25000000000003" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="287.7916666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Dec</text></g><g class="bargroup" data-i="4" style="cursor:default"><rect x="338.375" y="68.39697224558452" width="17" height="119.60302775441548" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="358.375" y="107.32716568544996" width="17" height="80.67283431455004" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="322.3333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="356.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jan 26</text></g><g class="bargroup" data-i="5" style="cursor:default"><rect x="407.4583333333333" y="56.03700588730024" width="17" height="131.96299411269976" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="427.4583333333333" y="122.12952060555088" width="17" height="65.87047939444912" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="391.41666666666663" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="425.9583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Feb</text></g><g class="bargroup" data-i="6" style="cursor:default"><rect x="476.5416666666667" y="53.668629100084104" width="17" height="134.3313708999159" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="496.5416666666667" y="87.34398654331372" width="17" height="100.65601345668628" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="460.5" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="495.0416666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Mar</text></g><g class="bargroup" data-i="7" style="cursor:default"><rect x="545.6249999999999" y="43.973086627417985" width="17" height="144.02691337258202" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="565.6249999999999" y="85.12363330529857" width="17" height="102.87636669470143" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="529.5833333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="564.1249999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Apr</text></g><g class="bargroup" data-i="8" style="cursor:default"><rect x="614.7083333333333" y="51.30025231286797" width="17" height="136.69974768713203" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="634.7083333333333" y="96.22539949537428" width="17" height="91.77460050462572" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="598.6666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="633.2083333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">May</text></g><g class="bargroup" data-i="9" style="cursor:default"><rect x="683.7916666666666" y="12" width="17" height="176" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="703.7916666666666" y="51.07821698906645" width="17" height="136.92178301093355" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="667.75" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="702.2916666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jun</text></g><g class="bargroup" data-i="10" style="cursor:default"><rect x="752.8749999999999" y="77.79646761984861" width="17" height="110.20353238015139" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="772.8749999999999" y="92.080740117746" width="17" height="95.919259882254" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="736.8333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="771.3749999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jul</text></g><g class="bargroup" data-i="11" style="cursor:default"><rect x="821.9583333333333" y="170.3851976450799" width="17" height="17.6148023549201" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="841.9583333333333" y="166.7038519764508" width="17" height="21.2961480235492" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="805.9166666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="840.4583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Aug</text></g></svg></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div><div class="card glass"><div class="card-title">Collection Rate (2026)</div><div id="dash-ring"><div style="position:relative;width:168px;height:168px;margin:0 auto"><svg width="168" height="168"><circle cx="84" cy="84" r="77" fill="none" stroke="rgba(210,220,235,.09)" stroke-width="9"></circle><circle cx="84" cy="84" r="77" fill="none" stroke="#D4AF37" stroke-width="9" stroke-linecap="round" stroke-dasharray="483.80526865282815" stroke-dashoffset="12.790382857250405" transform="rotate(-90 84 84)" style="filter:drop-shadow(0 0 6px #D4AF3744);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"></circle></svg><div class="ring-center"><div style="font-size:32.30769230769231px;font-weight:800">97%</div><div style="font-size:9.5px;color:var(--plat-dim);letter-spacing:.6px">collected / billed</div></div></div></div><div class="stat-row"><span class="k">Billed</span><span class="v">$600,937</span></div><div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">$585,050</span></div><div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">$67,650</span></div></div></div><div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Next Hearings <span class="more" data-jump="calendar">calendar →</span></div><div class="mini-list" id="dash-hearings"><div class="mrow" data-case="ea2245b3-d284-4c97-aace-c030258e0883"><span class="md">08/18/2026 9a</span><span class="mn">Scales, Dakota Trent</span><span class="mv">Omnibus · today</span></div><div class="mrow" data-case="02eac6f6-fe4e-4e19-a413-7306e4de132f"><span class="md">08/18/2026 10:30a</span><span class="mn">Peterson, Jesse Aaron</span><span class="mv">Omnibus · today</span></div><div class="mrow" data-case="120d1c91-eb35-487a-862e-7d8a3d5eb0d2"><span class="md">08/18/2026 1:30p</span><span class="mn">Lee, Nancy</span><span class="mv">Probation Violation · today</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">08/19/2026</span><span class="mn">Zobel, Tyler Robert</span><span class="mv">Jury Trial · in 1d</span></div><div class="mrow" data-case="4bdc1b04-98ac-4751-a21a-3d2afdd35ee3"><span class="md">08/19/2026 8:30a</span><span class="mn">Haq, Zia Ul</span><span class="mv">Pretrial · in 1d</span></div><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md">08/19/2026 9a</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">First Appearance · in 1d</span></div><div class="mrow" data-case="db57eee4-117e-4e0a-b4f7-41e098f0ead6"><span class="md">08/19/2026 1p</span><span class="mn">Miller, Jeremy Paul</span><span class="mv">Settlement Conference · in 1d</span></div><div class="mrow" data-case="cdcb79f7-18c5-454c-9dc8-072ac7dc4870"><span class="md">08/19/2026 2:30p</span><span class="mn">Brill, Matthew Travis</span><span class="mv">Omnibus · in 1d</span></div></div></div><div class="card glass"><div class="card-title">Payment Plans Due</div><div class="mini-list"><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">$250 <b style="color:var(--red)">17d late</b></span></div><div class="mrow" data-case="5dbe0748-a2af-44a5-b35e-4ea358e0886d"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Chang, Khai</span><span class="mv">$500 <b style="color:var(--red)">17d late</b></span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">McCurry, Vanessa Ferreira</span><span class="mv">$500 <b style="color:var(--red)">3d late</b></span></div><div class="mrow" data-case="4b6cc386-e8ab-4be6-ba97-5206b9e67e4e"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">Kroll, Hunter Joseph</span><span class="mv">$250 <b style="color:var(--red)">3d late</b></span></div><div class="mrow" data-case="32c2fb13-36d3-48de-a3cc-4d12314e7a44"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">McCorkell, Jonathan Michael</span><span class="mv">$250 in 28d</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Makiya, Brian</span><span class="mv">$250 in 28d</span></div></div></div><div class="card glass"><div class="card-title">Discovery Outstanding <span class="more" data-filter-disc="">view all →</span></div><div class="mini-list"><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="mn">Acuna-Nino, Clark Kent</span><span class="mv">Scott</span></div><div class="mrow" data-case="6b312aa2-3b0f-4be7-b431-70f5004b72b0"><span class="mn">Amaya Martinez, Eliezer Gerald</span><span class="mv">Olmsted</span></div><div class="mrow" data-case="1e293880-6be6-4847-beb2-d344d6a15987"><span class="mn">Anderson, Caleb Frederick</span><span class="mv">Winona</span></div><div class="mrow" data-case="e255c2a8-1a28-48fa-bbb2-0a4e6fb8b94d"><span class="mn">Calhoun, Mitchell Moore</span><span class="mv">Crow Wing</span></div><div class="mrow" data-case="eaec65b5-91e8-479e-bffd-02a49177d325"><span class="mn">Chorolec, Helen Olga</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="mn">Clasen, Anthony Michael</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="1a298b31-9551-44b5-aabc-d05356e524f7"><span class="mn">Collette, Jennifer Elizabeth</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="e292c7f2-c140-4303-a7ce-8d82ba99851d"><span class="mn">Gusita, Armando-Valentin</span><span class="mv">Hennepin</span></div></div></div></div><div class="grid" style="grid-template-columns:1.3fr 1fr 1.2fr"><div class="card glass"><div class="card-title">Top Counties · active fees</div><div class="bars-h"><div class="brow"><span style="color:var(--plat)">Hennepin</span><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bval">$170,500</span></div><div class="brow"><span style="color:var(--plat)">Anoka</span><div class="btrack"><div class="bfill" style="width:30.498533724340177%"></div></div><span class="bval">$52,000</span></div><div class="brow"><span style="color:var(--plat)">Ramsey</span><div class="btrack"><div class="bfill" style="width:29.03225806451613%"></div></div><span class="bval">$49,500</span></div><div class="brow"><span style="color:var(--plat)">Scott</span><div class="btrack"><div class="bfill" style="width:24.34017595307918%"></div></div><span class="bval">$41,500</span></div><div class="brow"><span style="color:var(--plat)">Dakota</span><div class="btrack"><div class="bfill" style="width:19.35483870967742%"></div></div><span class="bval">$33,000</span></div><div class="brow"><span style="color:var(--plat)">Wright</span><div class="btrack"><div class="bfill" style="width:18.181818181818183%"></div></div><span class="bval">$31,000</span></div><div class="brow"><span style="color:var(--plat)">Washington</span><div class="btrack"><div class="bfill" style="width:15.542521994134898%"></div></div><span class="bval">$26,500</span></div><div class="brow"><span style="color:var(--plat)">St. Louis</span><div class="btrack"><div class="bfill" style="width:12.609970674486803%"></div></div><span class="bval">$21,500</span></div></div></div><div class="card glass"><div class="card-title">Charge Mix · active</div><div id="dash-donut"><svg width="158" height="158" style="display:block;margin:0 auto"><circle cx="79" cy="79" r="73" fill="none" stroke="#D4AF37" stroke-width="11" stroke-dasharray="353.1013115541495 105.57121586996027" stroke-dashoffset="0" transform="rotate(-90 79 79)" opacity=".9"><title>Driving While Impaired · 72</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#3B9EDE" stroke-width="11" stroke-dasharray="27.59177596284579 431.08075146126396" stroke-dashoffset="-355.1013115541495" transform="rotate(-90 79 79)" opacity=".9"><title>Assault · 6</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#2ECC71" stroke-width="11" stroke-dasharray="22.659813302371493 436.01271412173827" stroke-dashoffset="-384.69308751699526" transform="rotate(-90 79 79)" opacity=".9"><title>Failure to Report Collision · 5</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#9B59B6" stroke-width="11" stroke-dasharray="17.727850641897195 440.9446767822126" stroke-dashoffset="-409.3529008193667" transform="rotate(-90 79 79)" opacity=".9"><title>Criminal Vehicular Operation · 4</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E67E22" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-429.0807514612639" transform="rotate(-90 79 79)" opacity=".9"><title>Reckless Driving · 3</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E74C3C" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-443.8766394426868" transform="rotate(-90 79 79)" opacity=".9"><title>Careless Driving · 3</title></circle></svg></div><div class="legend" style="margin-top:10px;justify-content:center"><span><i style="background:#D4AF37"></i>Driving While Impaired (72)</span><span><i style="background:#3B9EDE"></i>Assault (6)</span><span><i style="background:#2ECC71"></i>Failure to Report Col… (5)</span><span><i style="background:#9B59B6"></i>Criminal Vehicular Op… (4)</span><span><i style="background:#E67E22"></i>Reckless Driving (3)</span><span><i style="background:#E74C3C"></i>Careless Driving (3)</span></div></div><div class="card glass"><div class="card-title">Recent Activity</div><div class="mini-list"><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md">08/18/2026</span><span class="mn">Updated Makiya, Brian</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md">08/18/2026</span><span class="mn">Added case Makiya, Brian</span></div><div class="mrow" data-case="86e9323f-fa14-4c11-af58-42698500fdb7"><span class="md">08/12/2026</span><span class="mn">Added case Rosenlund, Nicholas Jay</span></div><div class="mrow" data-case="08706430-3cde-4be0-b2af-8100d166f321"><span class="md">08/10/2026</span><span class="mn">Unflagged trial watch — Mykhailiuk, Yevhenii</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="md">08/10/2026</span><span class="mn">Unflagged trial watch — Clasen, Anthony Michael</span></div><div class="mrow" data-case="597705fe-2f20-4a40-af26-4a120783a76f"><span class="md">08/06/2026</span><span class="mn">Payment $250 — Zarza, Daniel Lazaro</span></div><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="md">08/06/2026</span><span class="mn">Payment $1,250 — Walker, Ronald</span></div><div class="mrow" data-case="closed-25-CR-25-2856"><span class="md">08/03/2026</span><span class="mn">Payment $250 — Bock, Jeremy</span></div><div class="mrow" data-case="96fa81a1-0d3f-4d75-a5b3-bb22740c28e5"><span class="md">07/31/2026</span><span class="mn">Added case Kuhns, Jeremy Allen</span></div></div></div></div></main>
+  <main id="view" class="view"><div class="pulse"><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5v22M22.5 9.5c-1.4-1.9-3.8-2.8-6.5-2.8-3.6 0-6.5 1.9-6.5 5s2.7 4.3 6.5 5 7 2 7 5.3-3.1 5-7 5c-3 0-5.6-1-7-3"></path></svg><div><div class="p-label">August Revenue</div><div class="p-num p-green">$11,900</div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="21" rx="3"></rect><path d="M5 13h22M11 4v6M21 4v6"></path><circle cx="16" cy="20" r="2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Upcoming Hearings</div><div class="p-num ">31<small>next 14 days</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a3 3 0 0 1 3-3h6l3 4h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"></path><path d="M4 14h28"></path></svg><div><div class="p-label">Discovery Status</div><div class="p-num ">44<small>outstanding</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29C16 29 6 19.5 6 12.5a10 10 0 0 1 20 0c0 7-10 16.5-10 16.5Z"></path><circle cx="16" cy="12.5" r="3.5"></circle></svg><div><div class="p-label">Active Counties</div><div class="p-num ">26<small>counties</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 16 4l12 8"></path><line x1="4" y1="12" x2="28" y2="12"></line><line x1="8" y1="15.5" x2="8" y2="25"></line><line x1="16" y1="15.5" x2="16" y2="25"></line><line x1="24" y1="15.5" x2="24" y2="25"></line><line x1="3" y1="28" x2="29" y2="28"></line></svg><div><div class="p-label">Trial Watch</div><div class="p-num ">10<small>cases</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22.5a11 11 0 0 1 22 0"></path><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"></line><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Annual Pace</div><div class="p-num "><span class="p-green">$822,790</span></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div><div class="card ai-card"><div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Financial Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div><div class="ai-grid"><div class="ai-big"><div class="ai-big-label">August projected close</div><div class="ai-big-num">$14,756</div><div class="ai-bar"><i class="proj" style="width:13.7%"></i><i style="width:11.0%"></i><em style="left:57.9%"></em><em style="left:78.7%"></em><em style="left:92.6%"></em></div><div class="ai-big-sub">$11,900 collected · goals $62,500 / $85,000 / $100,000</div></div><div class="ai-big"><div class="ai-big-label">Year-end projection</div><div class="ai-big-num cyan">$822,790</div><div class="ai-bar"><i class="proj cy" style="width:94.3%"></i><i class="cy" style="width:61.3%"></i><em style="left:86.0%"></em></div><div class="ai-big-sub">$534,250 banked · goal $750,000 · <b style="color:#7FE8AC">on track</b></div></div><div class="ai-rows"><div class="ai-row risk" style="animation-delay:0ms"><span class="dot"></span><span><b>August</b> is pacing to close at <b>$14,756</b> — below the <b>$62,500 minimum</b> — needs ~<b>$8,434/day</b> the rest of the month.</span></div><div class="ai-row risk" style="animation-delay:70ms"><span class="dot"></span><span><b>4</b> payment plans are past due (<b>$1,500</b>) — a reminder call usually recovers these fastest.</span></div><div class="ai-row risk" data-jump="calendar" style="animation-delay:140ms;cursor:pointer"><span class="dot"></span><span><b>104</b> hearings are past their dates with no outcome recorded — <b>hearing dates need updating</b>: Martin, Shawn Matthew (50d ago), Marube, Winner Omweno (49d ago), Mooney, Karla Jean (49d ago) +101 more. Click to review the calendar.</span></div><div class="ai-row warn" style="animation-delay:210ms"><span class="dot"></span><span><b>$49,550</b> outstanding across <b>28</b> open balances — largest: Gusita, Armando-Valentin ($4,850). Collecting it covers <b>7%</b> of the annual goal.</span></div><div class="ai-row warn" style="animation-delay:280ms"><span class="dot"></span><span>Momentum: this month projects <b>-80%</b> vs your 3-month average of $72,617.</span></div><div class="ai-row warn" data-jump="active" style="animation-delay:350ms;cursor:pointer"><span class="dot"></span><span>Signed-date audit: <b>156</b> cases still carry an offense-date placeholder or pre-firm date — open each case and set the real <b>Date Opened</b>; the count drops as you fix them.</span></div></div></div><div class="ai-foot">◈ On-device intelligence engine — recalculates live from your cases, payments, plans &amp; goals. Nothing leaves this browser.</div></div><div style="margin-bottom:12px"><div class="card glass"><div class="card-title">Case Reviews &amp; Check-Ins<span class="more" data-jump="calsync">open calendar →</span></div><div class="empty" style="padding:18px;font-size:11.5px;line-height:1.7">No calendar feed on this device yet. Once Google Calendar is feeding in, anything titled <b>case review</b> or <b>check in</b> lands here automatically.</div></div></div><div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"><svg width="100%" height="210" viewBox="0 0 1031 210"><defs><lineargradient id="ggd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC52"></stop><stop offset="100%" stop-color="#8C6E1C"></stop></lineargradient><lineargradient id="ggdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ECC71"></stop><stop offset="100%" stop-color="#14532D"></stop></lineargradient><lineargradient id="ggdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8E99A8"></stop><stop offset="100%" stop-color="#3A4250"></stop></lineargradient></defs><line x1="46" x2="1025" y1="12" y2="12" stroke="rgba(210,220,235,.07)"></line><text x="39" y="15" fill="#525C6B" font-size="8.5" text-anchor="end">$119k</text><line x1="46" x2="1025" y1="70.66666666666666" y2="70.66666666666666" stroke="rgba(210,220,235,.07)"></line><text x="39" y="73.66666666666666" fill="#525C6B" font-size="8.5" text-anchor="end">$79k</text><line x1="46" x2="1025" y1="129.33333333333331" y2="129.33333333333331" stroke="rgba(210,220,235,.07)"></line><text x="39" y="132.33333333333331" fill="#525C6B" font-size="8.5" text-anchor="end">$40k</text><line x1="46" x2="1025" y1="188" y2="188" stroke="rgba(210,220,235,.07)"></line><text x="39" y="191" fill="#525C6B" font-size="8.5" text-anchor="end">$0k</text><g class="bargroup" data-i="0" style="cursor:default"><rect x="68.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="88.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="46" y="12" width="81.25" height="176" fill="transparent"></rect><text x="86.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Sep 25</text></g><g class="bargroup" data-i="1" style="cursor:default"><rect x="149.375" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="169.375" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="127.25" y="12" width="81.25" height="176" fill="transparent"></rect><text x="167.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Oct</text></g><g class="bargroup" data-i="2" style="cursor:default"><rect x="230.625" y="138.1160639192599" width="17" height="49.88393608074011" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="250.625" y="119.90916736753574" width="17" height="68.09083263246426" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="208.5" y="12" width="81.25" height="176" fill="transparent"></rect><text x="249.125" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Nov</text></g><g class="bargroup" data-i="3" style="cursor:default"><rect x="311.875" y="40.716568544995795" width="17" height="147.2834314550042" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="331.875" y="93.26492851135407" width="17" height="94.73507148864593" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="289.75" y="12" width="81.25" height="176" fill="transparent"></rect><text x="330.375" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Dec</text></g><g class="bargroup" data-i="4" style="cursor:default"><rect x="393.125" y="68.39697224558452" width="17" height="119.60302775441548" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="413.125" y="107.32716568544996" width="17" height="80.67283431455004" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="371" y="12" width="81.25" height="176" fill="transparent"></rect><text x="411.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jan 26</text></g><g class="bargroup" data-i="5" style="cursor:default"><rect x="474.375" y="56.03700588730024" width="17" height="131.96299411269976" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="494.375" y="122.12952060555088" width="17" height="65.87047939444912" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="452.25" y="12" width="81.25" height="176" fill="transparent"></rect><text x="492.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Feb</text></g><g class="bargroup" data-i="6" style="cursor:default"><rect x="555.625" y="53.668629100084104" width="17" height="134.3313708999159" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="575.625" y="87.34398654331372" width="17" height="100.65601345668628" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="533.5" y="12" width="81.25" height="176" fill="transparent"></rect><text x="574.125" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Mar</text></g><g class="bargroup" data-i="7" style="cursor:default"><rect x="636.875" y="43.973086627417985" width="17" height="144.02691337258202" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="656.875" y="85.12363330529857" width="17" height="102.87636669470143" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="614.75" y="12" width="81.25" height="176" fill="transparent"></rect><text x="655.375" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Apr</text></g><g class="bargroup" data-i="8" style="cursor:default"><rect x="718.125" y="51.30025231286797" width="17" height="136.69974768713203" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="738.125" y="96.22539949537428" width="17" height="91.77460050462572" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="696" y="12" width="81.25" height="176" fill="transparent"></rect><text x="736.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">May</text></g><g class="bargroup" data-i="9" style="cursor:default"><rect x="799.375" y="12" width="17" height="176" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="819.375" y="51.07821698906645" width="17" height="136.92178301093355" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="777.25" y="12" width="81.25" height="176" fill="transparent"></rect><text x="817.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jun</text></g><g class="bargroup" data-i="10" style="cursor:default"><rect x="880.625" y="77.79646761984861" width="17" height="110.20353238015139" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="900.625" y="92.080740117746" width="17" height="95.919259882254" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="858.5" y="12" width="81.25" height="176" fill="transparent"></rect><text x="899.125" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jul</text></g><g class="bargroup" data-i="11" style="cursor:default"><rect x="961.875" y="170.3851976450799" width="17" height="17.6148023549201" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="981.875" y="166.7038519764508" width="17" height="21.2961480235492" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="939.75" y="12" width="81.25" height="176" fill="transparent"></rect><text x="980.375" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Aug</text></g></svg></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div><div class="card glass"><div class="card-title">Collection Rate (2026)</div><div id="dash-ring"><div style="position:relative;width:168px;height:168px;margin:0 auto"><svg width="168" height="168"><circle cx="84" cy="84" r="77" fill="none" stroke="rgba(210,220,235,.09)" stroke-width="9"></circle><circle cx="84" cy="84" r="77" fill="none" stroke="#D4AF37" stroke-width="9" stroke-linecap="round" stroke-dasharray="483.80526865282815" stroke-dashoffset="0" transform="rotate(-90 84 84)" style="filter:drop-shadow(0 0 6px #D4AF3744);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"></circle></svg><div class="ring-center"><div style="font-size:32.30769230769231px;font-weight:800">105%</div><div style="font-size:9.5px;color:var(--plat-dim);letter-spacing:.6px">collected / billed</div></div></div></div><div class="stat-row"><span class="k">Billed</span><span class="v">$510,487</span></div><div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">$534,250</span></div><div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">$67,650</span></div></div></div><div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Next Hearings <span class="more" data-jump="calendar">calendar →</span></div><div class="mini-list" id="dash-hearings"><div class="mrow" data-case="f03b6f2e-f7e2-4a6b-bfd9-72f743c8952d"><span class="md">08/25/2026 8:30a</span><span class="mn">Lane, Charles David</span><span class="mv">Implied Consent · today</span></div><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="md">08/25/2026 8:30a</span><span class="mn">Walker, Ronald</span><span class="mv">Arraignment · today</span></div><div class="mrow" data-case="156d3795-15b7-483d-8954-182d5a636011"><span class="md">08/25/2026 9:45a</span><span class="mn">Von Essen, Brandon Bradley</span><span class="mv">Pretrial · today</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/25/2026 1:30p</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Rule 20 Review Hearing · today</span></div><div class="mrow" data-case="522d2625-4121-4255-a065-9a16cc683727"><span class="md">08/26/2026</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/26/2026 8:30a</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Pretrial · in 1d</span></div><div class="mrow" data-case="55d25547-8d99-4ffe-8843-01e20581e937"><span class="md">08/26/2026 8:30a</span><span class="mn">Martens, Marc Christopher</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="md">08/26/2026 8:30a</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div></div></div><div class="card glass"><div class="card-title">Payment Plans Due</div><div class="mini-list"><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">$250 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="5dbe0748-a2af-44a5-b35e-4ea358e0886d"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Chang, Khai</span><span class="mv">$500 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">McCurry, Vanessa Ferreira</span><span class="mv">$500 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="4b6cc386-e8ab-4be6-ba97-5206b9e67e4e"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">Kroll, Hunter Joseph</span><span class="mv">$250 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="32c2fb13-36d3-48de-a3cc-4d12314e7a44"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">McCorkell, Jonathan Michael</span><span class="mv">$250 in 21d</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Makiya, Brian</span><span class="mv">$250 in 21d</span></div></div></div><div class="card glass"><div class="card-title">Discovery Outstanding <span class="more" data-filter-disc="">view all →</span></div><div class="mini-list"><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="mn">Acuna-Nino, Clark Kent</span><span class="mv">Scott</span></div><div class="mrow" data-case="6b312aa2-3b0f-4be7-b431-70f5004b72b0"><span class="mn">Amaya Martinez, Eliezer Gerald</span><span class="mv">Olmsted</span></div><div class="mrow" data-case="1e293880-6be6-4847-beb2-d344d6a15987"><span class="mn">Anderson, Caleb Frederick</span><span class="mv">Winona</span></div><div class="mrow" data-case="e255c2a8-1a28-48fa-bbb2-0a4e6fb8b94d"><span class="mn">Calhoun, Mitchell Moore</span><span class="mv">Crow Wing</span></div><div class="mrow" data-case="eaec65b5-91e8-479e-bffd-02a49177d325"><span class="mn">Chorolec, Helen Olga</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="mn">Clasen, Anthony Michael</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="1a298b31-9551-44b5-aabc-d05356e524f7"><span class="mn">Collette, Jennifer Elizabeth</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="e292c7f2-c140-4303-a7ce-8d82ba99851d"><span class="mn">Gusita, Armando-Valentin</span><span class="mv">Hennepin</span></div></div></div></div><div class="grid" style="grid-template-columns:1.3fr 1fr 1.2fr"><div class="card glass"><div class="card-title">Top Counties · active fees</div><div class="bars-h"><div class="brow"><span style="color:var(--plat)">Hennepin</span><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bval">$170,500</span></div><div class="brow"><span style="color:var(--plat)">Anoka</span><div class="btrack"><div class="bfill" style="width:30.498533724340177%"></div></div><span class="bval">$52,000</span></div><div class="brow"><span style="color:var(--plat)">Ramsey</span><div class="btrack"><div class="bfill" style="width:29.03225806451613%"></div></div><span class="bval">$49,500</span></div><div class="brow"><span style="color:var(--plat)">Scott</span><div class="btrack"><div class="bfill" style="width:24.34017595307918%"></div></div><span class="bval">$41,500</span></div><div class="brow"><span style="color:var(--plat)">Dakota</span><div class="btrack"><div class="bfill" style="width:19.35483870967742%"></div></div><span class="bval">$33,000</span></div><div class="brow"><span style="color:var(--plat)">Wright</span><div class="btrack"><div class="bfill" style="width:18.181818181818183%"></div></div><span class="bval">$31,000</span></div><div class="brow"><span style="color:var(--plat)">Washington</span><div class="btrack"><div class="bfill" style="width:15.542521994134898%"></div></div><span class="bval">$26,500</span></div><div class="brow"><span style="color:var(--plat)">St. Louis</span><div class="btrack"><div class="bfill" style="width:12.609970674486803%"></div></div><span class="bval">$21,500</span></div></div></div><div class="card glass"><div class="card-title">Charge Mix · active</div><div id="dash-donut"><svg width="158" height="158" style="display:block;margin:0 auto"><circle cx="79" cy="79" r="73" fill="none" stroke="#D4AF37" stroke-width="11" stroke-dasharray="353.1013115541495 105.57121586996027" stroke-dashoffset="0" transform="rotate(-90 79 79)" opacity=".9"><title>Driving While Impaired · 72</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#3B9EDE" stroke-width="11" stroke-dasharray="27.59177596284579 431.08075146126396" stroke-dashoffset="-355.1013115541495" transform="rotate(-90 79 79)" opacity=".9"><title>Assault · 6</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#2ECC71" stroke-width="11" stroke-dasharray="22.659813302371493 436.01271412173827" stroke-dashoffset="-384.69308751699526" transform="rotate(-90 79 79)" opacity=".9"><title>Failure to Report Collision · 5</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#9B59B6" stroke-width="11" stroke-dasharray="17.727850641897195 440.9446767822126" stroke-dashoffset="-409.3529008193667" transform="rotate(-90 79 79)" opacity=".9"><title>Criminal Vehicular Operation · 4</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E67E22" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-429.0807514612639" transform="rotate(-90 79 79)" opacity=".9"><title>Reckless Driving · 3</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E74C3C" stroke-width="11" stroke-dasharray="12.795887981422895 445.8766394426869" stroke-dashoffset="-443.8766394426868" transform="rotate(-90 79 79)" opacity=".9"><title>Careless Driving · 3</title></circle></svg></div><div class="legend" style="margin-top:10px;justify-content:center"><span><i style="background:#D4AF37"></i>Driving While Impaired (72)</span><span><i style="background:#3B9EDE"></i>Assault (6)</span><span><i style="background:#2ECC71"></i>Failure to Report Col… (5)</span><span><i style="background:#9B59B6"></i>Criminal Vehicular Op… (4)</span><span><i style="background:#E67E22"></i>Reckless Driving (3)</span><span><i style="background:#E74C3C"></i>Careless Driving (3)</span></div></div><div class="card glass"><div class="card-title">Recent Activity</div><div class="mini-list"><div class="mrow"><span class="md">08/25/2026</span><span class="mn">Legacy carry-forward switched off — its 130100 collected is already inside the monthly totals</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">08/11/2026</span><span class="mn">Payment $250 — Zobel, Tyler Robert</span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md">08/11/2026</span><span class="mn">Updated McCurry, Vanessa Ferreira</span></div><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="md">07/11/2026</span><span class="mn">Updated Acuna-Nino, Clark Kent</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">07/11/2026</span><span class="mn">Updated Zobel, Tyler Robert</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">07/11/2026</span><span class="mn">Updated Zobel, Tyler Robert</span></div><div class="mrow" data-case="b0245dc7-b3ba-48c2-91f6-5acb91bb7122"><span class="md">07/11/2026</span><span class="mn">Updated Parmeter, Gerald Hilden</span></div><div class="mrow" data-case="2be7e476-c2ab-49b9-b023-d172a61a602b"><span class="md">07/11/2026</span><span class="mn">Resolved Donarski, Tyler William</span></div><div class="mrow" data-case="721138ec-7341-4b3f-8b46-9310a2d85129"><span class="md">07/11/2026</span><span class="mn">Resolved Hendricks, Edward Lee</span></div></div></div></div></main>
 </div>
 
 <!-- ═════════ OVERLAYS ═════════ -->
@@ -658,7 +730,21 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
   <div class="pal-list" id="pal-list"></div>
 </div></div>
 
-<div id="toasts"><div class="toast"><span>It's been a while since your last backup — hit <b>Backup</b> to download one</span></div></div>
+<div class="hmenu" id="hmenu" role="menu">
+            <div class="hmenu-hd">Connections</div>
+            <button class="hmi" id="btn-cal"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span><span>Google Calendar</span><span class="tag on">on</span></button>
+            <button class="hmi" id="btn-clio"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg></span><span>Clio</span><span class="tag">off</span></button>
+            <div class="hsep"></div>
+            <div class="hmenu-hd">Data</div>
+            <button class="hmi" id="btn-import"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 20h16"></path></svg></span><span>Import</span></button>
+            <button class="hmi" id="btn-export"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg></span><span>Backup now</span></button>
+            <button class="hmi" id="btn-csv"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg></span><span>Export CSV</span></button>
+            <button class="hmi" id="btn-print"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M6 15h12v6H6z"></path></svg></span><span>Print</span></button>
+            <div class="hsep"></div>
+            <button class="hmi" id="btn-settings"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.1 14.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.87 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.87-1.2l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3.1 14.5H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9.9 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.87 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0 1.2 2.87H21a2 2 0 1 1 0 4z"></path></svg></span><span>Settings</span></button>
+            <button class="hmi" id="btn-lock"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span><span>Lock &nbsp;·&nbsp; L</span></button>
+</div>
+<div id="toasts"></div>
 <div id="confetti"></div>
 <div class="chart-tip" id="chart-tip" style="display: none; left: 1114px; top: 427px;"></div>
 <input type="file" id="file-input" accept=".json,application/json" style="display:none">
@@ -1137,6 +1223,7 @@ function anyOvOpen(){ return $$('.overlay.show').length > 0 }
 let menuEl = null;
 function popMenu(anchor, items){
   killMenu();
+  items = items.filter(Boolean);
   menuEl = document.createElement('div'); menuEl.className='menu-pop';
   menuEl.innerHTML = items.map(it => it==='—' ? '<div class="sep"></div>' : '<button class="mi'+(it.danger?' danger':'')+'">'+it.icon+' '+it.label+'</button>').join('');
   document.body.appendChild(menuEl);
@@ -1282,7 +1369,7 @@ function caseRow(c, i, resolved, isSub, hasKids, collapsed){
   const nm = displayName(c);
   const nameHtml = isSub
     ? '<div class="cname" style="padding-left:20px;color:var(--plat-dim)"><span style="color:var(--gold-dim)">↳</span> '+(nm && nm!==''?esc(nm):'companion file')+' '+badges(c)+'</div>'
-    : '<div class="cname"><span class="pdot pdot-'+(c.priority||'med')+'" title="'+({high:'High',med:'Medium',low:'Low'}[c.priority]||'Medium')+' priority"></span>'
+    : '<div class="cname">'
       + (hasKids?'<span class="subcaret'+(collapsed?'':' open')+'" data-fold="'+c.id+'" title="Companion files">▶</span>':'')
       + (c.clio?'<a href="'+esc(c.clio)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open matter in Clio">'+esc(nm)+'</a>':esc(nm))
       + ' '+badges(c)+'</div><div class="caption">'+esc(c.caption||autoCaption(c))+'</div>';
@@ -1296,14 +1383,14 @@ function caseRow(c, i, resolved, isSub, hasKids, collapsed){
   }
   return '<tr class="rowc'+(isSub?' subrow':'')+'" data-id="'+c.id+'">'
     + '<td class="idx">'+(isSub?'':i)+'</td>'
-    + '<td style="min-width:200px">'+nameHtml+'</td>'
-    + '<td style="min-width:130px;white-space:nowrap">'+nh+doc+icBlock+'</td>'
-    + '<td class="chg" style="min-width:150px">'+(()=>{ const st = statuteFor(c);
+    + '<td>'+nameHtml+'</td>'
+    + '<td>'+nh+doc+icBlock+'</td>'
+    + '<td class="chg">'+(()=>{ const st = statuteFor(c);
         const block = (c.expungement?'<div class="chg-lv" style="color:var(--gold-hi);font-weight:700;letter-spacing:.4px">Expungement</div>':'')+'<div class="chg-lv">'+esc(c.level||'')+(c.degree?' · '+esc(c.degree):'')+'</div><div class="chg-main">'+esc(c.charge==='Other'? (c.chargeOther||'Other') : c.charge||'—')+(c.refusal?' · Refusal':'')+'</div>';
         return st ? '<a href="'+esc(st)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="MN statute">'+block+'</a>' : block })()+'</td>'
     + '<td class="cty">'+(c.county?'<a href="'+esc(countyLink(c.county))+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">'+esc(c.county)+'</a>':'—')+'</td>'
     + '<td style="white-space:nowrap;font-size:12px">'+ (resolved ? (c.closedDate?usDate(c.closedDate):'—') : usDate(c.offenseDate)||'—') +'</td>'
-    + '<td style="min-width:130px">'+hearingCell(c)+'</td>'
+    + '<td>'+hearingCell(c)+'</td>'
     + feeCell(c)
     + '<td>'+discCell(c)+'</td>'
     + '<td class="rowmenu"><span class="dots" data-menu="'+c.id+'">⋯</span></td>'
@@ -1343,8 +1430,11 @@ function renderCases(resolved, keepScroll){
       '<span class="count-note"><b>'+list.length+'</b> cases · fees <b>'+fmt$(totFee)+'</b> · collected <b>'+fmt$(totCol)+'</b></span>' +
       '<select class="sel" id="f-sort" title="Sort">'+Object.entries(sortOpts).map(([k,l])=>'<option value="'+k+'"'+(F.sort===k?' selected':'')+'>Sort · '+l+'</option>').join('')+'</select>' +
     '</div>' +
-    '<div class="tblwrap glass"><table class="tbl"><thead><tr>' +
-      ['#','Client / Case Name','Case No.','Primary Charge','County', resolved?'Closed':'Offense Date','Next Hearing','Billed / Collected','Discovery',''].map((h,ci)=>{
+    '<div class="tblwrap glass"><table class="tbl cases">' +
+    '<colgroup><col class="c-idx"><col class="c-name"><col class="c-no"><col class="c-chg"><col class="c-cty">' +
+    '<col class="c-date"><col class="c-hear"><col class="c-fee"><col class="c-disc"><col class="c-menu"></colgroup>' +
+    '<thead><tr>' +
+      ['#','Client / Case','Case No.','Charge','County', resolved?'Closed':'Offense','Next Hearing','Billed / Collected','Discovery',''].map((h,ci)=>{
         const key = {1:'name',4:'county',5:'opened',6:'hearing',7:'fee'}[ci];
         return '<th'+(key?' data-sort="'+key+'"':'')+'>'+h+(key&&F.sort===key?'<span class="arr">'+(F.dir>0?'▲':'▼')+'</span>':'')+'</th>'}).join('') +
     '</tr></thead><tbody>' + (rows || '<tr><td colspan="10"><div class="empty"><div class="big">⚖</div>'+(resolved?'No resolved cases yet — resolve a case from its ⋯ menu and it moves here with its closed date.':'No cases match these filters.')+'</div></td></tr>') + '</tbody></table></div>' + cfRow;
@@ -1384,6 +1474,11 @@ function rowMenu(anchor, id){
     {icon:'⧉', label:'Copy case number', fn:()=>c.caseNo&&copyText(c.caseNo, c.caseNo)},
     {icon:'＋', label:'Add case for this client', fn:()=>openEditor(null, id, true)},
     '—',
+    (typeof clioConnected === 'function' && clioConnected()
+      ? (c.clioId
+          ? {icon:'⧉', label:'Open matter in Clio', fn:()=>window.open(clioMatterUrl(c.clioId), '_blank', 'noopener')}
+          : {icon:'⊕', label:'Create matter in Clio', fn:()=>clioCreateMatter(c)})
+      : null),
     {icon:'◐', label:'Priority: '+({high:'High → Medium',med:'Medium → Low',low:'Low → High'}[c.priority||'med']), fn:()=>{ c.priority={high:'med',med:'low',low:'high'}[c.priority||'med']; save(); refresh() }},
     {icon:'✓', label: c.discovery==='Received'?'Discovery: mark Outstanding':'Discovery: mark Received', fn:()=>{ c.discovery = c.discovery==='Received'?'Outstanding':'Received'; if(c.discovery!=='Received') c.drive=''; save(); refresh() }},
     '—',
@@ -1448,7 +1543,7 @@ function renderEditorBody(){
     '<div class="frow" style="grid-template-columns:1fr 1fr 1fr">' +
       fld('First Name', inp('e-first', c.first, 'First')) + fld('Middle Name', inp('e-mid', c.mid, 'Middle')) + fld('Last Name', inp('e-last', c.last, 'Last')) + '</div>' +
     '<div class="frow" style="grid-template-columns:1fr 1fr 1fr">' +
-      fld('Priority', selc('e-priority', [['high','🔴 High'],['med','🟡 Medium'],['low','🟢 Low']], c.priority)) +
+      fld('Priority', selc('e-priority', [['high','High'],['med','Medium'],['low','Low']], c.priority)) +
       fld('Status', selc('e-status', [['active','Active'],['pending','Pending'],['inactive','Inactive'],['closed','Closed']], c.status)) +
       fld('Matter Type', selc('e-matter', [['criminal','Criminal Matter'],['juvenile','Juvenile Matter'],['ic','Implied Consent']], c.matter)) + '</div>' +
     '<div class="frow" style="grid-template-columns:1fr 1fr 1fr">' +
@@ -1481,6 +1576,7 @@ function renderEditorBody(){
     '<div class="fsec"><div class="fsec-t">Hearings</div><div id="e-hearings">' + c.hearings.map((h,i)=>hearingRowHtml(h,i)).join('') + '</div>' +
     (c.hearings.length<3?'<button class="btn btn-ghost" id="e-add-hearing" style="font-size:12px">+ Add hearing</button>':'') + '</div>' +
     '<div class="fsec"><div class="fsec-t">Google Calendar</div>' + calCaseHtml(editId) + '</div>' +
+    '<div class="fsec"><div class="fsec-t">Clio</div>' + clioCaseHtml(c) + '</div>' +
 
     '<div class="fsec"><div class="fsec-t">Fees & Payment</div>' +
     (c.sub ? '<div style="margin-bottom:11px">'+cb('e-sharedfee','Fee billed with lead case (uncheck for a fresh retainer on this case)', c.sharedFee)+'</div>' : '') +
@@ -1935,7 +2031,7 @@ function renderPayments(v){
       const d = c.plan.nextDate ? daysUntil(c.plan.nextDate) : null, late = d!=null && d<0;
       const remaining = c.plan.amount ? Math.ceil(bal / c.plan.amount) : null;
       return '<div class="card glass" style="cursor:pointer" data-case="'+c.id+'">' +
-        '<div style="display:flex;align-items:center;gap:9px;margin-bottom:4px"><span class="pdot pdot-'+(c.priority||'med')+'"></span><b style="font-size:14px">'+esc(displayName(c))+'</b>'+(late?'<span class="cd cd-now" style="margin-left:auto">'+(-d)+'d OVERDUE</span>':'')+'</div>' +
+        '<div style="display:flex;align-items:center;gap:9px;margin-bottom:4px"><b style="font-size:14px">'+esc(displayName(c))+'</b>'+(late?'<span class="cd cd-now" style="margin-left:auto">'+(-d)+'d OVERDUE</span>':'')+'</div>' +
         '<div style="font-size:11px;color:var(--plat-dim);margin-bottom:10px">'+esc(c.caseNo||'')+' · '+fmt$(c.plan.amount)+' '+esc(c.plan.frequency||'')+(c.plan.nextDate?' · next '+usDate(c.plan.nextDate):'')+'</div>' +
         '<div class="balbar" style="height:7px"><i style="width:'+pct+'%"></i></div>' +
         '<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:7px"><span style="color:var(--green)">'+fmt$(col)+' collected</span><span style="color:var(--orange)">'+fmt$(bal)+' to go'+(remaining?' · ~'+remaining+' payments':'')+'</span></div>' +
@@ -2131,7 +2227,7 @@ function anaAvg(b){
 function anaMix(b){
   const act = activeMains();
   const dim = (keyFn, label) => { const agg={}; for(const c of act){ const k=keyFn(c)||'—'; agg[k]=(agg[k]||0)+1 } return Object.entries(agg).sort((x,y)=>y[1]-x[1]) };
-  const counties = dim(c=>c.county), levels = dim(c=>c.level), prio = dim(c=>({high:'🔴 High',med:'🟡 Medium',low:'🟢 Low'}[c.priority])), disc = dim(c=>c.discovery), comm = dim(c=>{ const f=c.fee; return f==null?'no fee set':f===0?'$0 · included':f<2500?'under $2,500':f<5000?'$2,500\u2013$4,999':f<7500?'$5,000\u2013$7,499':'$7,500+' });
+  const counties = dim(c=>c.county), levels = dim(c=>c.level), prio = dim(c=>({high:'High',med:'Medium',low:'Low'}[c.priority])), disc = dim(c=>c.discovery), comm = dim(c=>{ const f=c.fee; return f==null?'no fee set':f===0?'$0 · included':f<2500?'under $2,500':f<5000?'$2,500\u2013$4,999':f<7500?'$5,000\u2013$7,499':'$7,500+' });
   const aging = [['< 90 days',0],['90–180 days',0],['180–365 days',0],['1 year +',0]];
   for(const c of act){ const d=c.dateOpened; if(!d) continue; const age=-daysUntil(d);
     aging[age<90?0:age<180?1:age<365?2:3][1]++ }
@@ -2535,9 +2631,24 @@ function openSettings(){
       '<div class="frow" style="grid-template-columns:2fr 1.2fr">'+fld('GitHub Token (stays on this device)', '<input class="fi" id="s-sync-token" type="password" placeholder="github_pat_… or ghp_…">')+fld('Gist ID (optional — auto-found)', inp('s-sync-gist','', 'leave blank'))+'</div>' +
       '<button class="btn btn-gold" id="s-sync-connect">Connect & Sync</button>'
     ) + '</div>' +
+    '<div class="fsec"><div class="fsec-t">Connections</div>' +
+    '<div class="mini-list" style="margin-bottom:12px">' +
+      '<div class="mrow" style="cursor:default"><span class="md">Clio</span>' +
+        '<span class="mn">' + (clioConnected()
+          ? '<b style="color:var(--green)">Connected</b>' + (DB.settings.clio && DB.settings.clio.user ? ' · ' + esc(DB.settings.clio.user) : '')
+            + (DB.settings.clio && DB.settings.clio.lastSync ? ' · synced ' + new Date(DB.settings.clio.lastSync).toLocaleString() : '')
+          : '<span style="color:var(--plat-faint)">Not connected</span>') + '</span>' +
+        '<span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-clio">Open</button></span></div>' +
+      '<div class="mrow" style="cursor:default"><span class="md">Google Calendar</span>' +
+        '<span class="mn">' + (CAL.filter(e=>e.src!=='clio').length
+          ? '<b style="color:var(--green)">' + CAL.filter(e=>e.src!=='clio').length + '</b> events feeding in'
+          : '<span style="color:var(--plat-faint)">No feed on this device</span>') + '</span>' +
+        '<span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-gcal">Open</button></span></div>' +
+    '</div></div>' +
+    '<div class="fsec"><div class="fsec-t">Automatic Backup</div>' + autoBakHtml() + '</div>' +
     '<div class="fsec"><div class="fsec-t">Data</div>' +
     '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-audit">Find Duplicates</button><button class="btn btn-gold" id="s-backup">Download Backup (JSON)</button><button class="btn" id="s-csv">Export Cases CSV</button><button class="btn" id="s-csvp">Export Payments CSV</button><button class="btn btn-red" id="s-wipe">Wipe All Data</button></div>' +
-    '<div style="font-size:11px;color:var(--plat-faint);margin-top:10px">Last backup: '+(s.lastBackup?new Date(s.lastBackup).toLocaleString():'<b style="color:var(--orange)">never</b>')+' · '+DB.cases.length+' case rows · '+allPayments().length+' payments · '+(JSON.stringify(DB).length/1024).toFixed(0)+' KB local</div></div>' +
+    '<div style="font-size:11px;color:var(--plat-faint);margin-top:10px">'+DB.cases.length+' case rows · '+allPayments().length+' payments · '+(JSON.stringify(DB).length/1024).toFixed(0)+' KB local</div></div>' +
     '<div class="modal-f" style="border:0;padding:18px 0 4px"><button class="btn" data-close="ov-settings">Close</button><button class="btn btn-gold" id="s-save">Save Settings</button></div>';
   $('#s-save').onclick = ()=>{
     s.firm = $('#s-firm').value.trim()||s.firm; s.user = $('#s-user').value.trim(); s.firmStart = $('#s-firmstart').value||s.firmStart;
@@ -2613,6 +2724,9 @@ function openSettings(){
   const so = $('#s-sync-off'); if(so) so.onclick = ()=>askConfirm('Disconnect sync on this device?','Your data stays on this device and in the cloud gist — this device just stops syncing until you reconnect.', ()=>{ setSyncCfg(null); closeOv('ov-settings'); openSettings() }, 'Disconnect', true);
   const sa = $('#s-audit'); if(sa) sa.onclick = ()=>{ closeOv('ov-settings'); openAudit() };
   $('#s-backup').onclick = exportBackup;
+  $('#s-clio').onclick = ()=>{ closeOv('ov-settings'); openClio() };
+  $('#s-gcal').onclick = ()=>{ closeOv('ov-settings'); openCal() };
+  wireAutoBak();
   $('#s-csv').onclick = ()=>exportCSV('cases'); $('#s-csvp').onclick = ()=>exportCSV('payments');
   $('#s-wipe').onclick = ()=>askConfirm('Wipe all data?','This deletes every case, payment, note and setting on this device. Export a backup first. This cannot be undone.', ()=>{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_PIN); location.reload() }, 'Wipe Everything', true);
   openOv('ov-settings');
@@ -3005,7 +3119,7 @@ function openAudit(){
 function exportBackup(){
   DB.settings.lastBackup = new Date().toISOString(); persist();
   dl('case-tracker-backup-'+todayISO()+'.json', JSON.stringify({app:'crt2', version:2, exported:new Date().toISOString(), data:DB}, null, 1));
-  toast('Backup downloaded — keep it somewhere safe');
+  toast('Backup downloaded');
 }
 function csvEsc(x){ x = x==null?'':String(x); return /[",\n]/.test(x) ? '"'+x.replace(/"/g,'""')+'"' : x }
 function exportCSV(kind){
@@ -3199,7 +3313,35 @@ function boot(){
   $('#btn-csv').onclick = ()=>exportCSV(curTab==='payments'?'payments':'cases');
   $('#btn-print').onclick = doPrint;
   $('#btn-cal').onclick = openCal;
+  $('#btn-clio').onclick = openClio;
+  /* header ⋯ dropdown */
+  (function(){
+    const mb = $('#btn-more'), mn = $('#hmenu');
+    if(!mb || !mn) return;
+    const close = ()=>{ mn.classList.remove('show'); mb.setAttribute('aria-expanded','false') };
+    const place = ()=>{
+      const r = mb.getBoundingClientRect();
+      mn.style.visibility = 'hidden'; mn.classList.add('show');
+      const w = mn.offsetWidth, h = mn.offsetHeight;
+      mn.style.left = Math.max(10, Math.min(r.right - w, innerWidth - w - 10)) + 'px';
+      mn.style.top  = (r.bottom + h + 10 > innerHeight ? Math.max(10, r.top - h - 8) : r.bottom + 8) + 'px';
+      mn.style.visibility = '';
+    };
+    mb.addEventListener('click', e=>{
+      e.stopPropagation();
+      const open = !mn.classList.contains('show');
+      if(open){ try{ paintHmenu() }catch(x){} place() }
+      else close();
+      mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    window.addEventListener('resize', close);
+    window.addEventListener('scroll', close, true);
+    mn.addEventListener('click', ()=> setTimeout(close, 0));
+    document.addEventListener('click', e=>{ if(!mn.contains(e.target) && e.target !== mb) close() });
+    document.addEventListener('keydown', e=>{ if(e.key === 'Escape') close() });
+  })();
   calLoad(); if(CAL.length) setTimeout(()=>{ const n = calAutolink(); if(n) save(); if(calCfg().autoApply) calApply(true); if(n) refresh() }, 400);
+  try{ clioBoot() }catch(e){ console.warn('clio boot', e) }
   // overlay close
   document.addEventListener('click', e=>{
     const c = e.target.closest('[data-close]'); if(c) closeOv(c.dataset.close);
@@ -3239,10 +3381,9 @@ function boot(){
         body: JSON.stringify({files:{[GIST_FILE]:{content: JSON.stringify(DB)}}})}) }catch(e){}
     }
   });
-  // backup nudge
-  const lb = DB.settings.lastBackup;
-  if((DB.log||[]).length > 3 && (!lb || Date.now()-new Date(lb).getTime() > 14*864e5))
-    setTimeout(()=>toast('It\'s been a while since your last backup — hit <b>Backup</b> to download one', null, 8000), 2500);
+  // automatic rolling backup — silent, every 3 days
+  setTimeout(autoBackupTick, 3000);
+  setInterval(autoBackupTick, 6*36e5);
 }
 /* entry */
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -3275,6 +3416,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 
 
+
+<div class="overlay" id="ov-clio"><div class="modal" style="width:min(760px,95vw)" role="dialog" aria-modal="true">
+  <div class="modal-h"><div><div class="t">Clio</div>
+    <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Matters, calendar and billing, wired straight into this tracker.</div></div>
+    <button class="x-btn" data-close="ov-clio">×</button></div>
+  <div class="modal-b" id="clio-body"></div>
+</div></div>
 
 <div class="overlay" id="ov-cal"><div class="modal" style="width:min(1040px,97vw)" role="dialog" aria-modal="true">
   <div class="modal-h"><div><div class="t">Google Calendar → Client Files</div><div style="font-size:11px;color:var(--plat-dim);margin-top:3px" id="cal-sub"></div></div><button class="x-btn" data-close="ov-cal">×</button></div>
@@ -3435,7 +3583,9 @@ function calApply(silent){
 }
 function calIngest(json){
   if(!json || !Array.isArray(json.events)) return false;
-  CAL = json.events.map(calParse).filter(e => e.uid && e.date);
+  /* Google and Clio share this list; each feed only replaces its own. */
+  const keepClio = CAL.filter(e => e.src === 'clio');
+  CAL = json.events.map(calParse).filter(e => e.uid && e.date).concat(keepClio);
   calSaveLocal();
   const cfg = calCfg(); cfg.feedAt = json.generatedAt || new Date().toISOString();
   const n = calAutolink(); if(n) save();
@@ -3733,97 +3883,742 @@ function renderCal(){
 <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
 <script>
 'use strict';
-/* ═════════════════ CLIO CONNECT ═════════════════
-   Single entry point for wiring this page to Clio.
+/* ═════════════════ AUTOMATIC BACKUP ═════════════════
+   Silent, rolling, every three days. No nagging, no prompts.
+   Snapshots live in this browser; when cloud sync is on, the newest is
+   also parked in the private gist so a dead laptop is not a dead
+   tracker. Settings → Data lists every snapshot with a restore. */
+const LS_AUTOBAK = 'crt2_autobak';
+const AUTOBAK_EVERY = 3 * 864e5;      /* three days */
+const AUTOBAK_KEEP  = 4;              /* ~12 days of history */
+const AUTOBAK_GIST_FILE = 'case-tracker-autobackup.json';
 
-   Clio's API is a confidential OAuth client and sends no CORS headers,
-   so a browser cannot talk to it directly — the handshake has to start
-   on a server holding the client secret. Point the two constants below
-   at that server and this button does the rest.
+function autoBakList(){ try{ const a = JSON.parse(localStorage.getItem(LS_AUTOBAK) || '[]'); return Array.isArray(a) ? a : [] }catch(e){ return [] } }
+function autoBakWrite(list){ try{ localStorage.setItem(LS_AUTOBAK, JSON.stringify(list)); return true }catch(e){ return false } }
 
-   Until then the button explains itself rather than failing silently,
-   and makes no network requests it knows will fail. */
-const CLIO_CONNECT_URL = '/clio/connect';     // starts the OAuth handshake
-const CLIO_STATUS_URL  = '/api/clio/status';  // reports { connected: true|false }
-
-function clioBtn(){ return document.getElementById('btn-clio') }
-
-function clioPaintBtn(state, label){
-  const b = clioBtn(); if(!b) return;
-  b.classList.toggle('on', state === 'connected');
-  b.classList.toggle('busy', state === 'busy');
-  const t = document.getElementById('btn-clio-txt');
-  if(t) t.textContent = label || (state === 'connected' ? 'Clio Connected' : 'Clio Connect');
-  b.title = state === 'connected'
-    ? 'Clio is connected. Click to re-authorise.'
-    : 'Connect this tracker to Clio';
+function autoBackupNow(reason){
+  if(!DB) return null;
+  const snap = { at: new Date().toISOString(), reason: reason || 'auto',
+                 cases: DB.cases.length, pays: allPayments().length,
+                 rev: (DB.meta && DB.meta.rev) || 0,
+                 data: JSON.stringify({app:'crt2', version:2, exported:new Date().toISOString(), data:DB}) };
+  let list = autoBakList(); list.push(snap);
+  while(list.length > AUTOBAK_KEEP) list.shift();
+  /* localStorage is finite — shed the oldest until the write lands */
+  while(list.length > 1 && !autoBakWrite(list)) list.shift();
+  if(list.length === 1) autoBakWrite(list);
+  DB.settings.lastAutoBackup = snap.at;
+  try{ persist() }catch(e){}
+  return snap;
 }
 
-function clioSay(msg){
-  if(typeof toast === 'function') toast(msg, null, 9000);
-  else alert(msg.replace(/<[^>]+>/g, ''));
-}
-
-/* Returns { httpStatus, body }. httpStatus 0 means nothing answered.
-   The body is always drained: an unread response stream holds the
-   connection open and stops the page ever going network-idle. */
-async function clioProbe(){
-  /* A page opened from disk has no origin to call. Asking anyway just
-     logs a CORS error before failing in exactly the way we predicted. */
-  if(location.protocol === 'file:') return { httpStatus: 0, body: null };
+async function autoBakGistPush(snap){
+  const cfg = (typeof syncCfg === 'function') ? syncCfg() : null;
+  if(!cfg || !cfg.gistId || !cfg.token || !snap) return false;
   try{
-    const r = await fetch(CLIO_STATUS_URL, { credentials:'same-origin', cache:'no-store' });
-    if(!r.ok){ try{ await r.arrayBuffer() }catch(e){} return { httpStatus: r.status, body: null } }
-    return { httpStatus: r.status, body: await r.json() };
-  }catch(e){ return { httpStatus: 0, body: null } }
+    const r = await fetch('https://api.github.com/gists/' + cfg.gistId, {
+      method:'PATCH',
+      headers:{'Authorization':'Bearer '+cfg.token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json'},
+      body: JSON.stringify({files:{[AUTOBAK_GIST_FILE]:{content: snap.data}}})
+    });
+    return r.ok;
+  }catch(e){ return false }
 }
 
-async function clioRefresh(){
-  const { httpStatus, body } = await clioProbe();
-  if(httpStatus === 200) clioPaintBtn(body && body.connected ? 'connected' : 'idle');
-  return body;
+function autoBackupTick(){
+  if(!DB || !DB.settings) return;
+  const last = DB.settings.lastAutoBackup;
+  if(last && Date.now() - new Date(last).getTime() < AUTOBAK_EVERY) return;
+  const snap = autoBackupNow('scheduled');
+  autoBakGistPush(snap);
 }
 
-/* Only probe when the page already knows it has a signed-in backend
-   session. Anywhere else the request is guaranteed to fail, and a
-   guaranteed-failing request is just console noise. */
-function clioAutoRefresh(){
-  if(typeof AUTH !== 'object' || !AUTH || AUTH.signedIn !== true) return;
-  clioRefresh();
+function autoBakRestore(idx){
+  const list = autoBakList(), snap = list[idx];
+  if(!snap) return toast('That snapshot is gone');
+  askConfirm('Restore the backup from ' + new Date(snap.at).toLocaleString() + '?',
+    'Everything on this device is replaced by that snapshot — <b>' + snap.cases + '</b> case rows, <b>' + snap.pays + '</b> payments.<br>'
+    + 'A snapshot of the data as it stands right now is taken first, so this is reversible.', () => {
+      autoBackupNow('pre-restore');
+      try{
+        const j = JSON.parse(snap.data);
+        const d = j && j.data ? j.data : j;
+        if(!d || !Array.isArray(d.cases)) throw new Error('snapshot unreadable');
+        DB = d; DB.meta = {rev: ((DB.meta && DB.meta.rev) || 0) + 1, savedAt: new Date().toISOString()};
+        save(); refresh(); renderView(); closeOv('ov-settings');
+        toast('Restored the backup from ' + new Date(snap.at).toLocaleDateString());
+      }catch(e){ toast('Could not read that snapshot: ' + esc(e.message)) }
+    }, 'Restore');
 }
 
-async function clioConnect(){
-  clioPaintBtn('busy', 'Checking…');
-  const { httpStatus, body } = await clioProbe();
+function autoBakDownload(idx){
+  const snap = autoBakList()[idx]; if(!snap) return;
+  dl('case-tracker-backup-' + snap.at.slice(0,10) + '.json', snap.data);
+}
 
-  if(httpStatus === 0){
-    clioPaintBtn('idle');
-    clioSay('Clio is not wired up to this page yet. When it is, point '
-          + '<b>CLIO_CONNECT_URL</b> in this file at the endpoint that starts '
-          + 'the OAuth handshake and this button will do the rest.');
-    return;
+function autoBakHtml(){
+  const list = autoBakList();
+  const last = DB.settings.lastAutoBackup;
+  const due  = last ? new Date(new Date(last).getTime() + AUTOBAK_EVERY) : null;
+  const head = '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.65;margin-bottom:10px">'
+    + 'A snapshot is taken automatically every <b style="color:var(--plat)">3 days</b> and kept here — the last '
+    + AUTOBAK_KEEP + ' are held on this device'
+    + ((typeof syncCfg === 'function' && syncCfg()) ? ', and the newest is mirrored into your private sync gist' : '')
+    + '. Nothing asks you to do anything.<br>'
+    + (last ? 'Last snapshot <b style="color:var(--plat)">' + new Date(last).toLocaleString() + '</b> · next around <b style="color:var(--plat)">' + due.toLocaleDateString() + '</b>'
+            : 'The first snapshot is taken shortly after this page loads.')
+    + '</div>';
+  if(!list.length) return head;
+  return head + '<div class="mini-list">' + list.slice().reverse().map((sn, ri) => {
+    const i = list.length - 1 - ri;
+    return '<div class="mrow" style="cursor:default">'
+      + '<span class="md">' + new Date(sn.at).toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + '</span>'
+      + '<span class="mn">' + sn.cases + ' cases · ' + sn.pays + ' payments'
+      + (sn.reason && sn.reason !== 'scheduled' ? ' <span style="color:var(--plat-faint);font-size:10px">(' + esc(sn.reason) + ')</span>' : '') + '</span>'
+      + '<span class="mv"><button class="btn btn-ghost" style="padding:4px 9px;font-size:11px" data-bakdl="' + i + '">Download</button>'
+      + '<button class="btn btn-ghost" style="padding:4px 9px;font-size:11px" data-bakre="' + i + '">Restore</button></span></div>';
+  }).join('') + '</div>';
+}
+
+function wireAutoBak(){
+  $$('#settings-body [data-bakdl]').forEach(b => b.onclick = () => autoBakDownload(+b.dataset.bakdl));
+  $$('#settings-body [data-bakre]').forEach(b => b.onclick = () => autoBakRestore(+b.dataset.bakre));
+}
+
+/* ═════════════════ CLIO ═════════════════
+   A real client for Clio Manage's v4 REST API, wired the only two ways
+   a browser page can actually reach it:
+
+     relay  — you deploy the small worker printed in the Clio panel.
+              It holds the client secret, runs the OAuth handshake and
+              proxies /api/v4/*, which is what makes the calls legal
+              from a browser. Clio sends no cross-origin headers of its
+              own, so this is the mode that works from a hosted page.
+     token  — paste an access token and the page calls Clio directly.
+              Fine inside a desktop shell or an extension; a plain
+              browser tab is stopped by the same-origin rule.
+
+   Everything above the transport is shared: matters become cases,
+   Clio calendar entries flow through the same pipeline Google Calendar
+   already uses, and bills reconcile against what you have billed. */
+
+const CLIO_REGIONS = {
+  us: {label:'United States', host:'app.clio.com'},
+  ca: {label:'Canada',        host:'ca.app.clio.com'},
+  eu: {label:'Europe',        host:'eu.app.clio.com'},
+  au: {label:'Australia',     host:'au.app.clio.com'}
+};
+let clioBusy = false, clioTimer = null;
+
+function clioCfg(){
+  const s = DB.settings;
+  if(!s.clio) s.clio = {};
+  const d = {on:false, mode:'relay', region:'us', relay:'', token:'', refresh:'', expAt:0,
+             autoMin:30, lastSync:null, lastError:null, lastCounts:null,
+             pullMatters:true, pullCalendar:true, pullBills:false, importNew:false, user:''};
+  for(const k in d) if(s.clio[k] === undefined) s.clio[k] = d[k];
+  return s.clio;
+}
+function clioSaveCfg(){ try{ persist() }catch(e){} }
+function clioHost(){ return (CLIO_REGIONS[clioCfg().region] || CLIO_REGIONS.us).host }
+function clioRelay(){ return (clioCfg().relay || '').trim().replace(/\/+$/, '') }
+function clioBase(){
+  const c = clioCfg();
+  return (c.mode === 'relay' && clioRelay()) ? clioRelay() + '/api/v4' : 'https://' + clioHost() + '/api/v4';
+}
+function clioConnected(){ const c = clioCfg(); return !!(c.on && c.token) }
+function clioMatterUrl(id){ return 'https://' + clioHost() + '/matters/' + id }
+
+function clioNetHint(e){
+  const c = clioCfg();
+  if(location.protocol === 'file:')
+    return 'A page opened straight off the disk has no origin to call from. Open the tracker at its web address and try again.';
+  if(c.mode === 'token')
+    return 'The browser blocked the call to Clio. Clio does not answer browser origins directly — switch Clio to Relay mode and point it at your worker.';
+  return 'Could not reach the relay at ' + (clioRelay() || '(not set)') + ' — ' + ((e && e.message) || 'no response');
+}
+
+async function clioFetch(path, opts){
+  const c = clioCfg(); opts = opts || {};
+  const url = /^https?:/.test(path) ? path : clioBase() + path;
+  const h = Object.assign({'Accept':'application/json'}, opts.headers || {});
+  if(c.token) h['Authorization'] = 'Bearer ' + c.token;
+  h['X-Clio-Region'] = c.region || 'us';
+  if(opts.body && !h['Content-Type']) h['Content-Type'] = 'application/json';
+  let r;
+  try{
+    r = await fetch(url, {method: opts.method || 'GET', headers: h, body: opts.body,
+                          credentials: c.mode === 'relay' ? 'include' : 'omit', cache: 'no-store'});
+  }catch(e){ throw new Error(clioNetHint(e)) }
+
+  if(r.status === 401 && !opts._retried){
+    if(await clioRefreshToken()) return clioFetch(path, Object.assign({}, opts, {_retried:true}));
+    throw new Error('Clio rejected the credentials (401). Reconnect from the Clio panel.');
   }
-  if(httpStatus === 401){
-    clioPaintBtn('idle');
-    clioSay('Sign in first — Clio connects to your account, not to this browser.');
-    return;
+  if(r.status === 429 && !opts._retried){
+    const wait = Math.min(20, parseInt(r.headers.get('Retry-After') || '5', 10) || 5);
+    await new Promise(res => setTimeout(res, wait * 1000));
+    return clioFetch(path, Object.assign({}, opts, {_retried:true}));
   }
-  clioPaintBtn(body && body.connected ? 'connected' : 'idle');
-  window.location.href = CLIO_CONNECT_URL;
+  if(!r.ok){
+    let detail = ''; try{ detail = (await r.text()).slice(0, 200) }catch(e){}
+    throw new Error('Clio returned ' + r.status + (detail ? ' — ' + detail : ''));
+  }
+  if(r.status === 204) return null;
+  return r.json();
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  const b = clioBtn();
-  if(b) b.addEventListener('click', clioConnect);
-  clioAutoRefresh();
-  setInterval(clioAutoRefresh, 60000);
-});
+/* follows Clio's page_token paging until the list runs out */
+async function clioAll(path, params, cap){
+  const out = []; cap = cap || 3000;
+  const qs = new URLSearchParams(Object.assign({limit:200}, params || {})).toString();
+  let next = path + (qs ? '?' + qs : ''), guard = 0;
+  while(next && out.length < cap && guard++ < 40){
+    const j = await clioFetch(next);
+    const data = j && j.data;
+    if(!Array.isArray(data)) break;
+    out.push.apply(out, data);
+    const nx = j.meta && j.meta.paging && j.meta.paging.next;
+    next = nx ? String(nx).replace(/^https?:\/\/[^/]+\/api\/v4/, '') : null;
+  }
+  return out;
+}
+
+async function clioRefreshToken(){
+  const c = clioCfg();
+  if(c.mode !== 'relay' || !clioRelay() || !c.refresh) return false;
+  try{
+    const r = await fetch(clioRelay() + '/refresh', {method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'}, body: JSON.stringify({refresh_token: c.refresh, region: c.region})});
+    if(!r.ok) return false;
+    const j = await r.json();
+    if(!j || !j.access_token) return false;
+    c.token = j.access_token;
+    if(j.refresh_token) c.refresh = j.refresh_token;
+    c.expAt = Date.now() + ((+j.expires_in || 3600) * 1000);
+    clioSaveCfg(); return true;
+  }catch(e){ return false }
+}
+
+async function clioWhoAmI(){
+  try{
+    const j = await clioFetch('/users/who_am_i.json?fields=id,name,email');
+    return j && j.data;
+  }catch(e){
+    const j = await clioFetch('/users.json?fields=id,name,email&limit=1');   /* narrower tokens */
+    return j && j.data && j.data[0];
+  }
+}
+
+/* ── connect / disconnect ───────────────────────────────── */
+function clioStartOAuth(){
+  const c = clioCfg();
+  if(!clioRelay()) return toast('Set the relay address first');
+  const back = location.origin + location.pathname;
+  location.href = clioRelay() + '/connect?region=' + encodeURIComponent(c.region)
+                + '&redirect=' + encodeURIComponent(back);
+}
+
+/* the relay hands the tokens back in the URL fragment, so they never
+   reach a server log */
+function clioCatchReturn(){
+  const h = location.hash || '';
+  if(h.indexOf('clio') === -1) return false;
+  const q = new URLSearchParams(h.replace(/^#/, ''));
+  const tok = q.get('clio_token'), err = q.get('clio_error');
+  if(!tok && !err) return false;
+  history.replaceState(null, '', location.pathname + location.search);
+  const c = clioCfg();
+  if(err){ c.lastError = err; clioSaveCfg(); toast('Clio: ' + esc(err), null, 9000); return true }
+  c.token = tok;
+  c.refresh = q.get('clio_refresh') || c.refresh;
+  c.expAt = Date.now() + ((+q.get('expires_in') || 3600) * 1000);
+  c.on = true; c.lastError = null; clioSaveCfg();
+  toast('Clio connected');
+  setTimeout(() => clioSync(true), 400);
+  return true;
+}
+
+async function clioTest(){
+  const c = clioCfg();
+  const who = await clioWhoAmI();
+  c.user = who ? (who.name || who.email || ('user ' + who.id)) : '';
+  c.lastError = null; c.on = true; clioSaveCfg();
+  return c.user;
+}
+
+function clioDisconnect(){
+  const c = clioCfg();
+  c.on = false; c.token = ''; c.refresh = ''; c.expAt = 0; c.user = ''; c.lastError = null;
+  clioSaveCfg(); clearInterval(clioTimer); paintHmenu();
+}
+
+/* ── matters → cases ────────────────────────────────────── */
+const CLIO_MATTER_FIELDS = 'id,display_number,custom_number,description,status,open_date,close_date,'
+  + 'practice_area{id,name},client{id,name,first_name,last_name,type},responsible_attorney{id,name}';
+
+function clioSplitName(m){
+  const cl = m.client || {};
+  if(cl.first_name || cl.last_name) return {first: cl.first_name || '', last: cl.last_name || ''};
+  const n = String(cl.name || m.description || '').trim();
+  if(!n) return {first:'', last:''};
+  if(n.indexOf(',') > -1){ const p = n.split(','); return {last: p[0].trim(), first: (p[1] || '').trim().split(/\s+/)[0] || ''} }
+  const p = n.split(/\s+/);
+  return p.length > 1 ? {first: p[0], last: p[p.length - 1]} : {first:'', last: n};
+}
+
+function clioFindCase(m){
+  const byId = DB.cases.find(c => c.clioId && String(c.clioId) === String(m.id));
+  if(byId) return byId;
+  const byLink = DB.cases.find(c => c.clio && c.clio.indexOf('/matters/' + m.id) > -1);
+  if(byLink) return byLink;
+  const dn = String(m.display_number || '').trim();
+  if(dn){ const byNo = DB.cases.find(c => !c.clioId && (c.caseNo || '').trim() === dn); if(byNo) return byNo }
+  const nm = clioSplitName(m);
+  if(nm.last){
+    const hits = DB.cases.filter(c => !c.sub && !c.clioId && calNorm(c.last) === calNorm(nm.last)
+                 && (!nm.first || !c.first || calNorm(c.first).charAt(0) === calNorm(nm.first).charAt(0)));
+    if(hits.length === 1) return hits[0];
+  }
+  return null;
+}
+
+function clioApplyMatter(c, m, stamp){
+  let touched = false;
+  const set = (k, v) => { if(v != null && v !== '' && c[k] !== v){ c[k] = v; touched = true } };
+  set('clioId', String(m.id));
+  set('clio', clioMatterUrl(m.id));
+  if(!c.caseNo && m.display_number) set('caseNo', String(m.display_number));
+  if(!c.dateOpened && m.open_date) set('dateOpened', m.open_date);
+  if(m.status === 'Closed' && !c.resolved){
+    c.resolved = true; c.status = 'closed';
+    c.closedDate = m.close_date || todayISO(); touched = true;
+  }
+  if(touched) c.updatedAt = stamp;
+  return touched;
+}
+
+async function clioPullMatters(res){
+  const cfg = clioCfg();
+  const ms = await clioAll('/matters.json', {fields: CLIO_MATTER_FIELDS, order:'id(asc)'});
+  const stamp = new Date().toISOString();
+  DB.calKeys = DB.calKeys || {};
+  for(const m of ms){
+    let c = clioFindCase(m);
+    if(!c){
+      if(!cfg.importNew){ res.unmatched++; continue }
+      const nm = clioSplitName(m);
+      c = blankCase(null);
+      c.first = nm.first; c.last = nm.last;
+      c.name = (!nm.last && m.client && m.client.name) ? m.client.name : '';
+      c.caseNo = String(m.display_number || '');
+      c.dateOpened = m.open_date || todayISO();
+      c.caption = String(m.description || '').slice(0, 140);
+      c.fee = null;
+      DB.cases.push(c);
+      res.created++;
+    }
+    if(clioApplyMatter(c, m, stamp)) res.updated++;
+    res.linked++;
+    const key = String(m.display_number || '').replace(/\D/g, '');
+    if(key) DB.calKeys[key] = c.id;
+  }
+  res.matters = ms.length;
+}
+
+/* ── Clio calendar → the same pipeline Google Calendar feeds ──
+   Google events and Clio events sit side by side in CAL; each side
+   only ever replaces its own. */
+const CLIO_CAL_FIELDS = 'id,summary,description,start_at,end_at,all_day,location,'
+  + 'matter{id,display_number,description},calendar_owner{id,name}';
+
+function clioHM(iso){
+  if(!iso || iso.length < 16) return '';
+  const d = new Date(iso);
+  if(isNaN(d)) return '';
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+function clioLocalDate(iso, allDay){
+  if(!iso) return '';
+  if(allDay || iso.length <= 10) return iso.slice(0,10);
+  const d = new Date(iso);
+  if(isNaN(d)) return iso.slice(0,10);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function clioCalToEvent(e){
+  const allDay = !!e.all_day;
+  const d = clioLocalDate(e.start_at, allDay);
+  if(!d) return null;
+  let title = String(e.summary || '').trim();
+  const mt = e.matter || null;
+  if(mt && mt.display_number && title.indexOf(String(mt.display_number)) === -1)
+    title = title + ' (' + mt.display_number + ' - ' + String(mt.description || '').slice(0, 40) + ')';
+  const ev = calParse({
+    uid: 'clio:' + e.id, id: 'clio:' + e.id, title: title, date: d,
+    time: allDay ? '' : clioHM(e.start_at),
+    end:  allDay ? '' : clioHM(e.end_at),
+    loc: e.location || '', desc: e.description || '', allDay: allDay, status: 'confirmed'
+  });
+  if(!ev) return null;
+  ev.src = 'clio';
+  ev.clioMatterId = mt ? String(mt.id) : '';
+  const key = mt && mt.display_number ? String(mt.display_number).replace(/\D/g, '') : '';
+  if(key) ev.matterNo = key;
+  return ev;
+}
+
+async function clioPullCalendar(res){
+  const from = new Date(Date.now() - 60 * 864e5).toISOString();
+  const to   = new Date(Date.now() + 400 * 864e5).toISOString();
+  const es = await clioAll('/calendar_entries.json',
+    {fields: CLIO_CAL_FIELDS, from: from, to: to, order:'start_at(asc)'});
+  const mine = es.map(clioCalToEvent).filter(Boolean);
+  /* a Clio entry attached to a linked matter needs no name guessing */
+  DB.calLinks = DB.calLinks || {};
+  for(const ev of mine){
+    if(!ev.clioMatterId) continue;
+    const c = DB.cases.find(x => String(x.clioId) === ev.clioMatterId);
+    if(c) DB.calLinks[ev.uid] = c.id;
+  }
+  CAL = CAL.filter(e => e.src !== 'clio').concat(mine);
+  calSaveLocal();
+  res.events = mine.length;
+}
+
+/* ── bills → what Clio thinks you have billed and collected ── */
+const CLIO_BILL_FIELDS = 'id,number,issued_at,due_at,state,total,balance,matter{id}';
+
+async function clioPullBills(res){
+  const bs = await clioAll('/bills.json', {fields: CLIO_BILL_FIELDS, order:'id(asc)'}, 1500);
+  const byMatter = {};
+  for(const b of bs){
+    const mid = b.matter && String(b.matter.id); if(!mid) continue;
+    const t = +b.total || 0, bal = +b.balance || 0;
+    const r = byMatter[mid] || (byMatter[mid] = {billed:0, paid:0, open:0, n:0});
+    r.billed += t; r.paid += Math.max(0, t - bal); r.open += bal; r.n++;
+  }
+  DB.clioBills = byMatter;
+  res.bills = bs.length;
+}
+
+function clioBillsFor(c){
+  if(!c || !c.clioId) return null;
+  return (DB.clioBills || {})[String(c.clioId)] || null;
+}
+
+/* ── one sync ───────────────────────────────────────────── */
+async function clioSync(manual){
+  const cfg = clioCfg();
+  if(clioBusy) return;
+  if(!clioConnected()){ if(manual) toast('Connect Clio first'); return }
+  clioBusy = true; paintHmenu();
+  const res = {matters:0, linked:0, created:0, updated:0, unmatched:0, events:0, bills:0};
+  try{
+    if(cfg.expAt && Date.now() > cfg.expAt - 60000) await clioRefreshToken();
+    if(!cfg.user) await clioTest();
+    if(cfg.pullMatters)  await clioPullMatters(res);
+    if(cfg.pullCalendar) await clioPullCalendar(res);
+    if(cfg.pullBills)    await clioPullBills(res);
+    if(cfg.pullCalendar){ calAutolink(); if(calCfg().autoApply) calApply(true) }
+    cfg.lastSync = new Date().toISOString(); cfg.lastError = null; cfg.lastCounts = res;
+    save(); refresh(); renderView();
+    if(manual) toast('Clio synced — <b>' + res.linked + '</b> matter' + (res.linked === 1 ? '' : 's') + ' linked'
+      + (res.created ? ' · <b>' + res.created + '</b> new' : '')
+      + (res.updated ? ' · <b>' + res.updated + '</b> updated' : '')
+      + (res.events ? ' · <b>' + res.events + '</b> calendar entries' : ''), null, 7000);
+  }catch(e){
+    cfg.lastError = e.message; clioSaveCfg();
+    if(manual) toast('Clio sync failed — ' + esc(e.message), null, 9000);
+  }finally{
+    clioBusy = false; paintHmenu();
+    const ov = document.getElementById('ov-clio');
+    if(ov && ov.classList.contains('show')) renderClioBody();
+  }
+}
+
+function clioAutoTimer(){
+  clearInterval(clioTimer);
+  const cfg = clioCfg();
+  if(!clioConnected() || !cfg.autoMin) return;
+  clioTimer = setInterval(() => clioSync(false), Math.max(5, cfg.autoMin) * 60000);
+}
+
+/* create a matter in Clio from a case that has none */
+async function clioCreateMatter(c){
+  if(!clioConnected()) return toast('Connect Clio first');
+  if(c.clioId) return toast('This case already points at a Clio matter');
+  const nm = displayName(c);
+  try{
+    const body = JSON.stringify({data:{
+      description: (c.caption || autoCaption(c) || nm).slice(0, 200),
+      status: c.resolved ? 'Closed' : 'Open',
+      open_date: c.dateOpened || todayISO()
+    }});
+    const j = await clioFetch('/matters.json?fields=' + encodeURIComponent(CLIO_MATTER_FIELDS), {method:'POST', body: body});
+    const m = j && j.data; if(!m) throw new Error('Clio did not return the new matter');
+    clioApplyMatter(c, m, new Date().toISOString());
+    save(); refresh();
+    toast('Created Clio matter <b>' + esc(m.display_number || m.id) + '</b> for ' + esc(nm));
+  }catch(e){ toast('Could not create the matter — ' + esc(e.message), null, 9000) }
+}
+
+/* ── the Clio panel ─────────────────────────────────────── */
+function openClio(){ renderClioBody(); openOv('ov-clio') }
+
+function clioWorkerSrc(){
+  return [
+'/* Clio relay - deploy free on Cloudflare Workers.',
+'   Worker > Settings > Variables (encrypted):',
+'     CLIO_ID, CLIO_SECRET, ALLOW_ORIGIN  (ALLOW_ORIGIN = this tracker\'s URL origin)',
+'   In your Clio developer app, set the redirect URI to:',
+'     https://<your-worker>.workers.dev/callback                              */',
+'',
+'const HOST = r => ({us:"app.clio.com", ca:"ca.app.clio.com",',
+'                    eu:"eu.app.clio.com", au:"au.app.clio.com"}[r] || "app.clio.com");',
+'',
+'export default {',
+'  async fetch(req, env) {',
+'    const u = new URL(req.url), p = u.pathname;',
+'    const cors = {',
+'      "Access-Control-Allow-Origin": env.ALLOW_ORIGIN,',
+'      "Access-Control-Allow-Credentials": "true",',
+'      "Access-Control-Allow-Headers": "Authorization,Content-Type,X-Clio-Region",',
+'      "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS"',
+'    };',
+'    if (req.method === "OPTIONS") return new Response(null, { headers: cors });',
+'',
+'    if (p === "/connect") {',
+'      const region = u.searchParams.get("region") || "us";',
+'      const back = u.searchParams.get("redirect") || env.ALLOW_ORIGIN;',
+'      const state = btoa(JSON.stringify({ region, back }));',
+'      const a = new URL("https://" + HOST(region) + "/oauth/authorize");',
+'      a.searchParams.set("response_type", "code");',
+'      a.searchParams.set("client_id", env.CLIO_ID);',
+'      a.searchParams.set("redirect_uri", u.origin + "/callback");',
+'      a.searchParams.set("state", state);',
+'      return Response.redirect(a.toString(), 302);',
+'    }',
+'',
+'    if (p === "/callback") {',
+'      const code = u.searchParams.get("code");',
+'      const st = JSON.parse(atob(u.searchParams.get("state") || "e30="));',
+'      const body = new URLSearchParams({',
+'        grant_type: "authorization_code", code,',
+'        client_id: env.CLIO_ID, client_secret: env.CLIO_SECRET,',
+'        redirect_uri: u.origin + "/callback"',
+'      });',
+'      const r = await fetch("https://" + HOST(st.region) + "/oauth/token", {',
+'        method: "POST",',
+'        headers: { "Content-Type": "application/x-www-form-urlencoded" },',
+'        body',
+'      });',
+'      const j = await r.json();',
+'      const frag = j.access_token',
+'        ? "#clio_token=" + j.access_token +',
+'          "&clio_refresh=" + (j.refresh_token || "") +',
+'          "&expires_in=" + (j.expires_in || 3600)',
+'        : "#clio_error=" + encodeURIComponent(j.error_description || j.error || "token exchange failed");',
+'      return Response.redirect(st.back + frag, 302);',
+'    }',
+'',
+'    if (p === "/refresh" && req.method === "POST") {',
+'      const b = await req.json();',
+'      const body = new URLSearchParams({',
+'        grant_type: "refresh_token", refresh_token: b.refresh_token,',
+'        client_id: env.CLIO_ID, client_secret: env.CLIO_SECRET',
+'      });',
+'      const r = await fetch("https://" + HOST(b.region || "us") + "/oauth/token", {',
+'        method: "POST",',
+'        headers: { "Content-Type": "application/x-www-form-urlencoded" },',
+'        body',
+'      });',
+'      return new Response(await r.text(), { status: r.status,',
+'        headers: { ...cors, "Content-Type": "application/json" } });',
+'    }',
+'',
+'    if (p.startsWith("/api/v4/")) {',
+'      const region = req.headers.get("X-Clio-Region") || "us";',
+'      const r = await fetch("https://" + HOST(region) + p + u.search, {',
+'        method: req.method,',
+'        headers: {',
+'          Authorization: req.headers.get("Authorization") || "",',
+'          Accept: "application/json",',
+'          "Content-Type": req.headers.get("Content-Type") || "application/json"',
+'        },',
+'        body: ["GET", "HEAD"].includes(req.method) ? undefined : await req.text()',
+'      });',
+'      return new Response(await r.text(), { status: r.status,',
+'        headers: { ...cors, "Content-Type": "application/json" } });',
+'    }',
+'',
+'    return new Response("clio relay ok", { headers: cors });',
+'  }',
+'};'
+  ].join('\n');
+}
+
+function renderClioBody(){
+  const c = clioCfg(), on = clioConnected();
+  const counts = c.lastCounts || {};
+  const linkedCases = DB.cases.filter(x => x.clioId).length;
+  const gcalN = (typeof CAL !== 'undefined' ? CAL.filter(e => e.src !== 'clio').length : 0);
+
+  const status = on
+    ? '<div class="bal-disp" style="margin-bottom:14px;border-color:rgba(46,204,113,.45);background:rgba(46,204,113,.07);color:#A8F3C6">'
+      + '● Connected' + (c.user ? ' as <b style="color:#A8F3C6">' + esc(c.user) + '</b>' : '') + ' · ' + esc((CLIO_REGIONS[c.region] || CLIO_REGIONS.us).label)
+      + (c.lastSync ? ' · last sync ' + new Date(c.lastSync).toLocaleString() : ' · not synced yet') + '</div>'
+    : '<div class="bal-disp" style="margin-bottom:14px">○ Not connected</div>';
+
+  const err = c.lastError
+    ? '<div class="bal-disp" style="margin-bottom:14px;border-color:rgba(231,76,60,.5);background:rgba(231,76,60,.08);color:#F1948A">'
+      + esc(c.lastError) + '</div>' : '';
+
+  const stats = on ? '<div class="frow" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">'
+    + [['Matters linked', linkedCases], ['New last sync', counts.created || 0],
+       ['Calendar entries', counts.events || 0], ['Unmatched', counts.unmatched || 0]]
+      .map(x => '<div><div class="p-label">' + x[0] + '</div><div style="font-size:19px;font-weight:800">' + x[1] + '</div></div>').join('')
+    + '</div>' : '';
+
+  $('#clio-body').innerHTML =
+    status + err + stats +
+
+    '<div class="fsec" style="border-top:0;padding-top:0;margin-top:0"><div class="fsec-t">How this page reaches Clio</div>' +
+    '<div class="frow" style="grid-template-columns:1fr 1fr">' +
+      fld('Mode', selc('cl-mode', [['relay','Relay (recommended)'],['token','Direct token']], c.mode)) +
+      fld('Region', selc('cl-region', Object.keys(CLIO_REGIONS).map(k => [k, CLIO_REGIONS[k].label]), c.region)) +
+    '</div>' +
+    (c.mode === 'relay' ?
+      '<div class="frow" style="grid-template-columns:1fr">' +
+        fld('Relay address', inp('cl-relay', c.relay, 'https://clio-relay.yourname.workers.dev')) + '</div>' +
+      '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Clio’s API answers servers, not browsers — it sends no cross-origin headers, and its OAuth client needs a secret that must never sit in a page anyone can view. The relay is a small worker that holds the secret, runs the handshake and forwards <code>/api/v4/*</code>. Deploy it once; this panel does the rest.</div>' +
+      '<div style="display:flex;gap:10px;margin-top:11px;flex-wrap:wrap">' +
+        '<button class="btn" id="cl-worker">Show relay source</button>' +
+        '<button class="btn btn-gold" id="cl-oauth">' + (on ? 'Re-authorise' : 'Connect to Clio') + '</button></div>' +
+      '<pre id="cl-worker-src" style="display:none;margin-top:12px;max-height:300px;overflow:auto;background:rgba(4,8,15,.65);border:1px solid var(--ge);border-radius:10px;padding:12px;font-size:10.5px;line-height:1.5;color:var(--plat-dim);white-space:pre;user-select:all"></pre>'
+    :
+      '<div class="frow" style="grid-template-columns:2fr 1fr">' +
+        fld('Access token', '<input class="fi" id="cl-token" type="password" placeholder="paste a Clio access token" value="' + esc(c.token) + '">') +
+        fld('&nbsp;', '<button class="btn btn-gold" id="cl-token-save" style="width:100%">Save &amp; Test</button>') + '</div>' +
+      '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Direct mode calls <code>https://' + esc(clioHost()) + '/api/v4</code> straight from this page. That works inside a desktop shell or a browser extension; a plain browser tab is stopped by the same-origin rule before the request leaves.</div>'
+    ) + '</div>' +
+
+    '<div class="fsec"><div class="fsec-t">What comes across</div>' +
+    '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px">' +
+      cb('cl-p-matters', 'Matters → cases', c.pullMatters) +
+      cb('cl-p-cal', 'Clio calendar → hearings', c.pullCalendar) +
+      cb('cl-p-bills', 'Bills → billed / collected check', c.pullBills) + '</div>' +
+    '<label class="cbrow" style="margin-bottom:12px"><input type="checkbox" id="cl-import"' + (c.importNew ? ' checked' : '') + '> Create a case here for any Clio matter with no match yet</label>' +
+    '<div class="frow" style="grid-template-columns:1fr 1fr">' +
+      fld('Auto-sync', selc('cl-auto', [['0','Off'],['15','Every 15 minutes'],['30','Every 30 minutes'],['60','Hourly'],['240','Every 4 hours']], String(c.autoMin))) +
+      fld('&nbsp;', '<button class="btn btn-gold" id="cl-sync" style="width:100%"' + (on ? '' : ' disabled') + '>' + (clioBusy ? 'Syncing…' : 'Sync Now') + '</button>') +
+    '</div>' +
+    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Matters match to cases by Clio id first, then matter number, then client surname — one confident hit only, never a guess between two. Clio calendar entries run through the same pipeline as Google Calendar, and a matter already tied to a case skips the name matching entirely.</div>' +
+    '</div>' +
+
+    '<div class="fsec"><div class="fsec-t">Google Calendar</div>' +
+    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7;margin-bottom:11px">Still connected and untouched — the ICS feed keeps flowing into the same hearing list, alongside Clio rather than instead of it. ' +
+      (gcalN ? '<b style="color:var(--green)">' + gcalN + '</b> events in the feed right now.' : 'No feed on this device yet.') + '</div>' +
+    '<button class="btn" id="cl-gcal">Open the Calendar panel</button></div>' +
+
+    '<div class="modal-f" style="border:0;padding:18px 0 4px">' +
+      (on ? '<button class="btn btn-red" id="cl-off">Disconnect</button>' : '') +
+      '<button class="btn" data-close="ov-clio">Close</button>' +
+      '<button class="btn btn-gold" id="cl-save">Save</button></div>';
+
+  const g = id => document.getElementById(id);
+  g('cl-mode').onchange = e => { c.mode = e.target.value; clioSaveCfg(); renderClioBody() };
+  g('cl-region').onchange = e => { c.region = e.target.value; clioSaveCfg(); renderClioBody() };
+
+  const w = g('cl-worker'); if(w) w.onclick = () => {
+    const box = g('cl-worker-src');
+    if(box.style.display === 'none'){ box.textContent = clioWorkerSrc(); box.style.display = 'block' }
+    else box.style.display = 'none';
+  };
+  const oa = g('cl-oauth'); if(oa) oa.onclick = () => {
+    const rl = g('cl-relay'); if(rl) c.relay = (rl.value || '').trim();
+    clioSaveCfg(); clioStartOAuth();
+  };
+  const ts = g('cl-token-save'); if(ts) ts.onclick = async () => {
+    c.token = (g('cl-token').value || '').trim(); c.mode = 'token'; clioSaveCfg();
+    ts.disabled = true; ts.textContent = 'Testing…';
+    try{ const who = await clioTest(); toast('Clio connected' + (who ? ' as <b>' + esc(who) + '</b>' : '')); clioAutoTimer() }
+    catch(e){ c.lastError = e.message; c.on = false; clioSaveCfg(); toast('Clio rejected that token — ' + esc(e.message), null, 9000) }
+    paintHmenu(); renderClioBody();
+  };
+  g('cl-sync').onclick = () => clioSync(true);
+  g('cl-gcal').onclick = () => { closeOv('ov-clio'); openCal() };
+  const off = g('cl-off'); if(off) off.onclick = () => askConfirm('Disconnect Clio?',
+    'The link to Clio is dropped on this device. Cases keep their matter numbers and links — nothing here is deleted.',
+    () => { clioDisconnect(); renderClioBody(); toast('Clio disconnected') }, 'Disconnect');
+  g('cl-save').onclick = () => {
+    const rl = g('cl-relay'); if(rl) c.relay = (rl.value || '').trim();
+    const tk = g('cl-token'); if(tk) c.token = (tk.value || '').trim();
+    c.pullMatters = g('cl-p-matters').checked;
+    c.pullCalendar = g('cl-p-cal').checked;
+    c.pullBills = g('cl-p-bills').checked;
+    c.importNew = g('cl-import').checked;
+    c.autoMin = +g('cl-auto').value || 0;
+    clioSaveCfg(); clioAutoTimer(); paintHmenu();
+    toast('Clio settings saved'); closeOv('ov-clio');
+  };
+}
+
+/* what Clio knows about one case, shown inside the editor */
+function clioCaseHtml(c){
+  if(!c) return '';
+  const dim = 'font-size:11.5px;color:var(--plat-faint);line-height:1.7';
+  if(!clioConnected())
+    return '<div style="' + dim + '">Clio is not connected on this device. Connect it from the menu and matters, court dates and bills line up against this case automatically.</div>';
+  if(!c.clioId)
+    return '<div style="' + dim + '">No Clio matter is tied to this case yet — the ⋯ menu on its row can create one, or the next sync links it by matter number or surname.</div>';
+
+  const b = clioBillsFor(c);
+  const link = '<a href="' + esc(clioMatterUrl(c.clioId)) + '" target="_blank" rel="noopener" style="color:var(--gold-hi);text-decoration:none">Open matter ' + esc(c.caseNo || c.clioId) + ' in Clio →</a>';
+  if(!b) return '<div style="' + dim + '">Linked to a Clio matter. ' + link + '<br>Turn on <b>Bills → billed / collected check</b> in the Clio panel to compare the money side.</div>';
+
+  const here = (c.fee || 0), col = collectedOf(c);
+  const row = (l, a, bb) => {
+    const gap = Math.round(a - bb);
+    return '<div class="mrow" style="cursor:default"><span class="md">' + l + '</span>'
+      + '<span class="mn">here ' + fmt$(a) + ' · Clio ' + fmt$(bb) + '</span>'
+      + '<span class="mv" style="color:' + (Math.abs(gap) < 1 ? 'var(--green)' : 'var(--orange)') + '">'
+      + (Math.abs(gap) < 1 ? 'matches' : (gap > 0 ? '+' : '\u2212') + fmt$(Math.abs(gap)) + ' here') + '</span></div>';
+  };
+  return '<div class="mini-list" style="margin-bottom:9px">' + row('Billed', here, b.billed) + row('Collected', col, b.paid) + '</div>'
+    + '<div style="' + dim + '">' + b.n + ' bill' + (b.n === 1 ? '' : 's') + ' in Clio · ' + fmt$(b.open) + ' still open there. ' + link + '</div>';
+}
+
+/* the header menu shows what is live at a glance */
+function paintHmenu(){
+  const tag = (id, on, txt) => {
+    const b = document.getElementById(id); if(!b) return;
+    let t = b.querySelector('.tag');
+    if(!t){ t = document.createElement('span'); t.className = 'tag'; b.appendChild(t) }
+    t.textContent = txt; t.classList.toggle('on', !!on);
+  };
+  const gcalN = (typeof CAL !== 'undefined' && Array.isArray(CAL)) ? CAL.filter(e => e.src !== 'clio').length : 0;
+  tag('btn-cal', gcalN > 0, gcalN > 0 ? 'on' : 'off');
+  tag('btn-clio', clioConnected(), clioBusy ? 'sync' : (clioConnected() ? 'on' : 'off'));
+}
+
+/* ── boot ───────────────────────────────────────────────── */
+function clioBoot(){
+  if(!DB) return;
+  clioCfg();
+  if(clioCatchReturn()) return;
+  paintHmenu();
+  if(clioConnected()){
+    clioAutoTimer();
+    setTimeout(() => clioSync(false), 2500);
+  }
+}
 </script>
 
 <div class="overlay" id="ov-audit"><div class="modal" style="width:min(940px,97vw)" role="dialog" aria-modal="true">
   <div class="modal-h"><div><div class="t">Data Audit</div>
     <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Duplicate records and overlapping totals. Nothing changes until you say so.</div></div>
-    <button class="x-btn" data-close="ov-audit">&times;</button></div>
+    <button class="x-btn" data-close="ov-audit">×</button></div>
   <div class="modal-b" id="aud-body" style="padding:16px 20px"></div>
 </div></div>
 </body></html>
