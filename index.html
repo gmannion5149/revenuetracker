@@ -714,6 +714,17 @@ function load(){
   migrateDB(); persist();
 }
 function migrateDB(){
+  /* The legacy carry-forward is dated "through Jul 10, 2026" and the
+     monthly totals already cover Nov 2025 to Jul 2026 — so its
+     collected figure was the same money a third time. Switched off
+     once; re-enable in Settings if that turns out to be wrong. */
+  if(DB.settings && !DB.settings._carryOffV1){
+    DB.settings._carryOffV1 = true;
+    if(DB.settings.carryOn && DB.settings.carry && DB.settings.carry.monthKey){
+      DB.settings.carryOn = false;
+      try{ logEv('Legacy carry-forward switched off — its ' + (DB.settings.carry.collected||0) + ' collected is already inside the monthly totals') }catch(e){}
+    }
+  }
   /* One-time rename: a device that already stored the old firm name
      would keep showing it, because defaults only apply on first run. */
   if(DB.settings && DB.settings.firm === 'Gerald Miller P.A.') DB.settings.firm = 'Gerard W. Mannion';
@@ -807,11 +818,21 @@ function kpiData(){
   const yr = new Date().getFullYear();
   const cf = (DB.settings.carryOn && DB.settings.carry && DB.settings.carry.year === yr) ? DB.settings.carry : null;
   const bill = billables();
-  const yB = bill.filter(c => yearOf(c) === yr);
-  let fees = yB.reduce((s,c)=>s+(c.fee||0),0);
-  let coll = yB.reduce((s,c)=>s+(c.legacyCollected||0),0);
-  for(const c of DB.cases) for(const p of (c.payments||[])) if((p.date||'').slice(0,4) == yr) coll += +p.amount||0;
   const magg = monthAggFor(yr);
+  /* One source of truth for the year's money.
+
+     These two were previously recomputed here straight from cases and
+     payments, which silently ignored settings.monthlyActuals. Analytics,
+     Income and the pulse card all DO count actuals, so the KPI band
+     disagreed with every other screen for the same year — understating
+     collected and billed by the whole of the monthly totals.
+
+     Deriving both from the month table fixes that, and inherits its two
+     guards as well: preStart() zeroes months before the firm start, and
+     lcCountable() stops legacy per-case money being added on top of the
+     monthly totals that already contain it. */
+  let fees = magg.reduce((s,r)=>s+r.fees,0);
+  let coll = magg.reduce((s,r)=>s+r.coll,0);
   const cnt = countables();
   let nCases = magg.reduce((s,r)=>s+r.n,0), nAll = cnt.length;
   let nClosed = cnt.filter(c=>c.resolved).length;
@@ -828,13 +849,18 @@ function lcCountable(c){
   if(!c.createdAt && carry && carry.monthKey && mk <= carry.monthKey) return null; /* legacy money already inside monthly actuals */
   return mk;
 }
-function monthRevenue(){
-  const mk = todayISO().slice(0,7);
+function monthRevenue(){ return monthCollectedFor(todayISO().slice(0,7)) }
+
+/* One place that answers "what came in during this month", used by the
+   pulse card and the AI panel so they cannot drift apart. A monthly
+   total covers the whole month, so it is compared against the itemised
+   payments rather than added to them. */
+function monthCollectedFor(mk){
   const a = actualsFor(mk);
-  let v = a ? a.coll : 0;
-  for(const c of DB.cases) for(const p of (c.payments||[])) if(monthKey(p.date) === mk) v += +p.amount||0;
-  for(const c of DB.cases) if(lcCountable(c) === mk) v += +c.legacyCollected||0;
-  return v;
+  let itemised = 0;
+  for(const c of DB.cases) for(const p of (c.payments||[])) if(monthKey(p.date) === mk) itemised += +p.amount||0;
+  for(const c of DB.cases) if(lcCountable(c) === mk) itemised += +c.legacyCollected||0;
+  return a && a.coll ? Math.max(a.coll, itemised) : itemised;
 }
 function preStart(y, m){ const fs2 = DB.settings.firmStart; if(!fs2) return false; return (y*12+m) < (+fs2.slice(0,4)*12 + (+fs2.slice(5,7)-1)) }
 function guaranteeCfg(){ const g = DB.settings.guarantee; return (g && +g.monthly>0 && g.start && g.end) ? g : null }
@@ -1720,7 +1746,7 @@ function pIcon(kind){
     gauge:'<path d="M5 22.5a11 11 0 0 1 22 0"/><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"/><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"/>'}[kind];
   return '<svg class="pi" viewBox="0 0 32 32" '+g+'>'+p+'</svg>';
 }
-function aiMonthAgg(mk){ const a = actualsFor(mk); let v = a ? a.coll : 0; for(const c of DB.cases) for(const p of (c.payments||[])) if(monthKey(p.date) === mk) v += +p.amount||0; for(const c of DB.cases) if(lcCountable(c) === mk) v += +c.legacyCollected||0; return v }
+function aiMonthAgg(mk){ return monthCollectedFor(mk) }
 function aiInsights(){
   const now = new Date(), yr = now.getFullYear();
   const k = kpiData();
@@ -2017,16 +2043,32 @@ function monthAggFor(y){
   for(const c of billables()){ const d = c.dateOpened;
     if(d && +d.slice(0,4)===y) rows[+d.slice(5,7)-1].fees += c.fee||0 }
   for(const c of mains()){ const d = c.dateOpened; if(d && +d.slice(0,4)===y) rows[+d.slice(5,7)-1].n++ }
-  rows.forEach((r,m)=>{ if(preStart(y,m)){ r.fees = 0; r.n = 0 }
+  /* A monthly total is the WHOLE month, not a pre-tracker slice of it.
+     The two sources are kept apart here and reconciled at the end, because
+     adding them counted the itemised payments twice — once on their own
+     and once inside the total that already contained them. */
+  rows.forEach(r => { r.actColl = 0; r.itemColl = 0; r.actFees = null; r.itemFees = r.fees; r.itemPays = 0; r.actPays = null });
+
+  rows.forEach((r,m)=>{ if(preStart(y,m)){ r.fees = 0; r.itemFees = 0; r.n = 0 }
     const a = actualsFor(y+'-'+String(m+1).padStart(2,'0'));
-    if(a){ r.coll += a.coll; r.hasActual = true; if(a.billed!=null){ r.fees = a.billed; r.billedActual = true } if(a.cases!=null){ r.n = a.cases; r.casesActual = true } if(a.pays!=null) r.pays = a.pays } });
+    if(a){ r.actColl = a.coll; r.hasActual = true; if(a.billed!=null){ r.actFees = a.billed; r.billedActual = true } if(a.cases!=null){ r.n = a.cases; r.casesActual = true } if(a.pays!=null) r.actPays = a.pays } });
   for(const c of DB.cases){ if(!c.createdAt) continue; const d = c.dateOpened;
     if(d && +d.slice(0,4)===y){ const r = rows[+d.slice(5,7)-1];
-      if(r.billedActual && c.fee!=null && !(c.sub&&c.sharedFee)) r.fees += c.fee||0;
+      if(r.billedActual && c.fee!=null && !(c.sub&&c.sharedFee)) r.itemFees += c.fee||0;
       if(r.casesActual && !(c.sub && c.sharedFee)) r.n++ } }
-  for(const c of DB.cases) for(const p of (c.payments||[])) if(p.date && +p.date.slice(0,4)===y){ rows[+p.date.slice(5,7)-1].coll += +p.amount||0; rows[+p.date.slice(5,7)-1].pays++ }
+  for(const c of DB.cases) for(const p of (c.payments||[])) if(p.date && +p.date.slice(0,4)===y){ rows[+p.date.slice(5,7)-1].itemColl += +p.amount||0; rows[+p.date.slice(5,7)-1].itemPays++ }
   
-  for(const c of DB.cases){ const mk2 = lcCountable(c); if(mk2 && +mk2.slice(0,4)===y){ const r = rows[+mk2.slice(5,7)-1]; const lc = +c.legacyCollected||0; if(lc){ r.coll += lc; r.legacyCol += lc; } } }
+  for(const c of DB.cases){ const mk2 = lcCountable(c); if(mk2 && +mk2.slice(0,4)===y){ const r = rows[+mk2.slice(5,7)-1]; const lc = +c.legacyCollected||0; if(lc){ r.itemColl += lc; r.legacyCol += lc; } } }
+
+  /* Larger of the two, not the sum. Larger rather than always trusting the
+     monthly total, because a stale total can be overtaken by itemising —
+     which is what happened to July 2026. */
+  rows.forEach(r => {
+    r.coll = r.actColl ? Math.max(r.actColl, r.itemColl) : r.itemColl;
+    r.fees = r.actFees != null ? Math.max(r.actFees, r.itemFees) : r.itemFees;
+    r.pays = r.actPays != null ? Math.max(r.actPays, r.itemPays) : r.itemPays;
+    r.doubleCounted = r.actColl && r.itemColl ? Math.min(r.actColl, r.itemColl) : 0;
+  });
   return rows;
 }
 function anaMonth(b){
@@ -2322,9 +2364,15 @@ function quarterEvents(y, q){
     for(let m = q*3; m < q*3+3; m++){
       const mk = y+'-'+String(m+1).padStart(2,'0');
       const a = actualsFor(mk);
-      if(a && a.coll) evs.push({date:mk+'-01', sk:mk+'-01!', amount:a.coll, c:null, kind:'actual', label:MONTHS[m]+' actuals'});
+      /* The monthly total covers the whole month, including anything
+         itemised inside it. Feeding both into the commission ladder
+         would climb the tiers on money that came in once. */
+      let itemised = 0;
+      for(const c of billables()) for(const p of (c.payments||[])) if(monthKey(p.date) === mk && +p.amount) itemised += +p.amount;
+      const useActual = a && a.coll && a.coll >= itemised;
+      if(useActual) evs.push({date:mk+'-01', sk:mk+'-01!', amount:a.coll, c:null, kind:'actual', label:MONTHS[m]+' actuals'});
+      else for(const c of billables()) for(const p of (c.payments||[])) if(monthKey(p.date) === mk && +p.amount) evs.push({date:p.date, sk:p.date+'~', amount:+p.amount, c, kind:'pay'});
     }
-    for(const c of billables()) for(const p of (c.payments||[])) if(inQ(p.date) && +p.amount) evs.push({date:p.date, sk:p.date+'~', amount:+p.amount, c, kind:'pay'});
   }
   evs.sort((a,b)=>a.sk.localeCompare(b.sk));
   let cum = 0;
@@ -2488,7 +2536,7 @@ function openSettings(){
       '<button class="btn btn-gold" id="s-sync-connect">Connect & Sync</button>'
     ) + '</div>' +
     '<div class="fsec"><div class="fsec-t">Data</div>' +
-    '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" id="s-backup">Download Backup (JSON)</button><button class="btn" id="s-csv">Export Cases CSV</button><button class="btn" id="s-csvp">Export Payments CSV</button><button class="btn btn-red" id="s-wipe">Wipe All Data</button></div>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-audit">Find Duplicates</button><button class="btn btn-gold" id="s-backup">Download Backup (JSON)</button><button class="btn" id="s-csv">Export Cases CSV</button><button class="btn" id="s-csvp">Export Payments CSV</button><button class="btn btn-red" id="s-wipe">Wipe All Data</button></div>' +
     '<div style="font-size:11px;color:var(--plat-faint);margin-top:10px">Last backup: '+(s.lastBackup?new Date(s.lastBackup).toLocaleString():'<b style="color:var(--orange)">never</b>')+' · '+DB.cases.length+' case rows · '+allPayments().length+' payments · '+(JSON.stringify(DB).length/1024).toFixed(0)+' KB local</div></div>' +
     '<div class="modal-f" style="border:0;padding:18px 0 4px"><button class="btn" data-close="ov-settings">Close</button><button class="btn btn-gold" id="s-save">Save Settings</button></div>';
   $('#s-save').onclick = ()=>{
@@ -2563,6 +2611,7 @@ function openSettings(){
   };
   const sn = $('#s-sync-now'); if(sn) sn.onclick = ()=>syncNow(true);
   const so = $('#s-sync-off'); if(so) so.onclick = ()=>askConfirm('Disconnect sync on this device?','Your data stays on this device and in the cloud gist — this device just stops syncing until you reconnect.', ()=>{ setSyncCfg(null); closeOv('ov-settings'); openSettings() }, 'Disconnect', true);
+  const sa = $('#s-audit'); if(sa) sa.onclick = ()=>{ closeOv('ov-settings'); openAudit() };
   $('#s-backup').onclick = exportBackup;
   $('#s-csv').onclick = ()=>exportCSV('cases'); $('#s-csvp').onclick = ()=>exportCSV('payments');
   $('#s-wipe').onclick = ()=>askConfirm('Wipe all data?','This deletes every case, payment, note and setting on this device. Export a backup first. This cannot be undone.', ()=>{ localStorage.removeItem(LS_KEY); localStorage.removeItem(LS_PIN); location.reload() }, 'Wipe Everything', true);
@@ -2575,6 +2624,384 @@ function dl(name, text, mime){
   a.href = URL.createObjectURL(new Blob([text], {type:mime||'application/json'}));
   a.download = name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
 }
+/* ═════════════════ DATA AUDIT ═════════════════
+   Duplicate detection and month reconciliation. Finds candidates and
+   presents them; never edits anything on its own. */
+
+const audNorm = s => String(s || '').toLowerCase()
+  .replace(/[^a-z\s]/g, ' ')
+  .replace(/\b(jr|sr|ii|iii|iv|esq|the)\b/g, ' ')
+  .split(/\s+/).filter(Boolean).sort().join(' ');
+
+const audPayKey = p => (p.date || '') + '|' + (+p.amount || 0);
+const audMoney = n => fmt$c(+n || 0);
+
+/* ── duplicate cases ────────────────────────────────────────────
+   Three signatures, strongest first. A case is only ever reported in
+   its strongest group, so nothing is listed twice. */
+function audDupeCases(){
+  const live = DB.cases.filter(c => c && c.id);
+  const claimed = new Set();
+  const groups = [];
+
+  const collect = (keyFn, why, strength) => {
+    const buckets = {};
+    for(const c of live){
+      if(claimed.has(c.id)) continue;
+      const k = keyFn(c);
+      if(!k) continue;
+      (buckets[k] = buckets[k] || []).push(c);
+    }
+    for(const k in buckets){
+      const g = buckets[k];
+      if(g.length < 2) continue;
+      g.forEach(c => claimed.add(c.id));
+      groups.push({ why, strength, key: k, cases: g });
+    }
+  };
+
+  /* Same court file number is about as certain as it gets. */
+  collect(c => (c.caseNo || '').trim() ? 'no:' + (c.caseNo || '').trim().toLowerCase() : null,
+          'same case number', 'high');
+  /* Same client name and same county. */
+  collect(c => { const n = audNorm(displayName(c)); return n && c.county ? 'nc:' + n + '|' + c.county : null },
+          'same name and county', 'high');
+  /* Same client name alone — worth a look, not proof. */
+  collect(c => { const n = audNorm(displayName(c)); return n ? 'n:' + n : null },
+          'same client name', 'medium');
+
+  for(const g of groups){
+    g.cases.sort((a, b) => String(a.createdAt || a.dateOpened || '').localeCompare(String(b.createdAt || b.dateOpened || '')));
+    g.extraFee = g.cases.slice(1).reduce((s, c) => s + (+c.fee || 0), 0);
+    g.extraColl = g.cases.slice(1).reduce((s, c) => s + collectedOf(c), 0);
+  }
+  groups.sort((a, b) => (b.extraFee + b.extraColl) - (a.extraFee + a.extraColl));
+  return groups;
+}
+
+/* ── duplicate payments inside one case ── */
+function audDupePays(){
+  const out = [];
+  for(const c of DB.cases){
+    const seen = {};
+    for(const p of (c.payments || [])){
+      const k = audPayKey(p);
+      (seen[k] = seen[k] || []).push(p);
+    }
+    const dupes = Object.values(seen).filter(g => g.length > 1);
+    if(dupes.length) out.push({ c, dupes, extra: dupes.reduce((s, g) => s + (g.length - 1) * (+g[0].amount || 0), 0) });
+  }
+  out.sort((a, b) => b.extra - a.extra);
+  return out;
+}
+
+/* ── month totals vs itemised payments ──────────────────────────
+   Read-only. Whether a monthly total is the whole month or only the
+   pre-tracker part changes the answer, and only you know which. */
+function audMonths(){
+  const acts = DB.settings.monthlyActuals || {};
+  const byMonth = {};
+  for(const c of DB.cases) for(const p of (c.payments || [])){
+    if(!p.date) continue;
+    const mk = p.date.slice(0, 7);
+    byMonth[mk] = (byMonth[mk] || 0) + (+p.amount || 0);
+  }
+  const rows = [];
+  for(const mk of Object.keys(acts).sort()){
+    const a = +(acts[mk] || {}).coll || 0;
+    const itemised = byMonth[mk] || 0;
+    if(a && itemised) rows.push({ mk, actual: a, itemised, counted: a + itemised });
+  }
+  return rows;
+}
+
+/* ── opening balance counted twice ─────────────────────────────
+   collectedOf() adds legacyCollected AND the itemised payments. When a
+   case was added through the editor the app converts the opening
+   balance into a payment and zeroes the field, so it is counted once.
+   The CSV/JSON import path never does that conversion — so an imported
+   case can carry an opening balance AND itemised payments, and every
+   total counts both. */
+function audLegacyDupes(){
+  const out = [];
+  for(const c of DB.cases){
+    const lc = +c.legacyCollected || 0;
+    if(lc <= 0) continue;
+    const pays = c.payments || [];
+    if(!pays.length) continue;                 // no payments: counted once, fine
+    const itemised = pays.reduce((s, p) => s + (+p.amount || 0), 0);
+    const exact = pays.some(p => Math.abs((+p.amount || 0) - lc) < 0.005);
+    out.push({ c, legacy: lc, itemised, exact, counted: lc + itemised });
+  }
+  out.sort((a, b) => b.legacy - a.legacy);
+  return out;
+}
+
+function audFixLegacy(caseId, mode){
+  const c = DB.cases.find(x => x.id === caseId);
+  if(!c) return;
+  const lc = +c.legacyCollected || 0;
+  if(lc <= 0) return;
+  const isDrop = mode === 'drop';
+  askConfirm(isDrop ? 'Remove the duplicated opening balance?' : 'Turn the opening balance into a payment?',
+    isDrop
+      ? 'An itemised payment of <b>' + audMoney(lc) + '</b> already exists on <b>' + esc(displayName(c)) + '</b>, '
+        + 'so the opening balance is the same money a second time. Clearing it leaves the itemised payment in place.'
+      : 'The opening balance of <b>' + audMoney(lc) + '</b> on <b>' + esc(displayName(c)) + '</b> becomes a dated payment, '
+        + 'so it is counted once and shows in the ledger.<br><br>Use this when the opening balance is real money that is '
+        + '<i>not</i> already among the itemised payments.',
+    () => audBackupThen(() => {
+      const stamp = new Date().toISOString();
+      const before = collectedOf(c);
+      if(!isDrop){
+        c.payments = c.payments || [];
+        c.payments.push({ id: uuid(), date: c.dateOpened || todayISO(), amount: lc, note: 'opening balance' });
+      }
+      c.legacyCollected = 0;
+      c.updatedAt = stamp;
+      save(); refresh();
+      logEv((isDrop ? 'Cleared duplicated opening balance on ' : 'Converted opening balance on ') + displayName(c));
+      toast(isDrop ? 'Collected on that case drops by <b>' + audMoney(before - collectedOf(c)) + '</b>'
+                   : 'Opening balance is now an itemised payment', null, 7000);
+      setTimeout(openAudit, 300);
+    }), isDrop ? 'Remove' : 'Convert', isDrop);
+}
+
+function audScan(){
+  const dc = audDupeCases(), dp = audDupePays(), mo = audMonths(), lg = audLegacyDupes();
+  return {
+    dupCases: dc, dupPays: dp, months: mo, legacy: lg,
+    legacyTotal: lg.reduce((s, r) => s + r.legacy, 0),
+    caseCount: dc.reduce((s, g) => s + g.cases.length - 1, 0),
+    payCount: dp.reduce((s, r) => s + r.dupes.reduce((t, g) => t + g.length - 1, 0), 0),
+    inflatedFee: dc.reduce((s, g) => s + g.extraFee, 0),
+    inflatedColl: dc.reduce((s, g) => s + g.extraColl, 0) + dp.reduce((s, r) => s + r.extra, 0)
+      + lg.filter(r => r.exact).reduce((s, r) => s + r.legacy, 0),
+    overlap: mo.reduce((s, r) => s + Math.min(r.actual, r.itemised), 0)
+  };
+}
+
+/* ── actions (each one asks first, and backs up before deleting) ── */
+function audBackupThen(fn){
+  try{ exportBackup() }catch(e){}
+  setTimeout(fn, 700);
+}
+
+/* Fold the duplicate into the keeper: its payments, hearings and notes
+   move across, then it is tombstoned the same way a manual delete is,
+   so other devices learn about it. */
+function audMerge(keepId, dropId){
+  const keep = DB.cases.find(c => c.id === keepId);
+  const drop = DB.cases.find(c => c.id === dropId);
+  if(!keep || !drop) return;
+  askConfirm('Merge these two records?',
+    'Payments, hearings and notes from <b>' + esc(displayName(drop)) + '</b> move into <b>' + esc(displayName(keep)) + '</b>, '
+    + 'then the duplicate is removed.<br><br>A backup downloads first. This can be undone for a few seconds after.',
+    () => audBackupThen(() => {
+      const stamp = new Date().toISOString();
+      keep.payments = keep.payments || [];
+      /* Match on id AND on date+amount, kept in separate namespaces.
+         The same payment entered on two devices has two different ids,
+         so an id-only check lets it through twice — which is the exact
+         duplication this tool exists to undo. */
+      const have = new Set();
+      for(const p of keep.payments){
+        if(p.id) have.add('id:' + p.id);
+        have.add('k:' + audPayKey(p));
+      }
+      let moved = 0;
+      for(const p of (drop.payments || [])){
+        if((p.id && have.has('id:' + p.id)) || have.has('k:' + audPayKey(p))) continue;
+        if(p.id) have.add('id:' + p.id);
+        have.add('k:' + audPayKey(p));
+        keep.payments.push(JSON.parse(JSON.stringify(p))); moved++;
+      }
+      keep.hearings = keep.hearings || [];
+      const hk = h => (h.date || '') + '|' + (h.time || '') + '|' + (h.type || '');
+      const haveH = new Set(keep.hearings.map(hk));
+      for(const h of (drop.hearings || [])) if(!haveH.has(hk(h))){ haveH.add(hk(h)); keep.hearings.push(JSON.parse(JSON.stringify(h))) }
+      if(Array.isArray(drop.notes) && drop.notes.length) keep.notes = (keep.notes || []).concat(drop.notes);
+      if(keep.fee == null && drop.fee != null) keep.fee = drop.fee;
+      if(!keep.caseNo && drop.caseNo) keep.caseNo = drop.caseNo;
+      if(!keep.clio && drop.clio) keep.clio = drop.clio;
+      keep.updatedAt = stamp;
+
+      const idx = DB.cases.indexOf(drop);
+      DB.cases = DB.cases.filter(c => c !== drop);
+      DB.deleted = DB.deleted || {};
+      DB.deleted[drop.id] = stamp;
+      save(); refresh();
+      logEv('Merged duplicate of ' + displayName(keep));
+      toast('Merged — <b>' + moved + '</b> payment(s) moved across', () => {
+        delete DB.deleted[drop.id];
+        DB.cases.splice(idx, 0, drop);
+        save(); refresh(); openAudit();
+      }, 9000);
+      setTimeout(openAudit, 300);
+    }), 'Merge', true);
+}
+
+function audDropPay(caseId, key){
+  const c = DB.cases.find(x => x.id === caseId);
+  if(!c) return;
+  const matches = (c.payments || []).filter(p => audPayKey(p) === key);
+  if(matches.length < 2) return;
+  askConfirm('Remove ' + (matches.length - 1) + ' repeated payment(s)?',
+    audMoney(matches[0].amount) + ' on ' + usDate(matches[0].date) + ' appears <b>' + matches.length + '</b> times on '
+    + '<b>' + esc(displayName(c)) + '</b>. One will be kept.<br><br>A backup downloads first.',
+    () => audBackupThen(() => {
+      const removed = [];
+      let kept = false;
+      c.payments = c.payments.filter(p => {
+        if(audPayKey(p) !== key) return true;
+        if(!kept){ kept = true; return true }
+        removed.push(p); return false;
+      });
+      c.updatedAt = new Date().toISOString();
+      save(); refresh();
+      logEv('Removed ' + removed.length + ' repeated payment(s) on ' + displayName(c));
+      toast('Removed <b>' + removed.length + '</b> repeated payment(s)', () => {
+        c.payments.push(...removed); save(); refresh(); openAudit();
+      }, 9000);
+      setTimeout(openAudit, 300);
+    }), 'Remove', true);
+}
+
+/* ── the report ── */
+function audWhyHtml(){
+  return '<div class="fsec"><div class="fsec-t">Why billed and collected never line up by month</div>'
+    + '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.8">'
+    + 'They are counted on different clocks, and always have been. <b style="color:var(--plat)">Billed</b> lands in the month a '
+    + 'case was <b>opened</b> — the whole fee at once. <b style="color:var(--plat)">Collected</b> lands in the month a payment '
+    + '<b>arrived</b>, which for a payment plan can be months later or spread across several.<br><br>'
+    + 'So a month with one large new case reads high on billed and low on collected, and a quiet month collecting on older '
+    + 'files reads the opposite. That is accrual against cash, not an error — but the two columns are not comparable '
+    + 'month by month. Over a full year they converge, minus whatever is still outstanding.</div></div>';
+}
+
+function audHtml(){
+  const r = audScan();
+  let h = '';
+
+  if(!r.dupCases.length && !r.dupPays.length && !r.months.length && !r.legacy.length){
+    return '<div class="empty" style="padding:30px 10px;text-align:center;line-height:1.8">'
+      + '<div style="font-size:15px;color:var(--green);margin-bottom:6px">Nothing suspicious found.</div>'
+      + '<div style="font-size:12px;color:var(--plat-dim)">No duplicate cases, no repeated payments, no opening balances '
+      + 'counted twice, and no month totals overlapping itemised payments.</div></div>'
+      + audWhyHtml();
+  }
+
+  h += '<div class="bal-disp" style="margin-bottom:14px;line-height:1.9">'
+    + '<b style="color:var(--gold-hi)">' + r.caseCount + '</b> duplicate case record(s) · '
+    + '<b style="color:var(--gold-hi)">' + r.payCount + '</b> repeated payment(s) · '
+    + '<b style="color:var(--gold-hi)">' + r.legacy.length + '</b> opening balance(s) counted twice'
+    + (r.inflatedColl ? '<br>Collected may be overstated by about <b style="color:var(--orange)">' + audMoney(r.inflatedColl) + '</b>' : '')
+    + (r.inflatedFee ? '<br>Billed may be overstated by about <b style="color:var(--orange)">' + audMoney(r.inflatedFee) + '</b>' : '')
+    + '</div>';
+
+  if(r.dupCases.length){
+    h += '<div class="fsec"><div class="fsec-t">Possible duplicate cases</div>';
+    for(const g of r.dupCases){
+      const keep = g.cases[0];
+      h += '<div style="border:1px solid var(--ge);border-radius:10px;padding:12px;margin-bottom:10px">'
+        + '<div style="font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:'
+        + (g.strength === 'high' ? 'var(--orange)' : 'var(--plat-faint)') + ';margin-bottom:8px">'
+        + esc(g.why) + (g.strength === 'medium' ? ' · worth a look' : ' · likely') + '</div>';
+      for(const c of g.cases){
+        const isKeep = c === keep;
+        h += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid rgba(210,220,235,.06)">'
+          + '<div style="min-width:0">'
+          + '<div style="font-size:12.5px;color:var(--plat)"><b>' + esc(displayName(c)) + '</b>'
+          + (isKeep ? ' <span style="color:var(--green);font-size:10px;letter-spacing:.06em">OLDEST — KEEP</span>' : '') + '</div>'
+          + '<div style="font-size:10.5px;color:var(--plat-faint)">'
+          + (c.caseNo ? esc(c.caseNo) + ' · ' : '') + (c.county ? esc(c.county) + ' · ' : '')
+          + 'fee ' + audMoney(c.fee) + ' · collected ' + audMoney(collectedOf(c))
+          + ' · ' + ((c.payments || []).length) + ' payment(s)'
+          + (c.dateOpened ? ' · opened ' + usDate(c.dateOpened) : '')
+          + '</div></div>'
+          + '<div style="display:flex;gap:6px;flex:none">'
+          + '<button class="btn" data-aud-open="' + esc(c.id) + '" style="font-size:11px;padding:5px 9px">Open</button>'
+          + (isKeep ? '' : '<button class="btn btn-red" data-aud-merge="' + esc(keep.id) + '|' + esc(c.id) + '" style="font-size:11px;padding:5px 9px">Merge into keeper</button>')
+          + '</div></div>';
+      }
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+
+  if(r.dupPays.length){
+    h += '<div class="fsec"><div class="fsec-t">Repeated payments on one case</div>';
+    for(const row of r.dupPays){
+      h += '<div style="border:1px solid var(--ge);border-radius:10px;padding:12px;margin-bottom:10px">'
+        + '<div style="font-size:12.5px;color:var(--plat);margin-bottom:6px"><b>' + esc(displayName(row.c)) + '</b>'
+        + ' <span style="font-size:10.5px;color:var(--plat-faint)">overstated by ' + audMoney(row.extra) + '</span></div>';
+      for(const g of row.dupes){
+        h += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px solid rgba(210,220,235,.06)">'
+          + '<div style="font-size:12px;color:var(--plat-dim)">' + audMoney(g[0].amount) + ' on ' + usDate(g[0].date)
+          + ' · <b style="color:var(--orange)">' + g.length + ' copies</b>'
+          + (g[0].note ? ' · ' + esc(g[0].note) : '') + '</div>'
+          + '<button class="btn btn-red" data-aud-pay="' + esc(row.c.id) + '~' + esc(audPayKey(g[0])) + '" style="font-size:11px;padding:5px 9px;flex:none">Keep one</button>'
+          + '</div>';
+      }
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+
+  if(r.legacy.length){
+    h += '<div class="fsec"><div class="fsec-t">Opening balances counted on top of itemised payments</div>'
+      + '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7;margin-bottom:10px">'
+      + 'These cases carry an <b>opening collected balance</b> AND itemised payments. Collected adds both together. '
+      + 'Cases added through the editor convert the opening balance into a payment automatically — imported cases never did, '
+      + 'which is how the same money ends up counted twice.</div>';
+    for(const row of r.legacy){
+      h += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid rgba(210,220,235,.06)">'
+        + '<div style="min-width:0"><div style="font-size:12.5px;color:var(--plat)"><b>' + esc(displayName(row.c)) + '</b>'
+        + (row.exact ? ' <span style="color:var(--orange);font-size:10px;letter-spacing:.06em">MATCHES A PAYMENT EXACTLY</span>' : '') + '</div>'
+        + '<div style="font-size:10.5px;color:var(--plat-faint)">opening ' + audMoney(row.legacy)
+        + ' + itemised ' + audMoney(row.itemised) + ' = counted as <b style="color:var(--orange)">' + audMoney(row.counted) + '</b>'
+        + (row.c.dateOpened ? ' · opened ' + usDate(row.c.dateOpened) : '') + '</div></div>'
+        + '<div style="display:flex;gap:6px;flex:none">'
+        + '<button class="btn" data-aud-open="' + esc(row.c.id) + '" style="font-size:11px;padding:5px 9px">Open</button>'
+        + '<button class="btn btn-red" data-aud-legacy="drop|' + esc(row.c.id) + '" style="font-size:11px;padding:5px 9px">Remove opening</button>'
+        + '<button class="btn" data-aud-legacy="convert|' + esc(row.c.id) + '" style="font-size:11px;padding:5px 9px">Make it a payment</button>'
+        + '</div></div>';
+    }
+    h += '</div>';
+  }
+
+  if(r.months.length){
+    h += '<div class="fsec"><div class="fsec-t">Month totals that overlap itemised payments</div>'
+      + '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7;margin-bottom:10px">'
+      + 'These months have both a carried-over monthly total <b>and</b> individually logged payments, and the tracker adds them together. '
+      + 'If the monthly total already includes those payments, the month is counted twice. '
+      + 'Nothing here is changed automatically — the monthly totals live in <b>Settings → Monthly Actuals</b>.</div>'
+      + '<div class="tblwrap"><table class="tbl"><thead><tr><th>Month</th>'
+      + '<th style="text-align:right">Monthly total</th><th style="text-align:right">Itemised</th>'
+      + '<th style="text-align:right">Currently counted</th></tr></thead><tbody>'
+      + r.months.map(m => '<tr><td>' + esc(m.mk) + '</td>'
+          + '<td style="text-align:right">' + audMoney(m.actual) + '</td>'
+          + '<td style="text-align:right">' + audMoney(m.itemised) + '</td>'
+          + '<td style="text-align:right;color:var(--orange)"><b>' + audMoney(m.counted) + '</b></td></tr>').join('')
+      + '</tbody></table></div></div>';
+  }
+
+  h += audWhyHtml();
+
+  return h;
+}
+
+function openAudit(){
+  const body = document.getElementById('aud-body');
+  if(!body) return;
+  body.innerHTML = audHtml();
+  body.querySelectorAll('[data-aud-open]').forEach(b => b.onclick = () => { closeOv('ov-audit'); openEditor(b.dataset.audOpen) });
+  body.querySelectorAll('[data-aud-merge]').forEach(b => b.onclick = () => { const [k, d] = b.dataset.audMerge.split('|'); closeOv('ov-audit'); audMerge(k, d) });
+  body.querySelectorAll('[data-aud-legacy]').forEach(b => b.onclick = () => { const [mode, id] = b.dataset.audLegacy.split('|'); closeOv('ov-audit'); audFixLegacy(id, mode) });
+  body.querySelectorAll('[data-aud-pay]').forEach(b => b.onclick = () => { const i = b.dataset.audPay.indexOf('~'); closeOv('ov-audit'); audDropPay(b.dataset.audPay.slice(0, i), b.dataset.audPay.slice(i + 1)) });
+  openOv('ov-audit');
+}
+
 function exportBackup(){
   DB.settings.lastBackup = new Date().toISOString(); persist();
   dl('case-tracker-backup-'+todayISO()+'.json', JSON.stringify({app:'crt2', version:2, exported:new Date().toISOString(), data:DB}, null, 1));
@@ -3392,4 +3819,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   setInterval(clioAutoRefresh, 60000);
 });
 </script>
+
+<div class="overlay" id="ov-audit"><div class="modal" style="width:min(940px,97vw)" role="dialog" aria-modal="true">
+  <div class="modal-h"><div><div class="t">Data Audit</div>
+    <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Duplicate records and overlapping totals. Nothing changes until you say so.</div></div>
+    <button class="x-btn" data-close="ov-audit">&times;</button></div>
+  <div class="modal-b" id="aud-body" style="padding:16px 20px"></div>
+</div></div>
 </body></html>
