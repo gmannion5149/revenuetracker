@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0065)file:///C:/Users/gerar/Downloads/Case_Revenue_Tracker___GM_4.html -->
+<!-- saved from url=(0065)file:///C:/Users/gerar/Downloads/Case_Revenue_Tracker___GM_7.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,11 +85,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .kbd{font-size:10px;border:1px solid var(--ge);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--plat-dim);background:rgba(4,8,15,.5)}
 
 /* ————— KPI band ————— */
-.kpis{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:14px;animation:fadeUp .5s}
-@media(max-width:1250px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:13px;animation:fadeUp .5s}
+@media(max-width:1250px){.kpis{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{border-radius:var(--r-m);padding:13px 15px 11px;position:relative;overflow:hidden;cursor:default;transition:transform .18s,border-color .18s}
-.kpi:hover{transform:translateY(-2px);border-color:var(--ge-2)}
+.kpi{border-radius:var(--r-m);padding:13px 15px 11px;position:relative;overflow:hidden;cursor:default;
+  transition:transform .2s cubic-bezier(.2,.8,.3,1),border-color .2s,box-shadow .2s}
+.kpi:hover{transform:translateY(-2px);border-color:var(--ge-2);
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.75),0 0 0 1px rgba(212,175,55,.07) inset}
 .kpi::after{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--kpi-c,rgba(212,175,55,.55)),transparent);opacity:.8}
 .kpi-label{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--plat-dim);margin-bottom:6px;white-space:nowrap}
 .kpi-val{font-size:22px;font-weight:800;letter-spacing:-.4px;line-height:1;white-space:nowrap}
@@ -98,7 +100,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .kpi .cf{color:var(--gold-dim);cursor:help;border-bottom:1px dotted rgba(212,175,55,.5)}
 
 /* ————— Tabs ————— */
-.tabs{display:flex;gap:4px;padding:6px;border-radius:var(--r-m);margin-bottom:16px;overflow-x:auto;position:sticky;top:10px;z-index:40;animation:fadeUp .55s}
+.tabs{display:flex;gap:8px;padding:5px 7px;border-radius:var(--r-m);margin-bottom:13px;overflow-x:auto;position:sticky;top:10px;z-index:40;animation:fadeUp .55s}
 .tab{border:0;background:transparent;color:var(--plat-dim);font-size:13.5px;padding:9px 17px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:all .18s;letter-spacing:.3px;position:relative}
 .tab:hover{color:var(--plat);background:rgba(210,220,235,.05)}
 .tab.on{color:var(--gold-hi);background:linear-gradient(180deg,rgba(212,175,55,.16),rgba(212,175,55,.06));font-weight:700}
@@ -107,7 +109,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .tabs{align-items:center}
 .tab-lead{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--plat-faint);padding-left:6px}
 select.tab-sel{font-size:13.5px;font-weight:700;letter-spacing:.3px;color:var(--gold-hi);min-width:200px;padding:10px 32px 10px 14px;background-color:rgba(212,175,55,.08);border-color:rgba(212,175,55,.32)}
-select.tab-sel:hover{background-color:rgba(212,175,55,.14)}
+select.tab-sel:hover{background-color:rgba(212,175,55,.14);box-shadow:0 0 0 3px rgba(212,175,55,.08)}
+select.tab-sel:focus{box-shadow:0 0 0 3px rgba(212,175,55,.13)}
 select.tab-sel option{background:#0B1119;color:var(--plat);font-weight:400}
 .icon-btn.tab-home{width:38px;height:38px;flex:0 0 auto}
 .icon-btn.tab-home.on{color:var(--gold-hi);border-color:rgba(212,175,55,.42);background:linear-gradient(180deg,rgba(212,175,55,.17),rgba(212,175,55,.07))}
@@ -131,23 +134,30 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 .tbl thead th:hover{color:var(--gold-hi)}
 .tbl thead th .arr{color:var(--gold);font-size:9px;margin-left:4px}
 .tbl tbody td{padding:10px 12px;border-bottom:1px solid rgba(210,220,235,.055);vertical-align:middle}
-.tbl tbody tr{transition:background .12s}
+.tbl tbody tr{transition:background .16s,box-shadow .16s}
 .tbl tbody tr.rowc{cursor:pointer}
 .tbl tbody tr:nth-child(even){background:rgba(210,220,235,.018)}
-.tbl tbody tr:hover{background:rgba(212,175,55,.05)}
+.tbl tbody tr:hover{background:rgba(212,175,55,.062);box-shadow:inset 0 0 30px -12px rgba(212,175,55,.28)}
+/* Rows with something time-critical get a quiet left edge — no new column,
+   no new panel, and the reason lives in the row's tooltip. */
+.tbl tbody tr.att > td:first-child{box-shadow:inset 3px 0 0 -1px rgba(212,175,55,.55)}
+.tbl tbody tr.att-hot > td:first-child{box-shadow:inset 3px 0 0 -1px rgba(231,76,60,.75)}
+.tbl tbody tr.att:hover{background:rgba(212,175,55,.075)}
 .tbl tbody tr.subrow td{background:rgba(4,8,15,.3)}
 .tbl tbody tr.subrow td:first-child{border-left:2px solid rgba(212,175,55,.3)}
 .tbl .idx{text-align:center;font-size:10.5px;font-weight:700;color:var(--plat-faint);width:34px}
 .tbl tfoot td{padding:10px 12px;font-weight:700;color:var(--gold-pale);border-top:1px solid rgba(212,175,55,.3);background:rgba(212,175,55,.05);position:sticky;bottom:0}
-.cname{font-weight:400;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:7px}
+.cname{font-weight:500;color:var(--white);white-space:nowrap;display:flex;align-items:center;gap:7px;letter-spacing:.1px}
 .cname a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
 .cname a:hover{color:var(--gold-hi);border-bottom-color:rgba(212,175,55,.5)}
-.caption{font-size:9.5px;color:var(--plat-dim);font-style:italic;margin-top:2px;white-space:nowrap}
+.caption{font-size:9.5px;color:var(--plat-faint);font-style:italic;margin-top:2px;white-space:nowrap;opacity:.72;transition:opacity .16s}
+tr:hover .caption{opacity:1}
 .pdot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block}
 .pdot-high{background:var(--red);animation:pulseDot 2s infinite}
 .pdot-med{background:#F0C430}.pdot-low{background:#2ECC71}
-.casenum{cursor:pointer;color:#FFF;white-space:nowrap;transition:color .15s;font-size:13.5px;font-weight:300}
-.casenum:hover{color:var(--gold-hi)}
+.casenum{cursor:pointer;color:#FFF;white-space:nowrap;transition:color .15s,text-shadow .15s;font-size:13.5px;font-weight:300}
+.casenum:hover{color:var(--gold-hi);text-shadow:0 0 10px rgba(212,175,55,.45)}
+.casenum:active{color:var(--green)}
 .badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;letter-spacing:.7px;padding:2px 7px;border-radius:20px;border:1px solid;white-space:nowrap;line-height:1.4}
 .b-ic{color:var(--ic);border-color:rgba(157,195,230,.45);background:rgba(157,195,230,.08)}
 .b-dom{color:#F1948A;border-color:rgba(231,76,60,.4);background:rgba(231,76,60,.07)}
@@ -159,7 +169,7 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 .b-gray{color:var(--plat-dim);border-color:var(--ge);background:rgba(210,220,235,.04)}
 .chg a{color:var(--plat);text-decoration:none;display:inline-block}
 .chg a:hover .chg-main{color:var(--gold-hi)}
-.chg-lv{font-size:11px;color:var(--plat-dim)}
+.chg-lv{font-size:10.5px;color:var(--plat-faint);letter-spacing:.2px}
 .chg-main{font-size:12px;color:var(--plat);white-space:nowrap;transition:color .15s}
 .cty a{color:#B5A88E;text-decoration:none;border-bottom:1px dotted rgba(181,168,142,.35)}
 .cty a:hover{color:var(--gold-hi)}
@@ -168,22 +178,30 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 .hz .t{font-size:10px;color:var(--plat-dim);font-weight:600;margin-left:6px;transition:color .15s,text-shadow .15s}
 .hz a:hover .d,.hz a:hover .t{color:var(--gold-hi)!important;text-shadow:0 0 9px rgba(212,175,55,.5)}
 .hz .cd{font-size:9px;font-weight:700;border-radius:20px;padding:1px 7px;margin-left:6px;letter-spacing:.4px}
+.cd-24{color:#FFD27F;background:rgba(230,126,34,.16);border:1px solid rgba(230,126,34,.5);animation:pulseDot 2.4s infinite}
 .cd-soon{color:#F7DC6F;background:rgba(212,175,55,.13);border:1px solid rgba(212,175,55,.35)}
 .cd-now{color:#F1948A;background:rgba(231,76,60,.13);border:1px solid rgba(231,76,60,.4);animation:pulseDot 2.4s infinite}
 .cd-ok{color:var(--plat-dim);background:rgba(210,220,235,.05);border:1px solid var(--ge)}
 .fee-cell{white-space:nowrap;min-width:104px}
-.fee-cell .f{font-size:12.5px}
-.fee-cell .c{color:var(--green);font-size:11.5px;margin-top:1px}
+.fee-cell .f{font-size:12.5px;color:var(--white)}
+.fee-cell .c{color:var(--green);font-size:11px;margin-top:1px;opacity:.72}
+.fee-cell .due{font-size:11px;font-weight:700;color:var(--orange);margin-top:2px;letter-spacing:.1px}
 .balbar{height:3px;border-radius:2px;background:rgba(210,220,235,.1);margin-top:5px;overflow:hidden}
-.balbar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green-deep),var(--green))}
-.paid-stamp{font-size:8.5px;font-weight:800;letter-spacing:1.2px;color:var(--green);border:1px solid rgba(46,204,113,.5);border-radius:3px;padding:1px 5px;transform:rotate(-4deg);display:inline-block;margin-top:3px}
+.balbar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green-deep),var(--green));
+  width:0;animation:barFill .75s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes barFill{to{width:var(--w,0)}}
+@media(prefers-reduced-motion:reduce){.balbar i{animation:none;width:var(--w,0)}}
+.paid-stamp{font-size:8px;font-weight:800;letter-spacing:1.1px;color:var(--green);border:1px solid rgba(46,204,113,.32);
+  border-radius:3px;padding:1px 5px;display:inline-block;margin-top:3px;opacity:.8;background:rgba(46,204,113,.06)}
+tr:hover .paid-stamp{opacity:1}
 .disc{white-space:nowrap;font-size:11px}
 .disc .dd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:1px}
 .dd-rec{background:var(--green)}.dd-out{background:var(--orange);animation:pulseDot 3s infinite}.dd-na{background:var(--plat-faint)}.dd-pend{background:var(--blue)}
 .disc .drv{color:var(--plat-faint);font-size:9.5px;margin-left:5px;letter-spacing:.4px}
 .rowmenu{position:relative;width:30px;text-align:center}
 .dots{cursor:pointer;color:var(--plat-dim);font-weight:800;letter-spacing:1px;padding:4px 7px;border-radius:7px}
-.dots:hover{color:var(--gold-hi);background:rgba(212,175,55,.1)}
+.dots{transition:color .15s,background .15s}
+.dots:hover{color:var(--gold-hi);background:rgba(212,175,55,.13);box-shadow:0 0 0 1px rgba(212,175,55,.22)}
 .menu-pop{position:fixed;z-index:200;min-width:210px;background:#0C1530;border:1px solid rgba(212,175,55,.28);border-radius:12px;box-shadow:var(--sh-pop);padding:6px;animation:popIn .14s}
 .menu-pop .mi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;color:var(--plat);font-size:12.5px;padding:9px 12px;border-radius:8px;cursor:pointer}
 .menu-pop .mi:hover{background:rgba(212,175,55,.1);color:var(--gold-pale)}
@@ -193,12 +211,12 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 .subcaret.open{transform:rotate(90deg)}
 
 /* ————— Toolbar / filters ————— */
-.toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
 .tb-search{position:relative;flex:1 1 240px;max-width:340px}
 .tb-search input{width:100%;background:rgba(4,8,15,.6);border:1px solid var(--ge);border-radius:10px;color:var(--white);font-size:13px;padding:9px 12px 9px 34px;outline:none;transition:border-color .18s}
 .tb-search input:focus{border-color:rgba(212,175,55,.5);box-shadow:0 0 0 3px rgba(212,175,55,.09)}
 .tb-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.5}
-select.sel{background:rgba(4,8,15,.6);border:1px solid var(--ge);border-radius:10px;color:var(--plat);font-size:12px;padding:8px 28px 8px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'><path d='M1 1l3.5 3.5L8 1' stroke='%23D4AF37' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
+select.sel{background:rgba(4,8,15,.6);border:1px solid var(--ge);border-radius:10px;color:var(--plat);font-size:12px;padding:8px 28px 8px 11px;outline:none;cursor:pointer;appearance:none;transition:border-color .16s,box-shadow .16s,color .16s;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'><path d='M1 1l3.5 3.5L8 1' stroke='%23D4AF37' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
 select.sel:focus{border-color:rgba(212,175,55,.5)}
 select.sel option{background:#0C1530;color:var(--plat)}
 .tb-div{width:1px;height:18px;background:var(--ge);margin:0 3px;flex:0 0 auto}
@@ -222,9 +240,12 @@ select.sel option{background:#0C1530;color:var(--plat)}
 .rc-spin{width:14px;height:14px;border-radius:50%;border:2px solid rgba(127,212,255,.25);border-top-color:#7FD4FF;animation:rcspin .8s linear infinite;flex:0 0 auto}
 @keyframes rcspin{to{transform:rotate(360deg)}}
 .chip{border:1px solid var(--ge);background:rgba(210,220,235,.045);color:var(--plat-dim);border-radius:20px;padding:6px 13px;font-size:11.5px;cursor:pointer;transition:all .16s;white-space:nowrap}
+select.sel:hover{border-color:var(--ge-2);color:var(--plat)}
+select.sel:focus{border-color:rgba(212,175,55,.45);box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+select.sel:not([data-empty]){}
 .chip:hover{color:var(--plat);border-color:var(--ge-2)}
 .chip.on{color:var(--gold-hi);border-color:rgba(212,175,55,.55);background:rgba(212,175,55,.12);font-weight:700}
-.count-note{font-size:11px;color:var(--plat-faint);margin-left:auto;white-space:nowrap}
+.count-note{font-size:11px;color:var(--plat-faint);margin-left:auto;white-space:nowrap;padding-right:2px;letter-spacing:.15px}
 .count-note b{color:var(--gold-dim)}
 
 /* ————— Forms ————— */
@@ -295,7 +316,27 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
 .bars-h .bfill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold-dim),var(--gold-hi));box-shadow:0 0 8px rgba(212,175,55,.3)}
 .bars-h .bval{text-align:right;color:var(--plat);white-space:nowrap}
 .mini-list .mrow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid rgba(210,220,235,.05);font-size:12px;cursor:pointer;border-radius:6px}
-.mini-list .mrow:hover{background:rgba(212,175,55,.05)}
+.mini-list .mrow:hover{background:rgba(212,175,55,.06);box-shadow:inset 2px 0 0 -1px rgba(212,175,55,.5)}
+.mini-list .mrow:hover .mn{color:var(--white)}
+.att-dot{flex:none;width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 7px currentColor}
+.att-dot.risk{color:#FF7E6B}.att-dot.warn{color:#F0CC52}.att-dot.info{color:#7FD4FF}
+.att-why{color:var(--plat-dim)!important;font-size:10.5px;max-width:52%;overflow:hidden;text-overflow:ellipsis}
+/* collapse control — sits inside the existing title rule, no new header */
+.w-fold{flex:none;border:0;background:transparent;color:var(--plat-faint);cursor:pointer;font-size:11px;line-height:1;
+  padding:2px 4px;border-radius:5px;transition:color .15s,background .15s;font-family:inherit}
+.w-fold:hover{color:var(--gold-hi);background:rgba(212,175,55,.1)}
+.w-card.folded{padding-bottom:12px}
+.w-card.folded .w-body{display:none}
+.w-card.folded .card-title{margin-bottom:0}
+.w-flash{animation:wFlash 2.1s ease-out}
+@keyframes wFlash{0%{box-shadow:0 0 0 1px rgba(127,212,255,.75),0 0 26px -4px rgba(127,212,255,.6)}
+  100%{box-shadow:0 0 0 1px transparent,0 0 26px -4px transparent}}
+.bars-h .brow.rowc{cursor:pointer;border-radius:6px;padding:2px 4px;margin-left:-4px;margin-right:-4px;transition:background .15s}
+.bars-h .brow.rowc:hover{background:rgba(212,175,55,.07)}
+.bars-h .brow.pipe-0{opacity:.42;cursor:default}
+.bars-h .brow.pipe-0:hover{background:transparent}
+.bars-h.pipe .brow{grid-template-columns:96px 1fr 34px;margin-bottom:6px}
+@media(prefers-reduced-motion:reduce){.w-flash{animation:none}}
 .mini-list .mrow:last-child{border-bottom:0}
 .mini-list .md{font-size:10.5px;color:var(--plat-dim);white-space:nowrap}
 .mini-list .mn{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -396,33 +437,46 @@ textarea.fi{resize:vertical;min-height:64px;line-height:1.5}
 .btn-gold:hover::before{transform:translateX(120%)}
 /* ═══════════ AI FINANCIAL INTELLIGENCE ═══════════ */
 .ai-card{margin-bottom:12px;border:1px solid transparent;background:linear-gradient(var(--gb-2),var(--gb-2)) padding-box,linear-gradient(100deg,rgba(212,175,55,.55),rgba(127,212,255,.45),rgba(155,89,182,.4),rgba(212,175,55,.55)) border-box;background-size:auto,300% 100%;animation:borderFlow 10s linear infinite;box-shadow:var(--sh),0 0 38px -16px rgba(127,212,255,.4)}
-.ai-head{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.ai-head{display:flex;align-items:center;gap:11px;margin-bottom:10px}
 .ai-core{flex:none;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#CFF3FF,#3B9EDE 62%,#1E5C8C);color:#7FD4FF;animation:ledPulse 2.2s infinite}
 .ai-scan{flex:1;height:2px;position:relative;overflow:hidden;border-radius:2px;background:rgba(127,212,255,.12)}
 .ai-scan i{position:absolute;top:0;bottom:0;width:26%;background:linear-gradient(90deg,transparent,#7FD4FF,transparent);animation:ledSweep 2.8s ease-in-out infinite}
 .ai-live{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:9px;letter-spacing:1.6px;padding:3px 9px;border-radius:10px;border:1px solid rgba(46,204,113,.4);color:#7FE8AC;background:rgba(46,204,113,.08)}
 .ai-live-dot{width:5px;height:5px;border-radius:50%;background:#2ECC71;color:#2ECC71;animation:ledPulse 1.6s infinite}
-.ai-grid{display:grid;grid-template-columns:minmax(230px,290px) minmax(230px,290px) 1fr;gap:14px;align-items:stretch}
+.ai-grid{display:grid;grid-template-columns:minmax(200px,238px) minmax(200px,238px) 1fr;gap:10px;align-items:stretch}
 @media(max-width:1150px){.ai-grid{grid-template-columns:1fr 1fr}.ai-rows{grid-column:1/-1}}
 @media(max-width:640px){.ai-grid{grid-template-columns:1fr}}
-.ai-big{border:1px solid var(--ge);border-radius:var(--r-m);padding:14px 15px;background:linear-gradient(180deg,rgba(210,220,235,.05),transparent 55%),repeating-linear-gradient(115deg,rgba(255,255,255,.012) 0 2px,transparent 2px 5px)}
-.ai-big-label{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--plat-dim)}
-.ai-big-num{font-size:27px;font-weight:800;margin:7px 0 2px;letter-spacing:-.5px;background:linear-gradient(180deg,#FFF4CE,#F0CC52 55%,#A8892A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ai-big{border:1px solid var(--ge);border-radius:var(--r-m);padding:10px 13px 11px;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(180deg,rgba(210,220,235,.045),transparent 55%),repeating-linear-gradient(115deg,rgba(255,255,255,.007) 0 2px,transparent 2px 5px)}
+.ai-big-label{font-size:9.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--plat-dim)}
+.ai-big-num small{font-size:14px;font-weight:600;-webkit-text-fill-color:var(--plat-dim);letter-spacing:0}
+.ai-big-num{font-size:23px;font-weight:800;margin:4px 0 1px;letter-spacing:-.5px;background:linear-gradient(180deg,#FFF4CE,#F0CC52 55%,#A8892A);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ai-big-num.cyan{background:linear-gradient(180deg,#E2F6FF,#7FD4FF 55%,#2E7DB0);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ai-bar{height:8px;border-radius:5px;background:rgba(6,10,20,.72);border:1px solid var(--ge);position:relative;overflow:hidden;margin-top:9px}
+.ai-bar{height:7px;border-radius:5px;background:rgba(6,10,20,.72);border:1px solid var(--ge);position:relative;overflow:hidden;margin-top:7px}
 .ai-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:linear-gradient(90deg,#8C6E1C,#F0CC52);box-shadow:0 0 10px rgba(240,204,82,.5)}
 .ai-bar i.cy{background:linear-gradient(90deg,#1E5C8C,#7FD4FF);box-shadow:0 0 10px rgba(127,212,255,.5)}
 .ai-bar i.proj{opacity:.28}
 .ai-bar em{position:absolute;top:-1px;bottom:-1px;width:2px;background:rgba(238,242,255,.55);border-radius:1px}
-.ai-big-sub{font-size:10.5px;color:var(--plat-dim);margin-top:7px;line-height:1.5}
-.ai-rows{display:flex;flex-direction:column;gap:7px;justify-content:center;min-width:0}
-.ai-row{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink);line-height:1.5;padding:7px 11px;border-radius:9px;background:rgba(210,220,235,.035);border:1px solid rgba(210,220,235,.07);animation:fadeUp .4s both}
-.ai-row .dot{flex:none;width:7px;height:7px;border-radius:50%;margin-top:5px;background:currentColor;box-shadow:0 0 8px currentColor}
+.ai-big-sub{font-size:10px;color:var(--plat-dim);margin-top:5px;line-height:1.45}
+.ai-rows{display:flex;flex-direction:column;gap:5px;justify-content:center;min-width:0}
+.ai-row{display:flex;gap:9px;align-items:flex-start;font-size:11.5px;color:var(--ink);line-height:1.4;padding:4px 10px;border-radius:8px;background:rgba(210,220,235,.035);border:1px solid rgba(210,220,235,.07);animation:fadeUp .4s both;position:relative;transition:border-color .16s,background .16s,box-shadow .16s}
+.ai-row .dot{flex:none;width:6px;height:6px;border-radius:50%;margin-top:5px;background:currentColor;box-shadow:0 0 8px currentColor}
+.ai-txt{flex:1;min-width:0}
+.ai-acts{flex:none;display:flex;gap:4px;align-self:center;opacity:0;transition:opacity .16s;margin-left:2px}
+.ai-row:hover .ai-acts,.ai-row:focus-within .ai-acts{opacity:1}
+.ai-act{border:1px solid rgba(210,220,235,.14);background:rgba(4,8,15,.5);color:var(--plat-dim);font-size:9.5px;letter-spacing:.5px;
+  padding:2px 7px;border-radius:6px;cursor:pointer;transition:all .14s;font-family:inherit}
+.ai-act:hover{color:#BFE6FF;border-color:rgba(127,212,255,.45);background:rgba(127,212,255,.1)}
+.ai-restore{color:#7FD4FF;cursor:pointer;border-bottom:1px dotted rgba(127,212,255,.5)}
+@media(max-width:900px){.ai-acts{opacity:1}}
 .ai-row.good .dot{color:#2ECC71}.ai-row.warn .dot{color:#F0CC52}.ai-row.risk .dot{color:#FF7E6B}.ai-row.info .dot{color:#7FD4FF}
 .ai-row b{color:var(--white)}
-.ai-foot{font-size:9.5px;color:var(--plat-faint);margin-top:11px;letter-spacing:.4px}
+.ai-foot{font-size:9px;color:var(--plat-faint);margin-top:8px;letter-spacing:.4px}
 @media print{.ai-scan i,.ai-core{animation:none}}
-.ai-row[data-jump]:hover{border-color:rgba(127,212,255,.4);background:rgba(127,212,255,.07);box-shadow:0 0 14px -6px rgba(127,212,255,.5)}
+.ai-row[data-jump]:hover,.ai-row[data-aiact]:hover{border-color:rgba(127,212,255,.4);background:rgba(127,212,255,.07);box-shadow:0 0 14px -6px rgba(127,212,255,.5)}
+/* Texture reads heavier the more surface it covers — ease it off on the big
+   panels only, so the identity stays but the large cards stop shimmering. */
+.card.ai-card,.tblwrap.glass{background-image:linear-gradient(180deg,rgba(255,255,255,.03),transparent 38%),repeating-linear-gradient(115deg,rgba(255,255,255,.006) 0 2px,transparent 2px 6px)}
 @media (prefers-reduced-motion:reduce){.hdr::after,.hdr::before,.kpi::before,.pcard::after,.ai-scan i,.ai-core,.ai-live-dot,.card-title::after,.ai-card,.sync-pill .sd{animation:none!important}}
 
 .agd-day{display:flex;justify-content:space-between;align-items:baseline;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-dim);margin:12px 0 5px;padding-bottom:4px;border-bottom:1px solid rgba(212,175,55,.16)}
@@ -795,8 +849,8 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
     <div class="hdr-right">
       <div class="hdr-clockwrap">
         <div class="hdr-date" id="hdr-date" data-orig="Tue · Aug 25, 2026">Tue · Aug 25, 2026</div>
-        <div class="hdr-clock" id="hdr-clock">10:22:18 <small>PM</small></div>
-        <div class="hdr-wx" id="hdr-wx">Minneapolis 73°F · CLEAR</div>
+        <div class="hdr-clock" id="hdr-clock">11:09:19 <small>PM</small></div>
+        <div class="hdr-wx" id="hdr-wx">Minneapolis 72°F · CLEAR</div>
       </div>
       <button class="sync-pill busy" id="sync-pill" style="display:none" tabindex="-1" aria-hidden="true" title="Cloud sync on — click to sync now (auto every 60s)"><span class="sd"></span><span id="sync-pill-txt">syncing…</span></button>
       <div class="hdr-acts">
@@ -811,12 +865,12 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
     </div>
   </header>
 
-  <div class="kpis" id="kpis"><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.6)"><div class="kpi-label">Billed (2026)</div><div class="kpi-val" data-v="510487" data-m="1">$510,487</div><div class="kpi-sub">fees booked</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.55)"><div class="kpi-label">Collected (2026)</div><div class="kpi-val" data-v="534250" data-m="1">$534,250</div><div class="kpi-sub">105% of billed</div></div><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.45)"><div class="kpi-label">Case Avg (2026)</div><div class="kpi-val" data-v="3928.3088235294117" data-m="1">$3,928</div><div class="kpi-sub">136 cases opened</div></div><div class="kpi glass" style="--kpi-c:rgba(230,126,34,.55)"><div class="kpi-label">Outstanding</div><div class="kpi-val" data-v="70150" data-m="1">$70,150</div><div class="kpi-sub">receivable</div></div><div class="kpi glass" style="--kpi-c:rgba(59,158,222,.55)"><div class="kpi-label">Active</div><div class="kpi-val" data-v="111" data-m="0">111</div><div class="kpi-sub">cases in play</div></div><div class="kpi glass" style="--kpi-c:rgba(155,89,182,.5)"><div class="kpi-label">Closed Cases</div><div class="kpi-val" data-v="49" data-m="0">49</div><div class="kpi-sub">resolved</div></div><div class="kpi glass" style="--kpi-c:rgba(200,205,214,.4)"><div class="kpi-label">Total Cases</div><div class="kpi-val" data-v="160" data-m="0">160</div><div class="kpi-sub">all time</div></div></div>
+  <div class="kpis" id="kpis"><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.6)"><div class="kpi-label">Billed (2026)</div><div class="kpi-val" data-v="526487" data-m="1">$526,487</div><div class="kpi-sub">fees booked</div></div><div class="kpi glass" style="--kpi-c:rgba(46,204,113,.55)"><div class="kpi-label">Collected (2026)</div><div class="kpi-val" data-v="544250" data-m="1">$544,250</div><div class="kpi-sub">103% of billed</div></div><div class="kpi glass" style="--kpi-c:rgba(212,175,55,.45)"><div class="kpi-label">Case Avg (2026)</div><div class="kpi-val" data-v="3887.5" data-m="1">$3,888</div><div class="kpi-sub">140 cases opened</div></div><div class="kpi glass" style="--kpi-c:rgba(230,126,34,.55)"><div class="kpi-label">Outstanding</div><div class="kpi-val" data-v="76150" data-m="1">$76,150</div><div class="kpi-sub">receivable</div></div><div class="kpi glass" style="--kpi-c:rgba(59,158,222,.55)"><div class="kpi-label">Active</div><div class="kpi-val" data-v="114" data-m="0">114</div><div class="kpi-sub">cases in play</div></div><div class="kpi glass" style="--kpi-c:rgba(155,89,182,.5)"><div class="kpi-label">Closed Cases</div><div class="kpi-val" data-v="50" data-m="0">50</div><div class="kpi-sub">resolved · 164 all time</div></div></div>
 
-  <nav class="tabs glass" id="tabs"><span class="tab-lead">View</span><select class="sel tab-sel" id="tab-sel" title="Choose a view"><option value="dash" selected="">Dashboard</option><option value="active">Active · 111</option><option value="resolved">Resolved · 49</option><option value="payments">Payments</option><option value="calendar">Calendar · 30</option><option value="analytics">Analytics</option><option value="goals">Goals</option><option value="income">Income</option></select><button class="icon-btn tab-home on" id="tab-home" title="Dashboard" aria-label="Dashboard"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10.5 9-7 9 7"></path><path d="M5.5 9.4V20h13V9.4"></path><path d="M9.6 20v-6.2h4.8V20"></path></svg></button><span class="tab-now">Dashboard</span></nav>
+  <nav class="tabs glass" id="tabs"><span class="tab-lead">View</span><select class="sel tab-sel" id="tab-sel" title="Choose a view"><option value="dash" selected="">Dashboard</option><option value="active">Active · 114</option><option value="resolved">Resolved · 50</option><option value="payments">Payments</option><option value="calendar">Calendar · 30</option><option value="analytics">Analytics</option><option value="goals">Goals</option><option value="income">Income</option></select><button class="icon-btn tab-home on" id="tab-home" title="Back to the dashboard" aria-label="Dashboard"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10.5 9-7 9 7"></path><path d="M5.5 9.4V20h13V9.4"></path><path d="M9.6 20v-6.2h4.8V20"></path></svg></button></nav>
 
   <div id="notice-slot"></div>
-  <main id="view" class="view"><div class="pulse"><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5v22M22.5 9.5c-1.4-1.9-3.8-2.8-6.5-2.8-3.6 0-6.5 1.9-6.5 5s2.7 4.3 6.5 5 7 2 7 5.3-3.1 5-7 5c-3 0-5.6-1-7-3"></path></svg><div><div class="p-label">August Revenue</div><div class="p-num p-green">$11,900</div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="21" rx="3"></rect><path d="M5 13h22M11 4v6M21 4v6"></path><circle cx="16" cy="20" r="2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Upcoming Hearings</div><div class="p-num ">30<small>next 14 days</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a3 3 0 0 1 3-3h6l3 4h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"></path><path d="M4 14h28"></path></svg><div><div class="p-label">Discovery Status</div><div class="p-num ">43<small>outstanding</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29C16 29 6 19.5 6 12.5a10 10 0 0 1 20 0c0 7-10 16.5-10 16.5Z"></path><circle cx="16" cy="12.5" r="3.5"></circle></svg><div><div class="p-label">Active Counties</div><div class="p-num ">24<small>counties</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 16 4l12 8"></path><line x1="4" y1="12" x2="28" y2="12"></line><line x1="8" y1="15.5" x2="8" y2="25"></line><line x1="16" y1="15.5" x2="16" y2="25"></line><line x1="24" y1="15.5" x2="24" y2="25"></line><line x1="3" y1="28" x2="29" y2="28"></line></svg><div><div class="p-label">Trial Watch</div><div class="p-num ">7<small>cases</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22.5a11 11 0 0 1 22 0"></path><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"></line><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Annual Pace</div><div class="p-num "><span class="p-green">$822,790</span></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div><div class="card ai-card"><div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Financial Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div><div class="ai-grid"><div class="ai-big"><div class="ai-big-label">August projected close</div><div class="ai-big-num">$14,756</div><div class="ai-bar"><i class="proj" style="width:13.7%"></i><i style="width:11.0%"></i><em style="left:57.9%"></em><em style="left:78.7%"></em><em style="left:92.6%"></em></div><div class="ai-big-sub">$11,900 collected · goals $62,500 / $85,000 / $100,000</div></div><div class="ai-big"><div class="ai-big-label">Year-end projection</div><div class="ai-big-num cyan">$822,790</div><div class="ai-bar"><i class="proj cy" style="width:94.3%"></i><i class="cy" style="width:61.3%"></i><em style="left:86.0%"></em></div><div class="ai-big-sub">$534,250 banked · goal $750,000 · <b style="color:#7FE8AC">on track</b></div></div><div class="ai-rows"><div class="ai-row risk" style="animation-delay:0ms"><span class="dot"></span><span><b>August</b> is pacing to close at <b>$14,756</b> — below the <b>$62,500 minimum</b> — needs ~<b>$8,434/day</b> the rest of the month.</span></div><div class="ai-row risk" style="animation-delay:70ms"><span class="dot"></span><span><b>4</b> payment plans are past due (<b>$1,500</b>) — a reminder call usually recovers these fastest.</span></div><div class="ai-row risk" data-jump="calendar" style="animation-delay:140ms;cursor:pointer"><span class="dot"></span><span><b>96</b> hearings are past their dates with no outcome recorded — <b>hearing dates need updating</b>: Martin, Shawn Matthew (50d ago), Marube, Winner Omweno (49d ago), Mooney, Karla Jean (49d ago) +93 more. Click to review the calendar.</span></div><div class="ai-row warn" style="animation-delay:210ms"><span class="dot"></span><span><b>$52,050</b> outstanding across <b>28</b> open balances — largest: Gusita, Armando-Valentin ($4,850). Collecting it covers <b>7%</b> of the annual goal.</span></div><div class="ai-row warn" style="animation-delay:280ms"><span class="dot"></span><span>Momentum: this month projects <b>-80%</b> vs your 3-month average of $72,617.</span></div><div class="ai-row warn" data-jump="active" style="animation-delay:350ms;cursor:pointer"><span class="dot"></span><span>Signed-date audit: <b>156</b> cases still carry an offense-date placeholder or pre-firm date — open each case and set the real <b>Date Opened</b>; the count drops as you fix them.</span></div></div></div><div class="ai-foot">◈ On-device intelligence engine — recalculates live from your cases, payments, plans &amp; goals. Nothing leaves this browser.</div></div><div style="margin-bottom:12px"><div class="card glass"><div class="card-title">Case Reviews &amp; Check-Ins<span class="more" data-jump="calsync">open calendar →</span></div><div class="empty" style="padding:18px;font-size:11.5px;line-height:1.7">No calendar feed on this device yet. Once Google Calendar is feeding in, anything titled <b>case review</b> or <b>check in</b> lands here automatically.</div></div></div><div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"><svg width="100%" height="210" viewBox="0 0 885 210"><defs><lineargradient id="ggd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC52"></stop><stop offset="100%" stop-color="#8C6E1C"></stop></lineargradient><lineargradient id="ggdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ECC71"></stop><stop offset="100%" stop-color="#14532D"></stop></lineargradient><lineargradient id="ggdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8E99A8"></stop><stop offset="100%" stop-color="#3A4250"></stop></lineargradient></defs><line x1="46" x2="879" y1="12" y2="12" stroke="rgba(210,220,235,.07)"></line><text x="39" y="15" fill="#525C6B" font-size="8.5" text-anchor="end">$119k</text><line x1="46" x2="879" y1="70.66666666666666" y2="70.66666666666666" stroke="rgba(210,220,235,.07)"></line><text x="39" y="73.66666666666666" fill="#525C6B" font-size="8.5" text-anchor="end">$79k</text><line x1="46" x2="879" y1="129.33333333333331" y2="129.33333333333331" stroke="rgba(210,220,235,.07)"></line><text x="39" y="132.33333333333331" fill="#525C6B" font-size="8.5" text-anchor="end">$40k</text><line x1="46" x2="879" y1="188" y2="188" stroke="rgba(210,220,235,.07)"></line><text x="39" y="191" fill="#525C6B" font-size="8.5" text-anchor="end">$0k</text><g class="bargroup" data-i="0" style="cursor:default"><rect x="62.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="82.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="45.99999999999999" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="80.54166666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Sep 25</text></g><g class="bargroup" data-i="1" style="cursor:default"><rect x="131.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="151.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="115.08333333333334" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="149.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Oct</text></g><g class="bargroup" data-i="2" style="cursor:default"><rect x="200.20833333333331" y="138.1160639192599" width="17" height="49.88393608074011" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="220.20833333333331" y="119.90916736753574" width="17" height="68.09083263246426" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="184.16666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="218.70833333333331" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Nov</text></g><g class="bargroup" data-i="3" style="cursor:default"><rect x="269.2916666666667" y="40.716568544995795" width="17" height="147.2834314550042" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="289.2916666666667" y="93.26492851135407" width="17" height="94.73507148864593" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="253.25000000000003" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="287.7916666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Dec</text></g><g class="bargroup" data-i="4" style="cursor:default"><rect x="338.375" y="68.39697224558452" width="17" height="119.60302775441548" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="358.375" y="107.32716568544996" width="17" height="80.67283431455004" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="322.3333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="356.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jan 26</text></g><g class="bargroup" data-i="5" style="cursor:default"><rect x="407.4583333333333" y="56.03700588730024" width="17" height="131.96299411269976" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="427.4583333333333" y="122.12952060555088" width="17" height="65.87047939444912" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="391.41666666666663" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="425.9583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Feb</text></g><g class="bargroup" data-i="6" style="cursor:default"><rect x="476.5416666666667" y="53.668629100084104" width="17" height="134.3313708999159" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="496.5416666666667" y="87.34398654331372" width="17" height="100.65601345668628" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="460.5" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="495.0416666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Mar</text></g><g class="bargroup" data-i="7" style="cursor:default"><rect x="545.6249999999999" y="43.973086627417985" width="17" height="144.02691337258202" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="565.6249999999999" y="85.12363330529857" width="17" height="102.87636669470143" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="529.5833333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="564.1249999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Apr</text></g><g class="bargroup" data-i="8" style="cursor:default"><rect x="614.7083333333333" y="51.30025231286797" width="17" height="136.69974768713203" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="634.7083333333333" y="96.22539949537428" width="17" height="91.77460050462572" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="598.6666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="633.2083333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">May</text></g><g class="bargroup" data-i="9" style="cursor:default"><rect x="683.7916666666666" y="12" width="17" height="176" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="703.7916666666666" y="51.07821698906645" width="17" height="136.92178301093355" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="667.75" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="702.2916666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jun</text></g><g class="bargroup" data-i="10" style="cursor:default"><rect x="752.8749999999999" y="77.79646761984861" width="17" height="110.20353238015139" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="772.8749999999999" y="92.080740117746" width="17" height="95.919259882254" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="736.8333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="771.3749999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jul</text></g><g class="bargroup" data-i="11" style="cursor:default"><rect x="821.9583333333333" y="170.3851976450799" width="17" height="17.6148023549201" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="841.9583333333333" y="166.7038519764508" width="17" height="21.2961480235492" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="805.9166666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="840.4583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Aug</text></g></svg></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div><div class="card glass"><div class="card-title">Collection Rate (2026)</div><div id="dash-ring"><div style="position:relative;width:168px;height:168px;margin:0 auto"><svg width="168" height="168"><circle cx="84" cy="84" r="77" fill="none" stroke="rgba(210,220,235,.09)" stroke-width="9"></circle><circle cx="84" cy="84" r="77" fill="none" stroke="#D4AF37" stroke-width="9" stroke-linecap="round" stroke-dasharray="483.80526865282815" stroke-dashoffset="0" transform="rotate(-90 84 84)" style="filter:drop-shadow(0 0 6px #D4AF3744);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"></circle></svg><div class="ring-center"><div style="font-size:32.30769230769231px;font-weight:800">105%</div><div style="font-size:9.5px;color:var(--plat-dim);letter-spacing:.6px">collected / billed</div></div></div></div><div class="stat-row"><span class="k">Billed</span><span class="v">$510,487</span></div><div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">$534,250</span></div><div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">$70,150</span></div></div></div><div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px"><div class="card glass"><div class="card-title">Next Hearings <span class="more" data-jump="calendar">calendar →</span></div><div class="mini-list" id="dash-hearings"><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="md">08/25/2026 8:30a</span><span class="mn">Walker, Ronald</span><span class="mv">Arraignment · today</span></div><div class="mrow" data-case="156d3795-15b7-483d-8954-182d5a636011"><span class="md">08/25/2026 9:45a</span><span class="mn">Von Essen, Brandon Bradley</span><span class="mv">Pretrial · today</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/25/2026 1:30p</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Rule 20 Review Hearing · today</span></div><div class="mrow" data-case="522d2625-4121-4255-a065-9a16cc683727"><span class="md">08/26/2026</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/26/2026 8:30a</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Pretrial · in 1d</span></div><div class="mrow" data-case="55d25547-8d99-4ffe-8843-01e20581e937"><span class="md">08/26/2026 8:30a</span><span class="mn">Martens, Marc Christopher</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="md">08/26/2026 8:30a</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="65bd8d44-94ed-47c7-9cff-59a34d9de0ef"><span class="md">08/26/2026 1:30p</span><span class="mn">Thao, Paul Michael</span><span class="mv">Pretrial · in 1d</span></div></div></div><div class="card glass"><div class="card-title">Payment Plans Due</div><div class="mini-list"><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">$250 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="5dbe0748-a2af-44a5-b35e-4ea358e0886d"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Chang, Khai</span><span class="mv">$500 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">McCurry, Vanessa Ferreira</span><span class="mv">$500 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="4b6cc386-e8ab-4be6-ba97-5206b9e67e4e"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">Kroll, Hunter Joseph</span><span class="mv">$250 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="32c2fb13-36d3-48de-a3cc-4d12314e7a44"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">McCorkell, Jonathan Michael</span><span class="mv">$250 in 21d</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Makiya, Brian</span><span class="mv">$250 in 21d</span></div></div></div><div class="card glass"><div class="card-title">Discovery Outstanding <span class="more" data-filter-disc="">view all →</span></div><div class="mini-list"><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="mn">Acuna-Nino, Clark Kent</span><span class="mv">Scott</span></div><div class="mrow" data-case="6b312aa2-3b0f-4be7-b431-70f5004b72b0"><span class="mn">Amaya Martinez, Eliezer Gerald</span><span class="mv">Olmsted</span></div><div class="mrow" data-case="1e293880-6be6-4847-beb2-d344d6a15987"><span class="mn">Anderson, Caleb Frederick</span><span class="mv">Winona</span></div><div class="mrow" data-case="e255c2a8-1a28-48fa-bbb2-0a4e6fb8b94d"><span class="mn">Calhoun, Mitchell Moore</span><span class="mv">Crow Wing</span></div><div class="mrow" data-case="eaec65b5-91e8-479e-bffd-02a49177d325"><span class="mn">Chorolec, Helen Olga</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="mn">Clasen, Anthony Michael</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="1a298b31-9551-44b5-aabc-d05356e524f7"><span class="mn">Collette, Jennifer Elizabeth</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="e292c7f2-c140-4303-a7ce-8d82ba99851d"><span class="mn">Gusita, Armando-Valentin</span><span class="mv">Hennepin</span></div></div></div></div><div class="grid" style="grid-template-columns:1.3fr 1fr 1.2fr"><div class="card glass"><div class="card-title">Top Counties · active fees</div><div class="bars-h"><div class="brow"><span style="color:var(--plat)">Hennepin</span><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bval">$156,000</span></div><div class="brow"><span style="color:var(--plat)">Anoka</span><div class="btrack"><div class="bfill" style="width:33.33333333333333%"></div></div><span class="bval">$52,000</span></div><div class="brow"><span style="color:var(--plat)">Ramsey</span><div class="btrack"><div class="bfill" style="width:28.205128205128204%"></div></div><span class="bval">$44,000</span></div><div class="brow"><span style="color:var(--plat)">Scott</span><div class="btrack"><div class="bfill" style="width:25%"></div></div><span class="bval">$39,000</span></div><div class="brow"><span style="color:var(--plat)">Dakota</span><div class="btrack"><div class="bfill" style="width:21.153846153846153%"></div></div><span class="bval">$33,000</span></div><div class="brow"><span style="color:var(--plat)">Wright</span><div class="btrack"><div class="bfill" style="width:19.871794871794872%"></div></div><span class="bval">$31,000</span></div><div class="brow"><span style="color:var(--plat)">Washington</span><div class="btrack"><div class="bfill" style="width:14.743589743589745%"></div></div><span class="bval">$23,000</span></div><div class="brow"><span style="color:var(--plat)">St. Louis</span><div class="btrack"><div class="bfill" style="width:13.782051282051283%"></div></div><span class="bval">$21,500</span></div></div></div><div class="card glass"><div class="card-title">Charge Mix · active</div><div id="dash-donut"><svg width="158" height="158" style="display:block;margin:0 auto"><circle cx="79" cy="79" r="73" fill="none" stroke="#D4AF37" stroke-width="11" stroke-dasharray="356.5026651130973 102.16986231101248" stroke-dashoffset="0" transform="rotate(-90 79 79)" opacity=".9"><title>Driving While Impaired · 68</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#3B9EDE" stroke-width="11" stroke-dasharray="24.360490081845388 434.3120373422644" stroke-dashoffset="-358.5026651130973" transform="rotate(-90 79 79)" opacity=".9"><title>Assault · 5</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#2ECC71" stroke-width="11" stroke-dasharray="19.08839206547631 439.5841353586335" stroke-dashoffset="-384.86315519494275" transform="rotate(-90 79 79)" opacity=".9"><title>Failure to Report Collision · 4</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#9B59B6" stroke-width="11" stroke-dasharray="19.08839206547631 439.5841353586335" stroke-dashoffset="-405.95154726041903" transform="rotate(-90 79 79)" opacity=".9"><title>Criminal Vehicular Operation · 4</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E67E22" stroke-width="11" stroke-dasharray="13.816294049107233 444.85623337500255" stroke-dashoffset="-427.0399393258953" transform="rotate(-90 79 79)" opacity=".9"><title>Reckless Driving · 3</title></circle><circle cx="79" cy="79" r="73" fill="none" stroke="#E74C3C" stroke-width="11" stroke-dasharray="13.816294049107233 444.85623337500255" stroke-dashoffset="-442.85623337500255" transform="rotate(-90 79 79)" opacity=".9"><title>Careless Driving · 3</title></circle></svg></div><div class="legend" style="margin-top:10px;justify-content:center"><span><i style="background:#D4AF37"></i>Driving While Impaired (68)</span><span><i style="background:#3B9EDE"></i>Assault (5)</span><span><i style="background:#2ECC71"></i>Failure to Report Col… (4)</span><span><i style="background:#9B59B6"></i>Criminal Vehicular Op… (4)</span><span><i style="background:#E67E22"></i>Reckless Driving (3)</span><span><i style="background:#E74C3C"></i>Careless Driving (3)</span></div></div><div class="card glass"><div class="card-title">Recent Activity</div><div class="mini-list"><div class="mrow" data-case="bca7474f-d33a-4b0f-9539-b382dd01b1d5"><span class="md">08/26/2026</span><span class="mn">Resolved Huerta, Andrew Martin</span></div><div class="mrow" data-case="95ed5de1-ff24-4442-87da-c844d19d814e"><span class="md">08/26/2026</span><span class="mn">Resolved Conter, Joshua Darrin</span></div><div class="mrow"><span class="md">08/25/2026</span><span class="mn">Legacy carry-forward switched off — its 130100 collected is already inside the monthly totals</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">08/11/2026</span><span class="mn">Payment $250 — Zobel, Tyler Robert</span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md">08/11/2026</span><span class="mn">Updated McCurry, Vanessa Ferreira</span></div><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="md">07/11/2026</span><span class="mn">Updated Acuna-Nino, Clark Kent</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">07/11/2026</span><span class="mn">Updated Zobel, Tyler Robert</span></div><div class="mrow" data-case="630ad401-a99a-4806-ad48-649ebc9f3cef"><span class="md">07/11/2026</span><span class="mn">Updated Zobel, Tyler Robert</span></div><div class="mrow" data-case="b0245dc7-b3ba-48c2-91f6-5acb91bb7122"><span class="md">07/11/2026</span><span class="mn">Updated Parmeter, Gerald Hilden</span></div></div></div></div></main>
+  <main id="view" class="view"><div class="pulse"><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5v22M22.5 9.5c-1.4-1.9-3.8-2.8-6.5-2.8-3.6 0-6.5 1.9-6.5 5s2.7 4.3 6.5 5 7 2 7 5.3-3.1 5-7 5c-3 0-5.6-1-7-3"></path></svg><div><div class="p-label">August Revenue</div><div class="p-num p-green">$21,900</div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="22" height="21" rx="3"></rect><path d="M5 13h22M11 4v6M21 4v6"></path><circle cx="16" cy="20" r="2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Upcoming Hearings</div><div class="p-num ">30<small>next 14 days</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a3 3 0 0 1 3-3h6l3 4h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"></path><path d="M4 14h28"></path></svg><div><div class="p-label">Discovery Status</div><div class="p-num ">46<small>outstanding</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29C16 29 6 19.5 6 12.5a10 10 0 0 1 20 0c0 7-10 16.5-10 16.5Z"></path><circle cx="16" cy="12.5" r="3.5"></circle></svg><div><div class="p-label">Active Counties</div><div class="p-num ">24<small>counties</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 16 4l12 8"></path><line x1="4" y1="12" x2="28" y2="12"></line><line x1="8" y1="15.5" x2="8" y2="25"></line><line x1="16" y1="15.5" x2="16" y2="25"></line><line x1="24" y1="15.5" x2="24" y2="25"></line><line x1="3" y1="28" x2="29" y2="28"></line></svg><div><div class="p-label">Trial Watch</div><div class="p-num ">7<small>cases</small></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="pcard glass" data-go=""><svg class="pi" viewBox="0 0 32 32" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22.5a11 11 0 0 1 22 0"></path><line x1="16" y1="22.5" x2="22.3" y2="14.2" stroke-width="2.1"></line><circle cx="16" cy="22.5" r="2.2" fill="#D4AF37" stroke="none"></circle></svg><div><div class="p-label">Annual Pace</div><div class="p-num "><span class="p-green">$838,191</span></div><div class="dashes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div><div class="card ai-card"><div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Case Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div><div class="ai-grid"><div class="ai-big"><div class="ai-big-label">August projected close</div><div class="ai-big-num">$27,156</div><div class="ai-bar"><i class="proj" style="width:25.1%"></i><i style="width:20.3%"></i><em style="left:57.9%"></em><em style="left:78.7%"></em><em style="left:92.6%"></em></div><div class="ai-big-sub">$21,900 collected · goals $62,500 / $85,000 / $100,000</div></div><div class="ai-big" title="Collected so far this year against your annual minimum goal"><div class="ai-big-label">Revenue to annual goal</div><div class="ai-big-num cyan">$544,250<small> / $750,000</small></div><div class="ai-bar"><i class="cy" style="width:72.6%"></i><em style="left:64.9%"></em></div><div class="ai-big-sub"><b style="color:#7FE8AC">72.6%</b> of annual goal · $205,750 to go, ahead of the year’s pace</div></div><div class="ai-rows"><div class="ai-row risk" style="animation-delay:0ms"><span class="dot"></span><span class="ai-txt"><b>August</b> is pacing to close at <b>$27,156</b> — below the <b>$62,500 minimum</b> — needs ~<b>$6,767/day</b> the rest of the month.</span></div><div class="ai-row risk" data-aiact="1" style="animation-delay:70ms;cursor:pointer" title="Show the 4 cases behind this"><span class="dot"></span><span class="ai-txt"><b>4</b> payment plans are past due (<b>$1,500</b>) — a reminder call usually recovers these fastest.</span><span class="ai-acts"><button class="ai-act" data-aireview="1" title="Show the affected cases">Review</button><button class="ai-act" data-aisnooze="1" title="Hide for a week — it comes back if the issue is still there">Snooze</button><button class="ai-act" data-aidismiss="1" title="Hide until this changes">Dismiss</button></span></div><div class="ai-row risk" data-aiact="2" style="animation-delay:140ms;cursor:pointer" title="Show the 4 cases behind this"><span class="dot"></span><span class="ai-txt"><b>4</b> cases have a hearing inside two weeks with <b>discovery still outstanding</b> — Walker, Ronald, Sanson, Michael Anthony Allen +2 more.</span><span class="ai-acts"><button class="ai-act" data-aireview="2" title="Show the affected cases">Review</button><button class="ai-act" data-aisnooze="2" title="Hide for a week — it comes back if the issue is still there">Snooze</button><button class="ai-act" data-aidismiss="2" title="Hide until this changes">Dismiss</button></span></div><div class="ai-row risk" data-aiact="3" style="animation-delay:210ms;cursor:pointer" title="Show the 76 cases behind this"><span class="dot"></span><span class="ai-txt"><b>95</b> hearings are past their dates with no outcome recorded — <b>hearing dates need updating</b>: Martin, Shawn Matthew (50d ago), Marube, Winner Omweno (49d ago), Mooney, Karla Jean (49d ago) +92 more.</span><span class="ai-acts"><button class="ai-act" data-aireview="3" title="Show the affected cases">Review</button><button class="ai-act" data-aisnooze="3" title="Hide for a week — it comes back if the issue is still there">Snooze</button><button class="ai-act" data-aidismiss="3" title="Hide until this changes">Dismiss</button></span></div><div class="ai-row warn" data-aiact="4" style="animation-delay:280ms;cursor:pointer" title="Show the 31 cases behind this"><span class="dot"></span><span class="ai-txt"><b>$58,050</b> outstanding across <b>31</b> open balances — largest: Gusita, Armando-Valentin ($4,850). Collecting it covers <b>8%</b> of the annual goal.</span><span class="ai-acts"><button class="ai-act" data-aireview="4" title="Show the affected cases">Review</button><button class="ai-act" data-aisnooze="4" title="Hide for a week — it comes back if the issue is still there">Snooze</button><button class="ai-act" data-aidismiss="4" title="Hide until this changes">Dismiss</button></span></div></div></div><div class="ai-foot">◈ On-device engine — recalculates live from your cases, hearings, discovery, payments &amp; goals. Nothing leaves this browser.</div></div><div class="grid cal-split" style="grid-template-columns:1fr 1fr;margin-bottom:12px"><div class="card glass" style="margin-bottom:12px"><div class="card-title">Google Calendar · next 14 days<span class="more" data-jump="calsync">open calendar →</span></div><div class="agd-day">Tue · 08/25/2026<span>today</span></div><div class="agd-row" data-case="f03b6f2e-f7e2-4a6b-bfd9-72f743c8952d"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Lane, Charles David</b><span class="agd-ty">Implied Consent</span></span><span class="agd-l">Hennepin (DT) (Zoom)</span></div><div class="agd-row" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Walker, Ronald</b><span class="agd-ty">Arraignment</span></span><span class="agd-l">Hennepin (BD)</span></div><div class="agd-row" data-case="156d3795-15b7-483d-8954-182d5a636011"><span class="agd-t">9:45a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Von Essen, Brandon Bradley</b><span class="agd-ty">Pretrial</span></span><span class="agd-l">Nicollet County (Zoom)</span></div><div class="agd-row" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="agd-t">1:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Eletsky, Mikhail</b><span class="agd-ty">Rule 20 Review Hearing</span></span><span class="agd-l">Hennepin (DT) (Zoom)</span></div><div class="agd-day">Wed · 08/26/2026<span>tomorrow</span></div><div class="agd-row" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Eletsky, Mikhail</b><span class="agd-ty">Pretrial</span></span><span class="agd-l">Hennepin (RD)</span></div><div class="agd-row" data-case="55d25547-8d99-4ffe-8843-01e20581e937"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Martens, Marc Christopher</b><span class="agd-ty">Plea Hearing</span></span><span class="agd-l">Hennepin (RD)</span></div><div class="agd-row" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Smith, Jeffery Lee</b><span class="agd-ty">Plea Hearing</span></span><span class="agd-l">Hennepin (RD)</span></div><div class="agd-row" data-case="65bd8d44-94ed-47c7-9cff-59a34d9de0ef"><span class="agd-t">1:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Thao, Paul Michael</b><span class="agd-ty">Pretrial</span></span><span class="agd-l">Ramsey County Suburban Court</span></div><div class="agd-row" data-case="115e94ac-ff2e-4721-91af-20ebf4c38c18"><span class="agd-t">2:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Dameron, Nathan Kelly Storm</b><span class="agd-ty">Pretrial</span></span><span class="agd-l">Hennepin (RD) (Zoom)</span></div><div class="agd-day">Thu · 08/27/2026<span>in 2d</span></div><div class="agd-row" data-case="ea2245b3-d284-4c97-aace-c030258e0883"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Scales, Dakota Trent</b><span class="agd-ty">Omnibus</span></span><span class="agd-l">Washington (Zoom)</span></div><div class="agd-row" data-case="86e9323f-fa14-4c11-af58-42698500fdb7"><span class="agd-t">9a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Rosenlund, Nicholas Jay</b><span class="agd-ty">Settlement Conference</span></span><span class="agd-l">Wright County</span></div><div class="agd-row" data-case="491d6bbf-07b0-42a9-8e56-1fbfb1c28e24"><span class="agd-t">9:15a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Williams, Michael Tavon</b><span class="agd-ty">Settlement Conference</span></span><span class="agd-l">Hennepin (BD)</span></div><div class="agd-day">Fri · 08/28/2026<span>in 3d</span></div><div class="agd-row"><span class="agd-t">all day</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7A8492;box-shadow:0 0 7px #7A8492"></span> GWM ON CALL<span class="agd-ty">Personal</span></span><span class="agd-l"></span></div><div class="agd-row" data-case="52e85b44-316d-4717-8e76-a3939aa2a8b2"><span class="agd-t">8:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FE8AC;box-shadow:0 0 7px #7FE8AC"></span> <b>Kpadeh, Yvonne</b><span class="agd-ty">Pretrial</span></span><span class="agd-l">Hennepin (BD)</span></div><div style="font-size:9.5px;color:var(--plat-faint);margin-top:10px">96 linked to client files · <b style="color:var(--orange)">4 unmatched</b> · feed 369h ago</div></div><div class="card glass"><div class="card-title">Case Reviews &amp; Check-Ins<span class="more" data-jump="calsync">open calendar →</span></div><div class="rv-list"><div style="font-size:11.5px;color:var(--plat-faint);padding:8px 2px">None scheduled ahead.</div><div class="rv-sep">EARLIER</div><div class="agd-row rv-row rv-past" data-case="747128cf-7710-4ccf-8dc6-738745a9565d"><span class="agd-t">08/19 10:30a</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FD4FF;box-shadow:0 0 7px #7FD4FF"></span> <b>Parlow, Alaini Leigh</b><span class="agd-ty">Check-In</span></span><span class="agd-l">6d ago</span></div><div class="agd-row rv-row rv-past" data-case="cca8cb32-4f46-40c9-8906-e526c9373091"><span class="agd-t">08/11 4:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#C8A2FF;box-shadow:0 0 7px #C8A2FF"></span> <b>Brady, Jesse David</b><span class="agd-ty">Case Review</span></span><span class="agd-l">14d ago</span></div><div class="agd-row rv-row rv-past" data-case="f87057d7-88bb-4c03-9049-ccf3df25e04f"><span class="agd-t">08/11 3:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#C8A2FF;box-shadow:0 0 7px #C8A2FF"></span> <b>Silwal, Asutosh</b><span class="agd-ty">Case Review</span></span><span class="agd-l">14d ago</span></div><div class="agd-row rv-row rv-past" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="agd-t">08/06 12p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FD4FF;box-shadow:0 0 7px #7FD4FF"></span> <b>Smith, Jeffery Lee</b><span class="agd-ty">Check-In</span></span><span class="agd-l">19d ago</span></div><div class="agd-row rv-row rv-past" data-case="bca7474f-d33a-4b0f-9539-b382dd01b1d5"><span class="agd-t">08/05 5:30p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#C8A2FF;box-shadow:0 0 7px #C8A2FF"></span> <b>Huerta, Andrew Martin</b><span class="agd-ty">Case Review</span></span><span class="agd-l">20d ago</span></div><div class="agd-row rv-row rv-past" data-case="db57eee4-117e-4e0a-b4f7-41e098f0ead6"><span class="agd-t">07/29 12p</span><span class="agd-n"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7FD4FF;box-shadow:0 0 7px #7FD4FF"></span> <b>Miller, Jeremy Paul</b><span class="agd-ty">Check-In</span></span><span class="agd-l">27d ago</span></div></div><div style="font-size:9.5px;color:var(--plat-faint);margin-top:10px">0 upcoming · last one 6d ago · 5 reviews, 3 check-ins</div></div></div><div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px"><div class="card glass w-card" id="w-revenue" data-w="revenue"><div class="card-title">Revenue · last 12 months<span class="more" data-jump="analytics">full analytics →</span><button class="w-fold" data-fold-w="revenue" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div id="dash-chart" class="chart-wrap"><svg width="100%" height="210" viewBox="0 0 885 210"><defs><lineargradient id="ggd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC52"></stop><stop offset="100%" stop-color="#8C6E1C"></stop></lineargradient><lineargradient id="ggdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ECC71"></stop><stop offset="100%" stop-color="#14532D"></stop></lineargradient><lineargradient id="ggdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8E99A8"></stop><stop offset="100%" stop-color="#3A4250"></stop></lineargradient></defs><line x1="46" x2="879" y1="12" y2="12" stroke="rgba(210,220,235,.07)"></line><text x="39" y="15" fill="#525C6B" font-size="8.5" text-anchor="end">$119k</text><line x1="46" x2="879" y1="70.66666666666666" y2="70.66666666666666" stroke="rgba(210,220,235,.07)"></line><text x="39" y="73.66666666666666" fill="#525C6B" font-size="8.5" text-anchor="end">$79k</text><line x1="46" x2="879" y1="129.33333333333331" y2="129.33333333333331" stroke="rgba(210,220,235,.07)"></line><text x="39" y="132.33333333333331" fill="#525C6B" font-size="8.5" text-anchor="end">$40k</text><line x1="46" x2="879" y1="188" y2="188" stroke="rgba(210,220,235,.07)"></line><text x="39" y="191" fill="#525C6B" font-size="8.5" text-anchor="end">$0k</text><g class="bargroup" data-i="0" style="cursor:default"><rect x="62.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="82.04166666666666" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="45.99999999999999" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="80.54166666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Sep 25</text></g><g class="bargroup" data-i="1" style="cursor:default"><rect x="131.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="151.125" y="188" width="17" height="1" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="115.08333333333334" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="149.625" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Oct</text></g><g class="bargroup" data-i="2" style="cursor:default"><rect x="200.20833333333331" y="138.1160639192599" width="17" height="49.88393608074011" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="220.20833333333331" y="119.90916736753574" width="17" height="68.09083263246426" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="184.16666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="218.70833333333331" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Nov</text></g><g class="bargroup" data-i="3" style="cursor:default"><rect x="269.2916666666667" y="40.716568544995795" width="17" height="147.2834314550042" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="289.2916666666667" y="93.26492851135407" width="17" height="94.73507148864593" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="253.25000000000003" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="287.7916666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Dec</text></g><g class="bargroup" data-i="4" style="cursor:default"><rect x="338.375" y="68.39697224558452" width="17" height="119.60302775441548" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="358.375" y="107.32716568544996" width="17" height="80.67283431455004" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="322.3333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="356.875" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jan 26</text></g><g class="bargroup" data-i="5" style="cursor:default"><rect x="407.4583333333333" y="56.03700588730024" width="17" height="131.96299411269976" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="427.4583333333333" y="122.12952060555088" width="17" height="65.87047939444912" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="391.41666666666663" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="425.9583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Feb</text></g><g class="bargroup" data-i="6" style="cursor:default"><rect x="476.5416666666667" y="53.668629100084104" width="17" height="134.3313708999159" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="496.5416666666667" y="87.34398654331372" width="17" height="100.65601345668628" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="460.5" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="495.0416666666667" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Mar</text></g><g class="bargroup" data-i="7" style="cursor:default"><rect x="545.6249999999999" y="43.973086627417985" width="17" height="144.02691337258202" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="565.6249999999999" y="85.12363330529857" width="17" height="102.87636669470143" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="529.5833333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="564.1249999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Apr</text></g><g class="bargroup" data-i="8" style="cursor:default"><rect x="614.7083333333333" y="51.30025231286797" width="17" height="136.69974768713203" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="634.7083333333333" y="96.22539949537428" width="17" height="91.77460050462572" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="598.6666666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="633.2083333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">May</text></g><g class="bargroup" data-i="9" style="cursor:default"><rect x="683.7916666666666" y="12" width="17" height="176" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="703.7916666666666" y="51.07821698906645" width="17" height="136.92178301093355" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="667.75" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="702.2916666666666" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jun</text></g><g class="bargroup" data-i="10" style="cursor:default"><rect x="752.8749999999999" y="77.79646761984861" width="17" height="110.20353238015139" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="772.8749999999999" y="92.080740117746" width="17" height="95.919259882254" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="736.8333333333333" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="771.3749999999999" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Jul</text></g><g class="bargroup" data-i="11" style="cursor:default"><rect x="821.9583333333333" y="155.58284272497897" width="17" height="32.417157275021026" rx="2.5" fill="url(#ggd)" opacity=".92"></rect><rect x="841.9583333333333" y="143.0200841042893" width="17" height="44.979915895710675" rx="2.5" fill="url(#ggdp)" opacity=".88"></rect><rect x="805.9166666666666" y="12" width="69.08333333333333" height="176" fill="transparent"></rect><text x="840.4583333333333" y="203" fill="#7A8492" font-size="8.5" text-anchor="middle">Aug</text></g></svg></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div></div><div class="card glass w-card" id="w-collrate" data-w="collrate"><div class="card-title">Collection Rate (2026)<button class="w-fold" data-fold-w="collrate" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div id="dash-ring"><div style="position:relative;width:168px;height:168px;margin:0 auto"><svg width="168" height="168"><circle cx="84" cy="84" r="77" fill="none" stroke="rgba(210,220,235,.09)" stroke-width="9"></circle><circle cx="84" cy="84" r="77" fill="none" stroke="#D4AF37" stroke-width="9" stroke-linecap="round" stroke-dasharray="483.80526865282815" stroke-dashoffset="0" transform="rotate(-90 84 84)" style="filter:drop-shadow(0 0 6px #D4AF3744);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"></circle></svg><div class="ring-center"><div style="font-size:32.30769230769231px;font-weight:800">103%</div><div style="font-size:9.5px;color:var(--plat-dim);letter-spacing:.6px">collected / billed</div></div></div></div><div class="stat-row"><span class="k">Billed</span><span class="v">$526,487</span></div><div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">$544,250</span></div><div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">$76,150</span></div></div></div></div><div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px"><div class="card glass w-card" id="w-hearings" data-w="hearings"><div class="card-title">Next Hearings<span class="more" data-jump="calendar">calendar →</span><button class="w-fold" data-fold-w="hearings" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="mini-list" id="dash-hearings"><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="md">08/25/2026 8:30a</span><span class="mn">Walker, Ronald</span><span class="mv">Arraignment · today</span></div><div class="mrow" data-case="156d3795-15b7-483d-8954-182d5a636011"><span class="md">08/25/2026 9:45a</span><span class="mn">Von Essen, Brandon Bradley</span><span class="mv">Pretrial · today</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/25/2026 1:30p</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Rule 20 Review Hearing · today</span></div><div class="mrow" data-case="522d2625-4121-4255-a065-9a16cc683727"><span class="md">08/26/2026</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="md">08/26/2026 8:30a</span><span class="mn">Eletsky, Mikhail</span><span class="mv">Pretrial · in 1d</span></div><div class="mrow" data-case="55d25547-8d99-4ffe-8843-01e20581e937"><span class="md">08/26/2026 8:30a</span><span class="mn">Martens, Marc Christopher</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="md">08/26/2026 8:30a</span><span class="mn">Smith, Jeffery Lee</span><span class="mv">Plea Hearing · in 1d</span></div><div class="mrow" data-case="65bd8d44-94ed-47c7-9cff-59a34d9de0ef"><span class="md">08/26/2026 1:30p</span><span class="mn">Thao, Paul Michael</span><span class="mv">Pretrial · in 1d</span></div></div></div></div><div class="card glass w-card" id="w-plans" data-w="plans"><div class="card-title">Payment Plans Due<button class="w-fold" data-fold-w="plans" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="mini-list"><div class="mrow" data-case="b03fb6f9-5f73-4db1-be25-81d41b08a8c8"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Soka, Anthony Bunthone</span><span class="mv">$250 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="5dbe0748-a2af-44a5-b35e-4ea358e0886d"><span class="md" style="color:var(--red)">08/01/2026</span><span class="mn">Chang, Khai</span><span class="mv">$500 <b style="color:var(--red)">24d late</b></span></div><div class="mrow" data-case="02b779c7-1589-416c-bc33-87cf5f8db88c"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">McCurry, Vanessa Ferreira</span><span class="mv">$500 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="4b6cc386-e8ab-4be6-ba97-5206b9e67e4e"><span class="md" style="color:var(--red)">08/15/2026</span><span class="mn">Kroll, Hunter Joseph</span><span class="mv">$250 <b style="color:var(--red)">10d late</b></span></div><div class="mrow" data-case="32c2fb13-36d3-48de-a3cc-4d12314e7a44"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">McCorkell, Jonathan Michael</span><span class="mv">$250 in 21d</span></div><div class="mrow" data-case="ed3d0de7-d46c-46b6-83d7-10533cfa235f"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Makiya, Brian</span><span class="mv">$250 in 21d</span></div><div class="mrow" data-case="3e3194a8-03b2-4def-9d18-b5efe142ca05"><span class="md" style="color:var(--plat-dim)">09/15/2026</span><span class="mn">Knutson, Shawn Steven</span><span class="mv">$250 in 21d</span></div></div></div></div><div class="card glass w-card" id="w-disc" data-w="disc"><div class="card-title">Discovery Outstanding<span class="more" data-filter-disc="">view all →</span><button class="w-fold" data-fold-w="disc" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="mini-list"><div class="mrow" data-case="bd47183d-1c6c-45a4-b919-3efe71abfcdc"><span class="mn">Acuna-Nino, Clark Kent</span><span class="mv">Scott</span></div><div class="mrow" data-case="6b312aa2-3b0f-4be7-b431-70f5004b72b0"><span class="mn">Amaya Martinez, Eliezer Gerald</span><span class="mv">Olmsted</span></div><div class="mrow" data-case="1e293880-6be6-4847-beb2-d344d6a15987"><span class="mn">Anderson, Caleb Frederick</span><span class="mv">Winona</span></div><div class="mrow" data-case="e255c2a8-1a28-48fa-bbb2-0a4e6fb8b94d"><span class="mn">Calhoun, Mitchell Moore</span><span class="mv">Crow Wing</span></div><div class="mrow" data-case="eaec65b5-91e8-479e-bffd-02a49177d325"><span class="mn">Chorolec, Helen Olga</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="9ccec10b-9bdf-4850-9f08-eda4094ad146"><span class="mn">Clasen, Anthony Michael</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="e292c7f2-c140-4303-a7ce-8d82ba99851d"><span class="mn">Gusita, Armando-Valentin</span><span class="mv">Hennepin</span></div><div class="mrow" data-case="522ce1ee-dc47-4ff2-822f-47cbac19f6fb"><span class="mn">Hassan, Adam</span><span class="mv">Hennepin</span></div></div></div></div></div><div class="grid" style="grid-template-columns:1.15fr 1fr 1.25fr"><div class="card glass w-card" id="w-counties" data-w="counties"><div class="card-title">Top Counties · active fees<button class="w-fold" data-fold-w="counties" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="bars-h"><div class="brow rowc" data-county="Hennepin" title="Show active cases in Hennepin"><span style="color:var(--plat)">Hennepin</span><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bval">$154,000</span></div><div class="brow rowc" data-county="Anoka" title="Show active cases in Anoka"><span style="color:var(--plat)">Anoka</span><div class="btrack"><div class="bfill" style="width:33.76623376623377%"></div></div><span class="bval">$52,000</span></div><div class="brow rowc" data-county="Ramsey" title="Show active cases in Ramsey"><span style="color:var(--plat)">Ramsey</span><div class="btrack"><div class="bfill" style="width:28.57142857142857%"></div></div><span class="bval">$44,000</span></div><div class="brow rowc" data-county="Scott" title="Show active cases in Scott"><span style="color:var(--plat)">Scott</span><div class="btrack"><div class="bfill" style="width:25.324675324675322%"></div></div><span class="bval">$39,000</span></div><div class="brow rowc" data-county="Dakota" title="Show active cases in Dakota"><span style="color:var(--plat)">Dakota</span><div class="btrack"><div class="bfill" style="width:21.428571428571427%"></div></div><span class="bval">$33,000</span></div><div class="brow rowc" data-county="Wright" title="Show active cases in Wright"><span style="color:var(--plat)">Wright</span><div class="btrack"><div class="bfill" style="width:20.12987012987013%"></div></div><span class="bval">$31,000</span></div><div class="brow rowc" data-county="Washington" title="Show active cases in Washington"><span style="color:var(--plat)">Washington</span><div class="btrack"><div class="bfill" style="width:14.935064935064934%"></div></div><span class="bval">$23,000</span></div><div class="brow rowc" data-county="St. Louis" title="Show active cases in St. Louis"><span style="color:var(--plat)">St. Louis</span><div class="btrack"><div class="bfill" style="width:13.96103896103896%"></div></div><span class="bval">$21,500</span></div></div></div></div><div class="card glass w-card" id="w-pipeline" data-w="pipeline"><div class="card-title">Case Pipeline · active<span class="more" data-jump="active">all cases →</span><button class="w-fold" data-fold-w="pipeline" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="bars-h pipe"><div class="brow rowc" data-pipe="intake" title="Show the 3 cases at New / Intake"><span style="color:var(--plat)">New / Intake</span><div class="btrack"><div class="bfill" style="width:6.5%"></div></div><span class="bval">3</span></div><div class="brow rowc" data-pipe="discovery" title="Show the 43 cases at Discovery"><span style="color:var(--plat)">Discovery</span><div class="btrack"><div class="bfill" style="width:93.5%"></div></div><span class="bval">43</span></div><div class="brow rowc" data-pipe="pretrial" title="Show the 46 cases at Pretrial"><span style="color:var(--plat)">Pretrial</span><div class="btrack"><div class="bfill" style="width:100.0%"></div></div><span class="bval">46</span></div><div class="brow rowc pipe-0" data-pipe="contested" title="Nothing at this stage"><span style="color:var(--plat)">Contested</span><div class="btrack"><div class="bfill" style="width:0.0%"></div></div><span class="bval">—</span></div><div class="brow rowc" data-pipe="trial" title="Show the 11 cases at Trial"><span style="color:var(--plat)">Trial</span><div class="btrack"><div class="bfill" style="width:23.9%"></div></div><span class="bval">11</span></div><div class="brow rowc" data-pipe="sentence" title="Show the 11 cases at Sentencing"><span style="color:var(--plat)">Sentencing</span><div class="btrack"><div class="bfill" style="width:23.9%"></div></div><span class="bval">11</span></div></div><div style="font-size:9.5px;color:var(--plat-faint);margin-top:8px;letter-spacing:.3px">Stage is read from each case’s hearing history and discovery status.</div></div></div><div class="card glass w-card" id="w-attention" data-w="attention"><div class="card-title">Needs Attention<span class="more" data-focus-attn="">all 43 →</span><button class="w-fold" data-fold-w="attention" title="Collapse this panel" aria-label="Collapse">▾</button></div><div class="w-body"><div class="mini-list"><div class="mrow" data-case="cb633d95-942f-43a3-b516-e8cba9569526"><span class="att-dot risk"></span><span class="mn">Eletsky, Mikhail</span><span class="mv att-why">hearing today at 1:30 PM</span></div><div class="mrow" data-case="156d3795-15b7-483d-8954-182d5a636011"><span class="att-dot risk"></span><span class="mn">Von Essen, Brandon Bradley</span><span class="mv att-why">hearing today at 9:45 AM</span></div><div class="mrow" data-case="7b34f41d-297e-47bd-ac00-1062a434af82"><span class="att-dot risk"></span><span class="mn">Walker, Ronald</span><span class="mv att-why">hearing today at 8:30 AM</span></div><div class="mrow" data-case="115e94ac-ff2e-4721-91af-20ebf4c38c18"><span class="att-dot risk"></span><span class="mn">Dameron, Nathan Kelly Storm</span><span class="mv att-why">hearing tomorrow at 2:30 PM</span></div><div class="mrow" data-case="55d25547-8d99-4ffe-8843-01e20581e937"><span class="att-dot risk"></span><span class="mn">Martens, Marc Christopher</span><span class="mv att-why">hearing tomorrow at 8:30 AM</span></div><div class="mrow" data-case="5a2c7524-3937-4068-b2d9-aedc00518911"><span class="att-dot risk"></span><span class="mn">Smith, Jeffery Lee</span><span class="mv att-why">hearing tomorrow at 8:30 AM</span></div><div class="mrow" data-case="65bd8d44-94ed-47c7-9cff-59a34d9de0ef"><span class="att-dot risk"></span><span class="mn">Thao, Paul Michael</span><span class="mv att-why">hearing tomorrow at 1:30 PM</span></div><div class="mrow" data-case="cca8cb32-4f46-40c9-8906-e526c9373091"><span class="att-dot risk"></span><span class="mn">Brady, Jesse David</span><span class="mv att-why">hearing 1d ago, no outcome recorded</span></div></div></div></div></div></main>
 </div>
 
 <!-- ═════════ OVERLAYS ═════════ -->
@@ -866,6 +920,7 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
             <button class="hmi" id="btn-clio" fdprocessedid="dymzr3"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg></span><span>Clio</span><span class="tag">off</span></button>
             <div class="hsep"></div>
             <div class="hmenu-hd">Data</div>
+            <button class="hmi" id="btn-dashcfg"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect></svg></span><span>Customize dashboard</span></button>
             <button class="hmi" id="btn-recon"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l-3-3"></path><path d="M20 17H9l3 3"></path></svg></span><span>Client list check</span></button>
             <button class="hmi" id="btn-import" fdprocessedid="018vb"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 20h16"></path></svg></span><span>Import</span></button>
             <button class="hmi" id="btn-export" fdprocessedid="xjgpvs"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg></span><span>Backup now</span></button>
@@ -877,7 +932,7 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
 </div>
 <div id="toasts"></div>
 <div id="confetti"></div>
-<div class="chart-tip" id="chart-tip" style="display: none; left: 1114px; top: 427px;"></div>
+<div class="chart-tip" id="chart-tip" style="display: none; left: 895px; top: 259px;"><b>Aug</b><br>Collected: <b style="color:var(--gold-hi)">$21,900</b><br>Billed: <b style="color:#AEB6C2">$30,387</b><br>Cases: 8</div>
 <div class="overlay" id="ov-recon"><div class="modal" style="width:min(880px,96vw)" role="dialog" aria-modal="true">
   <div class="modal-h"><div><div class="t">Client List Check</div>
     <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Compare a Clio export against your active cases</div></div>
@@ -1404,8 +1459,7 @@ function renderKPIs(animate){
     {l:'Case Avg ('+k.yr+')', v:k.avg, m:1, c:'rgba(212,175,55,.45)', s:k.nCases+' cases opened'},
     {l:'Outstanding', v:k.out, m:1, c:'rgba(230,126,34,.55)', s:'receivable'},
     {l:'Active', v:k.nActive, m:0, c:'rgba(59,158,222,.55)', s:'cases in play'},
-    {l:'Closed Cases', v:k.nClosed, m:0, c:'rgba(155,89,182,.5)', s:'resolved'},
-    {l:'Total Cases', v:k.nAll, m:0, c:'rgba(200,205,214,.4)', s:'all time'}
+    {l:'Closed Cases', v:k.nClosed, m:0, c:'rgba(155,89,182,.5)', s:'resolved \u00b7 '+k.nAll+' all time'}
   ];
   $('#kpis').innerHTML = cells.map((x,i)=>'<div class="kpi glass" style="--kpi-c:'+x.c+'"><div class="kpi-label">'+x.l+(i<4?cfMark:'')+'</div><div class="kpi-val" data-v="'+x.v+'" data-m="'+x.m+'">'+(x.m?fmt$(x.v):x.v.toLocaleString())+'</div><div class="kpi-sub">'+x.s+'</div></div>').join('');
   if(animate) $$('#kpis .kpi-val').forEach(el=>countUp(el, +el.dataset.v, +el.dataset.m));
@@ -1424,9 +1478,8 @@ function renderTabs(){
     TABS.map(t=>{ const c = t.n?t.n():null;
       return '<option value="'+t.id+'"'+(t.id===curTab?' selected':'')+'>'+t.label+(c!=null?' \u00b7 '+c:'')+'</option>' }).join('') +
     '</select>' +
-    '<button class="icon-btn tab-home'+(curTab==='dash'?' on':'')+'" id="tab-home" title="Dashboard" aria-label="Dashboard">' +
-      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10.5 9-7 9 7"/><path d="M5.5 9.4V20h13V9.4"/><path d="M9.6 20v-6.2h4.8V20"/></svg></button>' +
-    '<span class="tab-now">'+cur.label+(cur.n?'<span class="n">'+cur.n()+'</span>':'')+'</span>';
+    '<button class="icon-btn tab-home'+(curTab==='dash'?' on':'')+'" id="tab-home" title="Back to the dashboard" aria-label="Dashboard">' +
+      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10.5 9-7 9 7"/><path d="M5.5 9.4V20h13V9.4"/><path d="M9.6 20v-6.2h4.8V20"/></svg></button>';
 }
 function switchTab(id){ curTab = id; killMenu(); renderTabs(); renderView() }
 function renderView(){
@@ -1446,7 +1499,16 @@ function renderNotices(){
 <script>
 'use strict';
 /* ═════════════════ CASE TABLES (Active / Resolved) ═════════════════ */
-const F = { q:'', county:'', charge:'', level:'', priority:'', disc:'', tw:false, bal:false, plan:false, sort:'name', dir:1 };
+const F = { q:'', county:'', charge:'', level:'', priority:'', disc:'', tw:false, bal:false, plan:false, sort:'name', dir:1, focus:null };
+/* An intelligence alert hands the table an explicit set of case ids rather than
+   trying to express itself as county/charge/level filters. Insight → the exact
+   cases behind it → the ⋯ menu, without a new screen. */
+function focusCases(ids, label, sort){
+  Object.assign(F, {q:'', county:'', charge:'', level:'', priority:'', disc:'', tw:false, bal:false, plan:false});
+  F.focus = {ids:new Set(ids), label:label};
+  if(sort){ F.sort = sort; F.dir = 1 }
+  switchTab('active');
+}
 let collapsedClients = new Set();
 
 function caseMatches(c, resolved){
@@ -1456,6 +1518,7 @@ function caseMatches(c, resolved){
   if(F.level && c.level !== F.level) return false;
   if(F.priority && c.priority !== F.priority) return false;
   if(F.disc && c.discovery !== F.disc) return false;
+  if(F.focus && !F.focus.ids.has(c.id)) return false;
   if(F.tw && !c.trialWatch) return false;
   if(F.bal && balanceOf(c) <= 0) return false;
   if(F.plan && !(c.plan && c.plan.active)) return false;
@@ -1485,9 +1548,10 @@ function hearingCell(c){
   if(h.date){
     const d = daysUntil(h.date);
     if(d != null && !c.resolved){
-      if(d < 0) tail = '<span class="cd cd-now">'+(-d)+'d ago</span>';
-      else if(d === 0) tail = '<span class="cd cd-now">today</span>';
-      else if(d <= 7) tail = '<span class="cd cd-soon">in '+d+'d</span>';
+      if(d < 0) tail = '<span class="cd cd-now" title="This hearing has passed and the case is still open">'+(-d)+'d ago</span>';
+      else if(d === 0) tail = '<span class="cd cd-now" title="Hearing is today">today</span>';
+      else if(d === 1) tail = '<span class="cd cd-24" title="Hearing is tomorrow">tomorrow</span>';
+      else if(d <= 7) tail = '<span class="cd cd-soon" title="Hearing is within the week">in '+d+'d</span>';
       else if(d <= 30) tail = '<span class="cd cd-ok">in '+d+'d</span>';
     }
     linkable = (h.calId ? '<span class="gcal-dot" title="Linked to your Google Calendar — this date and type update automatically"></span>' : '')
@@ -1501,14 +1565,40 @@ function hearingCell(c){
   return '<div class="hz">' + (url ? '<a href="'+esc(url)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="text-decoration:none" title="Open on Clio Calendar">'+linkable+'</a>' : linkable) + tail + '</div>';
 }
 function badges(c){ return '' }
+/* Only genuinely time-critical things earn a row accent. Money and discovery
+   already read loudly in their own cells, so flagging those too would light up
+   most of the table and mean nothing — they ride along in the tooltip instead. */
+function attentionOf(c){
+  if(c.resolved) return null;
+  const h = nextHearing(c);
+  const d = h && h.date ? daysUntil(h.date) : null;
+  const why = []; let level = null;
+  if(d == null){
+    if(c.caseNo && !c.caseNoNote){ why.push('no next hearing set'); level = 'warm' }
+  } else if(d < 0){ why.push('hearing was ' + (-d) + (-d === 1 ? ' day' : ' days') + ' ago and the case is still open'); level = 'hot' }
+  else if(d === 0){ why.push('hearing today'); level = 'hot' }
+  else if(d === 1){ why.push('hearing tomorrow'); level = 'hot' }
+  else if(d <= 7){ why.push('hearing in ' + d + ' days'); level = 'warm' }
+  if(!level) return null;
+  const bal = balanceOf(c);
+  if(bal > 0 && !(c.sub && c.sharedFee)) why.push(fmt$(bal) + ' still outstanding');
+  if(c.discovery === 'Outstanding') why.push('discovery outstanding');
+  return {level, why: why.join(' \u00b7 ')};
+}
 function feeCell(c){
   if(c.sub && c.sharedFee) return '<td class="fee-cell" style="color:var(--plat-faint);font-size:10.5px;font-style:italic">fee with lead case</td>';
   if(c.fee == null) return '<td class="fee-cell" style="color:var(--plat-faint)">—</td>';
   if(c.sub && c.fee === 0 && !collectedOf(c)) return '<td class="fee-cell"><div class="f">$0</div><div style="font-size:9.5px;color:var(--plat-faint);font-style:italic">included w/ lead case</div></td>';
   const col = collectedOf(c), bal = balanceOf(c), pct = c.fee ? Math.min(100, col/c.fee*100) : 0;
-  return '<td class="fee-cell"><div class="f">'+fmt$(c.fee)+'</div><div class="c">'+fmt$(col)+'</div>' +
-    (bal <= 0 ? '<span class="paid-stamp">PAID IN FULL</span>' :
-      '<div class="balbar" title="'+fmt$(bal)+' outstanding"><i style="width:'+pct+'%"></i></div><div style="font-size:9.5px;color:var(--orange);margin-top:3px">'+fmt$(bal)+' due</div>') + '</td>';
+  /* When it is paid, billed and collected are the same number twice — show it
+     once and let the stamp carry the rest. When it is not, the balance is the
+     thing worth reading first. */
+  if(bal <= 0) return '<td class="fee-cell"><div class="f">'+fmt$(c.fee)+'</div>' +
+    '<span class="paid-stamp" title="'+fmt$(col)+' collected in full">PAID IN FULL</span></td>';
+  return '<td class="fee-cell" title="'+fmt$(col)+' collected of '+fmt$(c.fee)+' billed">' +
+    '<div class="f">'+fmt$(c.fee)+'</div><div class="c">'+fmt$(col)+'</div>' +
+    '<div class="balbar"><i style="--w:'+pct+'%"></i></div>' +
+    '<div class="due">'+fmt$(bal)+' due</div></td>';
 }
 function discCell(c){
   const dot = {Received:'dd-rec', Outstanding:'dd-out', 'Not Applicable':'dd-na', 'Pending Charges':'dd-pend'}[c.discovery] || 'dd-na';
@@ -1533,7 +1623,8 @@ function caseRow(c, i, resolved, isSub, hasKids, collapsed){
       if((k.matter==='ic' || /-CV-/.test(kn)) && kn && !icNums.includes(kn)) icNums.push(kn) }
     icBlock = icNums.map(nx=>'<div style="margin-top:2px"><span class="casenum" style="font-size:11px;color:var(--ic)" onclick="event.stopPropagation();copyText(\''+esc(nx)+'\',\''+esc(nx)+'\')" title="Implied Consent case — click to copy">'+esc(nx)+'</span></div>').join('');
   }
-  return '<tr class="rowc'+(isSub?' subrow':'')+'" data-id="'+c.id+'">'
+  const att = attentionOf(c);
+  return '<tr class="rowc'+(isSub?' subrow':'')+(att?' att att-'+att.level:'')+'" data-id="'+c.id+'"'+(att?' title="'+esc(att.why)+'"':'')+'>'
     + '<td class="idx">'+(isSub?'':i)+'</td>'
     + '<td>'+nameHtml+'</td>'
     + '<td>'+nh+doc+icBlock+'</td>'
@@ -1575,7 +1666,8 @@ function renderCases(resolved, keepScroll){
       '<input id="tb-q" placeholder="Search '+(resolved?'resolved':'active')+' cases…" value="'+esc(F.q)+'"></div>' +
       sel('f-county','County',counties) + sel('f-charge','Charge',charges) + sel('f-level','Level',LEVELS) +
       sel('f-disc','Discovery',DISC) +
-      ((F.q||F.county||F.charge||F.level||F.disc)?'<button class="chip" id="f-clear" style="color:var(--red);border-color:rgba(231,76,60,.4)">✕ Clear</button>':'') +
+      (F.focus?'<button class="chip on" id="f-focus" title="Showing only the cases behind that alert — click to clear">◈ '+esc(F.focus.label)+' · '+F.focus.ids.size+' &nbsp;✕</button>':'') +
+      ((F.q||F.county||F.charge||F.level||F.disc||F.focus)?'<button class="chip" id="f-clear" style="color:var(--red);border-color:rgba(231,76,60,.4)">✕ Clear</button>':'') +
       '<span class="count-note"><b>'+list.length+'</b> cases · fees <b>'+fmt$(totFee)+'</b> · collected <b>'+fmt$(totCol)+'</b></span>' +
       '<select class="sel" id="f-sort" title="Sort">'+Object.entries(sortOpts).map(([k,l])=>'<option value="'+k+'"'+(F.sort===k?' selected':'')+'>Sort · '+l+'</option>').join('')+'</select>' +
     '</div>' +
@@ -1599,7 +1691,8 @@ function renderCases(resolved, keepScroll){
   $('#tb-q').addEventListener('input', e=>{ F.q = e.target.value; clearTimeout(window.__qT); window.__qT = setTimeout(rerun, 180) });
   if($('#tb-q').value){ const el=$('#tb-q'); el.focus(); el.setSelectionRange(el.value.length, el.value.length) }
   [['f-county','county'],['f-charge','charge'],['f-level','level'],['f-disc','disc']].forEach(([id,k])=>{ const el=$('#'+id); if(el) el.onchange = e=>{ F[k]=e.target.value; rerun() } });
-  const fc = $('#f-clear'); if(fc) fc.onclick = ()=>{ Object.assign(F,{q:'',county:'',charge:'',level:'',priority:'',disc:'',tw:false,bal:false,plan:false}); rerun() };
+  const fc = $('#f-clear'); if(fc) fc.onclick = ()=>{ Object.assign(F,{q:'',county:'',charge:'',level:'',priority:'',disc:'',tw:false,bal:false,plan:false,focus:null}); rerun() };
+  const ff = $('#f-focus'); if(ff) ff.onclick = ()=>{ F.focus = null; rerun() };
   $('#f-sort').onchange = e=>{ F.sort = e.target.value; F.dir = 1; rerun() };
   $$('#view th[data-sort]').forEach(th=>th.onclick = ()=>{ const k = th.dataset.sort; if(F.sort===k) F.dir*=-1; else {F.sort=k;F.dir=1}; rerun() });
   const newWrap = v.querySelector('.tblwrap');
@@ -1620,6 +1713,10 @@ function rowMenu(anchor, id){
     {icon:'✎', label:'Open / Edit', fn:()=>openEditor(id)},
     {icon:'$', label:'Log payment', fn:()=>openPay(id)},
     {icon:'⧉', label:'Copy case number', fn:()=>c.caseNo&&copyText(c.caseNo, c.caseNo)},
+    {icon:'⧉', label:'Copy client name', fn:()=>copyText(displayName(c), displayName(c))},
+    {icon:'✎', label:'Add note', fn:()=>{ const t = prompt('Note for '+displayName(c)); if(t && t.trim()){
+        c.notes = c.notes||[]; c.notes.unshift({date:new Date().toISOString(), text:t.trim()});
+        c.updatedAt = new Date().toISOString(); save(); toast('Note added to <b>'+esc(displayName(c))+'</b>') } }},
     {icon:'＋', label:'Add case for this client', fn:()=>openEditor(null, id, true)},
     '—',
     (typeof clioConnected === 'function' && clioConnected()
@@ -1991,6 +2088,22 @@ function pIcon(kind){
   return '<svg class="pi" viewBox="0 0 32 32" '+g+'>'+p+'</svg>';
 }
 function aiMonthAgg(mk){ return monthCollectedFor(mk) }
+/* Snoozed and dismissed alerts live in settings so the choice follows you to
+   your other devices. Dismiss is keyed to a signature of the finding, so a
+   dismissed "4 plans past due" comes back on its own the moment it becomes 5 —
+   and disappears for good once the underlying problem is actually fixed. */
+function aiHidden(){ DB.settings.aiHide = DB.settings.aiHide || {}; return DB.settings.aiHide }
+function aiIsHidden(key, sig){
+  const h = aiHidden()[key]; if(!h) return false;
+  if(h.until && h.until > new Date().toISOString()) return true;
+  if(h.until) return false;
+  return h.sig === sig;
+}
+function aiHide(key, sig, days){
+  const h = aiHidden();
+  h[key] = days ? {until:new Date(Date.now() + days*864e5).toISOString()} : {sig:sig};
+  save();
+}
 function aiInsights(){
   const now = new Date(), yr = now.getFullYear();
   const k = kpiData();
@@ -2019,8 +2132,18 @@ function aiInsights(){
   for(const c of DB.cases){ if(c.resolved) continue; for(const h of (c.hearings||[])){ const res = h.resolution||''; if(!h.date || res.startsWith('Complete') || res === 'No Implied Consent') continue; const d = daysUntil(h.date); if(d != null && d < 0) staleH.push({c, h, d}); } }
   staleH.sort((a,b)=>a.d-b.d);
   const collRate = k.fees ? k.coll/k.fees : 0;
+  /* extra findings, all read straight off existing case data */
+  const liveCases = mains().filter(c=>!c.resolved);
+  const todayIso = todayISO();
+  const futureH = c => (c.hearings||[]).some(h=>h.date && h.date >= todayIso && !String(h.resolution||'').startsWith('Complete'));
+  const noFuture = liveCases.filter(c=>c.caseNo && !c.caseNoNote && !futureH(c));
+  const discSoon = liveCases.filter(c=>{
+    if(c.discovery !== 'Outstanding') return false;
+    const h = nextHearing(c); if(!h || !h.date) return false;
+    const d = daysUntil(h.date); return d != null && d >= 0 && d <= 14;
+  }).sort((a,b)=>{ const ha=nextHearing(a), hb=nextHearing(b); return (ha.date||'').localeCompare(hb.date||'') });
   const rows = [];
-  const R = (tone, html, jump)=>rows.push({tone, html, jump});
+  const R = (tone, html, jump, opt)=>rows.push(Object.assign({tone, html, jump}, opt||{}));
   if(!DB.cases.length){
     R('info','No case data on this device yet — open <b>Settings → Cloud Sync</b>, paste your GitHub token and hit <b>Connect</b> to load everything from your other devices.');
     return {mNow, mProj:0, yProj:0, goal, mg, k, needPM, rows, collRate};
@@ -2031,18 +2154,30 @@ function aiInsights(){
     : mProj >= mg.min ? 'above minimum — <b>'+fmt$(Math.max(0,Math.round(mg.median-mNow)))+'</b> more collected reaches median'
     : 'below the <b>'+fmt$(mg.min)+' minimum</b> — needs ~<b>'+fmt$(Math.max(0,Math.ceil((mg.min-mNow)/Math.max(1,dim-day))))+'/day</b> the rest of the month';
   R(mTone, '<b>'+MONTHS[now.getMonth()]+'</b> is pacing to close at <b>'+fmt$(mProj)+'</b> — '+mMsg+'.');
-  R(yProj >= goal ? 'good' : 'warn', 'Year-end projection <b>'+fmt$(yProj)+'</b> vs the '+fmt$(goal)+' goal — '+(yProj>=goal ? '<b>'+fmt$(yProj-goal)+' ahead</b> at current pace.' : 'hold <b>'+fmt$(Math.round(needPM))+'/month</b> for the remaining '+monthsLeft+' months to hit it.'));
-  if(arTot > 0) R(arTot > goal*0.06 ? 'warn' : 'info', '<b>'+fmt$(arTot)+'</b> outstanding across <b>'+openBal.length+'</b> open balances — largest: '+esc(displayName(openBal[0]))+' ('+fmt$(balanceOf(openBal[0]))+'). Collecting it covers <b>'+Math.round(arTot/Math.max(1,goal)*100)+'%</b> of the annual goal.');
-  if(late.length) R('risk', '<b>'+late.length+'</b> payment plan'+(late.length>1?'s are':' is')+' past due (<b>'+fmt$(lateSum)+'</b>) — a reminder call usually recovers these fastest.');
-  if(due14.length) R('info', '<b>'+fmt$(dueSum)+'</b> in payment plans lands in the next 14 days ('+due14.length+' plan'+(due14.length>1?'s':'')+').');
+  if(arTot > 0) R(arTot > goal*0.06 ? 'warn' : 'info', '<b>'+fmt$(arTot)+'</b> outstanding across <b>'+openBal.length+'</b> open balance'+(openBal.length===1?'':'s')+' — largest: '+esc(displayName(openBal[0]))+' ('+fmt$(balanceOf(openBal[0]))+'). Collecting it covers <b>'+Math.round(arTot/Math.max(1,goal)*100)+'%</b> of the annual goal.',
+    null, {key:'ar', sig:openBal.length+':'+Math.round(arTot), ids:openBal.map(c=>c.id), label:'Open balances', sort:'balance'});
+  if(late.length) R('risk', '<b>'+late.length+'</b> payment plan'+(late.length>1?'s are':' is')+' past due (<b>'+fmt$(lateSum)+'</b>) — a reminder call usually recovers these fastest.',
+    null, {key:'planlate', sig:String(late.length), ids:late.map(c=>c.id), label:'Payment plans past due', widget:'plans'});
+  if(due14.length) R('info', '<b>'+fmt$(dueSum)+'</b> in payment plans lands in the next 14 days ('+due14.length+' plan'+(due14.length>1?'s':'')+').',
+    null, {key:'plansoon', sig:String(due14.length), ids:due14.map(c=>c.id), label:'Plans due within 14 days', widget:'plans'});
+  if(discSoon.length){
+    const nm = discSoon.slice(0,2).map(c=>esc(displayName(c))).join(', ');
+    R('risk', '<b>'+discSoon.length+'</b> case'+(discSoon.length>1?'s have':' has')+' a hearing inside two weeks with <b>discovery still outstanding</b> — '+nm+(discSoon.length>2?' +'+(discSoon.length-2)+' more':'')+'.',
+      null, {key:'discsoon', sig:String(discSoon.length), ids:discSoon.map(c=>c.id), label:'Discovery out, hearing soon', sort:'hearing', widget:'attention'});
+  }
+  if(noFuture.length) R('warn', '<b>'+noFuture.length+'</b> active case'+(noFuture.length>1?'s have':' has')+' <b>no future hearing scheduled</b> — either the next date has not been entered or the case is ready to resolve.',
+    null, {key:'nofuture', sig:String(noFuture.length), ids:noFuture.map(c=>c.id), label:'No future hearing', widget:'attention'});
   if(avg3 > 0){ const d = (mProj-avg3)/avg3*100; R(Math.abs(d)<8?'info':(d>0?'good':'warn'), 'Momentum: this month projects <b>'+(d>=0?'+':'')+Math.round(d)+'%</b> vs your 3-month average of '+fmt$(Math.round(avg3))+'.') }
   R('info', '<b>'+openedM+'</b> new case'+(openedM===1?'':'s')+' this month · <b>'+up.length+'</b> hearing'+(up.length===1?'':'s')+' next 14 days'+(up.length>=9?' — heavy calendar':'')+' · collection rate <b>'+Math.round(collRate*100)+'%</b>.');
   if(staleH.length){
     const names = staleH.slice(0,3).map(x=>esc(displayName(x.c))+' ('+(-x.d)+'d ago)').join(', ');
-    R('risk', '<b>'+staleH.length+'</b> hearing'+(staleH.length>1?'s are':' is')+' past '+(staleH.length>1?'their dates':'its date')+' with no outcome recorded \u2014 <b>hearing dates need updating</b>: '+names+(staleH.length>3?' +'+(staleH.length-3)+' more':'')+'. Click to review the calendar.', 'calendar');
+    const stIds = [...new Set(staleH.map(x=>x.c.id))];
+    R('risk', '<b>'+staleH.length+'</b> hearing'+(staleH.length>1?'s are':' is')+' past '+(staleH.length>1?'their dates':'its date')+' with no outcome recorded \u2014 <b>hearing dates need updating</b>: '+names+(staleH.length>3?' +'+(staleH.length-3)+' more':'')+'.',
+      null, {key:'stale', sig:String(staleH.length), ids:stIds, label:'Hearings past their date', sort:'hearing', widget:'attention'});
   }
   const audit = DB.cases.filter(c => !c.createdAt && (!c.dateOpened || (c.offenseDate && c.dateOpened === c.offenseDate) || (DB.settings.firmStart && c.dateOpened && c.dateOpened < DB.settings.firmStart)));
-  if(audit.length) R('warn', 'Signed-date audit: <b>'+audit.length+'</b> case'+(audit.length>1?'s':'')+' still carr'+(audit.length>1?'y':'ies')+' an offense-date placeholder or pre-firm date \u2014 open each case and set the real <b>Date Opened</b>; the count drops as you fix them.', 'active');
+  if(audit.length) R('warn', 'Signed-date audit: <b>'+audit.length+'</b> case'+(audit.length>1?'s':'')+' still carr'+(audit.length>1?'y':'ies')+' an offense-date placeholder or pre-firm date \u2014 open each case and set the real <b>Date Opened</b>; the count drops as you fix them.',
+    null, {key:'dateaudit', sig:String(audit.length), ids:audit.filter(c=>!c.resolved).map(c=>c.id), label:'Date Opened needs checking', sort:'opened'});
   try{
     const cq = calQueue();
     if(cq.unlinked) R('warn', 'Google Calendar: <b>'+cq.unlinked+'</b> upcoming event'+(cq.unlinked>1?'s aren\u2019t':' isn\u2019t')+' tied to a client yet'+(cq.linked?' ('+cq.linked+' already linked and syncing)':'')+' \u2014 click to review and assign.', 'calsync');
@@ -2055,22 +2190,157 @@ function aiInsights(){
   }catch(e){}
   const order = {risk:0, warn:1, good:2, info:3};
   rows.sort((a,b)=>order[a.tone]-order[b.tone]);
-  return {mNow, mProj, yProj, goal, mg, k, needPM, rows: rows.slice(0,6), collRate};
+  /* An alert with no cases left behind it has already solved itself. */
+  const live = rows.filter(r => !(r.ids && !r.ids.length) && !(r.key && aiIsHidden(r.key, r.sig)));
+  return {mNow, mProj, yProj, goal, mg, k, needPM, rows: live.slice(0,5), collRate, hidden: rows.length - live.length};
 }
 function aiPanelHtml(){
   const A = aiInsights();
+  window.__aiRows = A.rows;
   const mScale = Math.max(A.mg.top, A.mProj, A.mNow) * 1.08 || 1;
-  const yScale = Math.max(A.goal, A.yProj, A.k.coll) * 1.06 || 1;
   const mark = v => '<em style="left:'+Math.min(99, v).toFixed(1)+'%"></em>';
+  const pct = A.goal ? A.k.coll / A.goal * 100 : 0;
+  /* How far through the year we are — the marker on the goal bar, so "72.6%"
+     reads as ahead or behind rather than just a number. */
+  const now = new Date(), y0 = new Date(now.getFullYear(), 0, 1);
+  const yearPct = (now - y0) / (new Date(now.getFullYear()+1, 0, 1) - y0) * 100;
+  const ahead = pct >= yearPct;
   return '<div class="card ai-card">'
-    + '<div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Financial Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div>'
+    + '<div class="ai-head"><span class="ai-core"></span><div class="card-title" style="margin:0;color:#BFE6FF">AI Case Intelligence</div><span class="ai-scan"><i></i></span><span class="ai-live"><span class="ai-live-dot"></span>LIVE</span></div>'
     + '<div class="ai-grid">'
-    + '<div class="ai-big"><div class="ai-big-label">'+MONTHS[new Date().getMonth()]+' projected close</div><div class="ai-big-num">'+fmt$(A.mProj)+'</div><div class="ai-bar"><i class="proj" style="width:'+(A.mProj/mScale*100).toFixed(1)+'%"></i><i style="width:'+(A.mNow/mScale*100).toFixed(1)+'%"></i>'+mark(A.mg.min/mScale*100)+mark(A.mg.median/mScale*100)+mark(A.mg.top/mScale*100)+'</div><div class="ai-big-sub">'+fmt$(A.mNow)+' collected · goals '+fmt$(A.mg.min)+' / '+fmt$(A.mg.median)+' / '+fmt$(A.mg.top)+'</div></div>'
-    + '<div class="ai-big"><div class="ai-big-label">Year-end projection</div><div class="ai-big-num cyan">'+fmt$(A.yProj)+'</div><div class="ai-bar"><i class="proj cy" style="width:'+(A.yProj/yScale*100).toFixed(1)+'%"></i><i class="cy" style="width:'+(A.k.coll/yScale*100).toFixed(1)+'%"></i>'+mark(A.goal/yScale*100)+'</div><div class="ai-big-sub">'+fmt$(A.k.coll)+' banked · goal '+fmt$(A.goal)+(A.yProj>=A.goal?' · <b style="color:#7FE8AC">on track</b>':' · needs '+fmt$(Math.round(A.needPM))+'/mo')+'</div></div>'
-    + '<div class="ai-rows">'+A.rows.map((r,i)=>'<div class="ai-row '+r.tone+'"'+(r.jump?' data-jump="'+r.jump+'"':'')+' style="animation-delay:'+(i*70)+'ms'+(r.jump?';cursor:pointer':'')+'"><span class="dot"></span><span>'+r.html+'</span></div>').join('')+'</div>'
+    + '<div class="ai-big"><div class="ai-big-label">'+MONTHS[now.getMonth()]+' projected close</div><div class="ai-big-num">'+fmt$(A.mProj)+'</div><div class="ai-bar"><i class="proj" style="width:'+(A.mProj/mScale*100).toFixed(1)+'%"></i><i style="width:'+(A.mNow/mScale*100).toFixed(1)+'%"></i>'+mark(A.mg.min/mScale*100)+mark(A.mg.median/mScale*100)+mark(A.mg.top/mScale*100)+'</div><div class="ai-big-sub">'+fmt$(A.mNow)+' collected · goals '+fmt$(A.mg.min)+' / '+fmt$(A.mg.median)+' / '+fmt$(A.mg.top)+'</div></div>'
+    + '<div class="ai-big" title="Collected so far this year against your annual minimum goal"><div class="ai-big-label">Revenue to annual goal</div>'
+      + '<div class="ai-big-num cyan">'+fmt$(A.k.coll)+'<small> / '+fmt$(A.goal)+'</small></div>'
+      + '<div class="ai-bar"><i class="cy" style="width:'+Math.min(100,pct).toFixed(1)+'%"></i>'+mark(yearPct)+'</div>'
+      + '<div class="ai-big-sub"><b style="color:'+(ahead?'#7FE8AC':'#F0CC52')+'">'+pct.toFixed(1)+'%</b> of annual goal · '
+      + (pct>=100 ? 'goal met' : fmt$(Math.round(A.goal-A.k.coll))+' to go, '+(ahead?'ahead of':'behind')+' the year\u2019s pace')+'</div></div>'
+    + '<div class="ai-rows">'+A.rows.map((r,i)=>{
+        const act = (r.ids && r.ids.length) ? ' data-aiact="'+i+'"' : (r.jump ? ' data-jump="'+r.jump+'"' : '');
+        const clickable = !!(r.ids && r.ids.length) || !!r.jump;
+        return '<div class="ai-row '+r.tone+'"'+act+' style="animation-delay:'+(i*70)+'ms'+(clickable?';cursor:pointer':'')+'"'
+          + (clickable?' title="Show the '+(r.ids?r.ids.length+' case'+(r.ids.length===1?'':'s'):'view')+' behind this"':'')
+          + '><span class="dot"></span><span class="ai-txt">'+r.html+'</span>'
+          + (r.key ? '<span class="ai-acts">'
+              + (clickable?'<button class="ai-act" data-aireview="'+i+'" title="Show the affected cases">Review</button>':'')
+              + '<button class="ai-act" data-aisnooze="'+i+'" title="Hide for a week — it comes back if the issue is still there">Snooze</button>'
+              + '<button class="ai-act" data-aidismiss="'+i+'" title="Hide until this changes">Dismiss</button></span>' : '')
+          + '</div>';
+      }).join('')+'</div>'
     + '</div>'
-    + '<div class="ai-foot">◈ On-device intelligence engine — recalculates live from your cases, payments, plans &amp; goals. Nothing leaves this browser.</div>'
+    + '<div class="ai-foot">◈ On-device engine — recalculates live from your cases, hearings, discovery, payments &amp; goals. Nothing leaves this browser.'
+      + (A.hidden ? ' · <span class="ai-restore" id="ai-restore">'+A.hidden+' hidden alert'+(A.hidden>1?'s':'')+' — restore</span>' : '')
+    + '</div>'
     + '</div>';
+}
+/* ── Case pipeline ────────────────────────────────────────
+   Stages come only from things the data actually knows: the posture of the
+   next hearing, discovery status, and whether the case is charged yet. A case
+   is placed at the latest stage it can be shown to have reached, so a
+   sentencing date outranks an outstanding discovery note. */
+const PIPE = [
+  {k:'intake',   l:'New / Intake'},
+  {k:'discovery',l:'Discovery'},
+  {k:'pretrial', l:'Pretrial'},
+  {k:'contested',l:'Contested'},
+  {k:'trial',    l:'Trial'},
+  {k:'sentence', l:'Sentencing'}
+];
+const PIPE_H = {
+  intake:   ['First Appearance','Arraignment','Bail Hearing'],
+  pretrial: ['Omnibus','Pretrial','Settlement Conference','Implied Consent','Review Hearing','Rule 20 Review Hearing','Hearing Officer Appointment','Evidentiary Hearing'],
+  contested:['Contested Omnibus','Contested Pretrial','Trial Management Conference'],
+  trial:    ['Jury Trial','Court Trial','Jury Trial Roll Call'],
+  sentence: ['Sentencing','Plea Hearing','Probation Violation']
+};
+function pipeStageOf(c){
+  const types = (c.hearings||[]).filter(h=>h.type).map(h=>h.type);
+  const h = nextHearing(c), nt = h && h.type;
+  const at = list => (nt && list.includes(nt)) || types.some(t=>list.includes(t));
+  if(at(PIPE_H.sentence)) return 'sentence';
+  if(at(PIPE_H.trial) || c.trialWatch) return 'trial';
+  if(at(PIPE_H.contested)) return 'contested';
+  if(c.discovery === 'Outstanding' || c.discovery === 'Pending Charges') return 'discovery';
+  if(at(PIPE_H.pretrial)) return 'pretrial';
+  return 'intake';
+}
+function pipeline(){
+  const out = {}; for(const p of PIPE) out[p.k] = [];
+  for(const c of activeMains()) out[pipeStageOf(c)].push(c);
+  return out;
+}
+
+/* ── Needs attention ──────────────────────────────────────
+   One line per case, worst first, each one a thing you can actually do
+   something about today. No item exists unless the case data says so. */
+function needsAttention(){
+  const out = [], today = todayISO();
+  for(const c of activeMains()){
+    const h = nextHearing(c);
+    const d = h && h.date ? daysUntil(h.date) : null;
+    const bal = balanceOf(c);
+    const push = (score, tone, why) => out.push({c, score, tone, why});
+    if(d != null && d < 0) push(94, 'risk', 'hearing ' + (-d) + 'd ago, no outcome recorded');
+    else if(d === 0) push(100, 'risk', 'hearing today' + (h.time ? ' at ' + fmtTime(h.time) : ''));
+    else if(d === 1) push(96, 'risk', 'hearing tomorrow' + (h.time ? ' at ' + fmtTime(h.time) : ''));
+    if(c.plan && c.plan.active && c.plan.nextDate){
+      const pd = daysUntil(c.plan.nextDate);
+      if(pd != null && pd < 0) push(88, 'risk', 'payment plan ' + (-pd) + 'd overdue · ' + fmt$(c.plan.amount));
+    }
+    if(c.discovery === 'Outstanding' && d != null && d >= 0 && d <= 14)
+      push(80, 'warn', 'discovery outstanding, hearing in ' + d + 'd');
+    if(c.caseNo && !c.caseNoNote && !(c.hearings||[]).some(x=>x.date && x.date >= today))
+      push(60, 'warn', 'no future hearing scheduled');
+    if(bal > 0 && d != null && d >= 0 && d <= 7)
+      push(55, 'warn', fmt$(bal) + ' outstanding, hearing in ' + d + 'd');
+    if(!c.county && c.caseNo) push(28, 'info', 'no county recorded');
+    if(c.fee == null && !(c.sub && c.sharedFee)) push(26, 'info', 'no fee recorded');
+  }
+  /* worst item per case, so one case never floods the list */
+  const best = {};
+  for(const it of out){ const p = best[it.c.id]; if(!p || it.score > p.score) best[it.c.id] = it }
+  return Object.values(best).sort((a,b)=>b.score-a.score);
+}
+
+/* ── widget chrome: hide + collapse, both kept in synced settings ── */
+const DASH_W = [
+  {k:'revenue',  l:'Revenue · last 12 months'},
+  {k:'collrate', l:'Collection Rate'},
+  {k:'hearings', l:'Next Hearings'},
+  {k:'plans',    l:'Payment Plans Due'},
+  {k:'disc',     l:'Discovery Outstanding'},
+  {k:'counties', l:'Top Counties'},
+  {k:'pipeline', l:'Case Pipeline'},
+  {k:'attention',l:'Needs Attention'}
+];
+function dashPrefs(){ DB.settings.dash = DB.settings.dash || {hide:{}, fold:{}}; const p = DB.settings.dash;
+  p.hide = p.hide||{}; p.fold = p.fold||{}; return p }
+function wShown(k){ return !dashPrefs().hide[k] }
+function wFolded(k){ return !!dashPrefs().fold[k] }
+/* Every bottom widget goes through here so collapse, hide and the AI's
+   "Review" jump all behave the same without repeating markup. */
+function wCard(k, title, more, body, style){
+  if(!wShown(k)) return '';
+  const f = wFolded(k);
+  return '<div class="card glass w-card'+(f?' folded':'')+'" id="w-'+k+'" data-w="'+k+'"'+(style?' style="'+style+'"':'')+'>'
+    + '<div class="card-title">'+title+(more||'')
+    + '<button class="w-fold" data-fold-w="'+k+'" title="'+(f?'Expand':'Collapse')+' this panel" aria-label="Collapse">'+(f?'▸':'▾')+'</button></div>'
+    + '<div class="w-body">'+body+'</div></div>';
+}
+function revealWidget(k){
+  if(curTab !== 'dash'){ switchTab('dash'); setTimeout(()=>revealWidget(k), 90); return }
+  if(!wShown(k)){ dashPrefs().hide[k] = false; save(); renderView(); setTimeout(()=>revealWidget(k), 60); return }
+  if(wFolded(k)){ dashPrefs().fold[k] = false; save(); renderView(); setTimeout(()=>revealWidget(k), 60); return }
+  const el = document.getElementById('w-'+k); if(!el) return;
+  try{ el.scrollIntoView({behavior:'smooth', block:'center'}) }catch(e){ if(el.scrollIntoView) el.scrollIntoView() }
+  el.classList.remove('w-flash'); void el.offsetWidth; el.classList.add('w-flash');
+  setTimeout(()=>el.classList.remove('w-flash'), 2200);
+}
+function customizeDash(anchor){
+  popMenu(anchor, DASH_W.map(w=>({
+    icon: wShown(w.k) ? '☑' : '☐', label: w.l,
+    fn: ()=>{ const p = dashPrefs(); p.hide[w.k] = wShown(w.k); save();
+      if(curTab === 'dash') renderView(); setTimeout(()=>customizeDash(anchor), 40) }
+  })).concat(['—', {icon:'↺', label:'Show every panel', fn:()=>{ dashPrefs().hide = {}; save(); if(curTab==='dash') renderView() }}]));
 }
 function renderDash(v){
   const now = new Date();
@@ -2098,43 +2368,82 @@ function renderDash(v){
   for(const c of activeMains()){ if(c.county) countyAgg[c.county] = (countyAgg[c.county]||0) + (c.fee||0) }
   const topCounty = Object.entries(countyAgg).sort((a,b)=>b[1]-a[1]).slice(0,8);
   const maxCty = topCounty[0] ? topCounty[0][1] : 1;
-  const chargeAgg = {};
-  for(const c of activeMains()){ const key = c.charge||'Other'; chargeAgg[key]=(chargeAgg[key]||0)+1 }
-  const topCharge = Object.entries(chargeAgg).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const pipe = pipeline();
+  const pipeMax = Math.max(1, ...PIPE.map(p=>pipe[p.k].length));
+  const attn = needsAttention();
 
   v.innerHTML =
     '<div class="pulse">' + pulse.map(p=>'<div class="pcard glass" data-go>'+pIcon(p.i)+'<div><div class="p-label">'+p.l+'</div><div class="p-num '+(p.cls||'')+'">'+p.n+'</div><div class="dashes">'+'<span></span>'.repeat(7)+'</div></div></div>').join('') + '</div>' + aiPanelHtml() + calRowHtml() +
     '<div class="grid" style="grid-template-columns:2.1fr 1fr;margin-bottom:12px">' +
-      '<div class="card glass"><div class="card-title">Revenue · last 12 months <span class="more" data-jump="analytics">full analytics →</span></div><div id="dash-chart" class="chart-wrap"></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div></div>' +
-      '<div class="card glass"><div class="card-title">Collection Rate ('+k.yr+')</div><div id="dash-ring"></div>' +
+      wCard('revenue', 'Revenue · last 12 months', '<span class="more" data-jump="analytics">full analytics →</span>',
+        '<div id="dash-chart" class="chart-wrap"></div><div class="legend" style="margin-top:8px"><span><i style="background:#D4AF37"></i>Collected (actuals + logged payments)</span><span><i style="background:#7A8492"></i>Billed (by case month)</span></div>') +
+      wCard('collrate', 'Collection Rate ('+k.yr+')', '',
+        '<div id="dash-ring"></div>' +
         '<div class="stat-row"><span class="k">Billed</span><span class="v">'+fmt$(k.fees)+'</span></div>' +
         '<div class="stat-row"><span class="k">Collected</span><span class="v" style="color:#7FE8AC">'+fmt$(k.coll)+'</span></div>' +
-        '<div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">'+fmt$(k.out)+'</span></div></div>' +
+        '<div class="stat-row"><span class="k">Outstanding</span><span class="v" style="color:var(--orange)">'+fmt$(k.out)+'</span></div>') +
     '</div>' +
     '<div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px">' +
-      '<div class="card glass"><div class="card-title">Next Hearings <span class="more" data-jump="calendar">calendar →</span></div><div class="mini-list" id="dash-hearings">' +
-        (up14.slice(0,8).map(({c,h,d})=>'<div class="mrow" data-case="'+c.id+'"><span class="md">'+usDate(h.date)+(h.time?' '+tShort(h.time):'')+'</span><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+esc(h.type||'')+' · '+(d===0?'today':'in '+d+'d')+'</span></div>').join('') || '<div class="empty" style="padding:20px">No hearings in the next 14 days.</div>') + '</div></div>' +
-      '<div class="card glass"><div class="card-title">Payment Plans Due</div><div class="mini-list">' +
+      wCard('hearings', 'Next Hearings', '<span class="more" data-jump="calendar">calendar →</span>',
+        '<div class="mini-list" id="dash-hearings">' +
+        (up14.slice(0,8).map(({c,h,d})=>'<div class="mrow" data-case="'+c.id+'"><span class="md">'+usDate(h.date)+(h.time?' '+tShort(h.time):'')+'</span><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+esc(h.type||'')+' · '+(d===0?'today':'in '+d+'d')+'</span></div>').join('') || '<div class="empty" style="padding:20px">No hearings in the next 14 days.</div>') + '</div>') +
+      wCard('plans', 'Payment Plans Due', (plansDue.length>8?'<span class="more" data-focus-plans>view all →</span>':''),
+        '<div class="mini-list">' +
         (plansDue.slice(0,8).map(c=>{ const d=daysUntil(c.plan.nextDate); const late = d<0;
-          return '<div class="mrow" data-case="'+c.id+'"><span class="md" style="color:'+(late?'var(--red)':'var(--plat-dim)')+'">'+usDate(c.plan.nextDate)+'</span><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+fmt$(c.plan.amount)+' '+(late?'<b style="color:var(--red)">'+(-d)+'d late</b>':(d===0?'due today':'in '+d+'d'))+'</span></div>'}).join('') || '<div class="empty" style="padding:20px">No active payment plans.<br>Enable one inside any case.</div>') + '</div></div>' +
-      '<div class="card glass"><div class="card-title">Discovery Outstanding <span class="more" data-filter-disc>view all →</span></div><div class="mini-list">' +
-        (discOut.slice(0,8).map(c=>'<div class="mrow" data-case="'+c.id+'"><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+esc(c.county||'')+'</span></div>').join('') || '<div class="empty" style="padding:20px">All discovery received. ✓</div>') + '</div></div>' +
+          return '<div class="mrow" data-case="'+c.id+'"><span class="md" style="color:'+(late?'var(--red)':'var(--plat-dim)')+'">'+usDate(c.plan.nextDate)+'</span><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+fmt$(c.plan.amount)+' '+(late?'<b style="color:var(--red)">'+(-d)+'d late</b>':(d===0?'due today':'in '+d+'d'))+'</span></div>'}).join('') || '<div class="empty" style="padding:20px">No active payment plans.<br>Enable one inside any case.</div>') + '</div>') +
+      wCard('disc', 'Discovery Outstanding', '<span class="more" data-filter-disc>view all →</span>',
+        '<div class="mini-list">' +
+        (discOut.slice(0,8).map(c=>'<div class="mrow" data-case="'+c.id+'"><span class="mn">'+esc(displayName(c))+'</span><span class="mv">'+esc(c.county||'')+'</span></div>').join('') || '<div class="empty" style="padding:20px">All discovery received. ✓</div>') + '</div>') +
     '</div>' +
-    '<div class="grid" style="grid-template-columns:1.3fr 1fr 1.2fr">' +
-      '<div class="card glass"><div class="card-title">Top Counties · active fees</div><div class="bars-h">' +
-        topCounty.map(([cty,val])=>'<div class="brow"><span style="color:var(--plat)">'+esc(cty)+'</span><div class="btrack"><div class="bfill" style="width:'+(val/maxCty*100)+'%"></div></div><span class="bval">'+fmt$(val)+'</span></div>').join('') + '</div></div>' +
-      '<div class="card glass"><div class="card-title">Charge Mix · active</div><div id="dash-donut"></div><div class="legend" style="margin-top:10px;justify-content:center">' +
-        topCharge.map(([ch,n],i)=>'<span><i style="background:'+CHART_COLORS[i]+'"></i>'+esc(ch.length>22?ch.slice(0,21)+'…':ch)+' ('+n+')</span>').join('') + '</div></div>' +
-      '<div class="card glass"><div class="card-title">Recent Activity</div><div class="mini-list">' +
-        ((DB.log||[]).slice(0,9).map(l=>'<div class="mrow"'+(l.caseId?' data-case="'+l.caseId+'"':'')+'><span class="md">'+usDate(l.t.slice(0,10))+'</span><span class="mn">'+esc(l.msg)+'</span></div>').join('') || '<div class="empty" style="padding:20px">Activity will appear here.</div>') + '</div></div>' +
+    '<div class="grid" style="grid-template-columns:1.15fr 1fr 1.25fr">' +
+      wCard('counties', 'Top Counties · active fees', '',
+        '<div class="bars-h">' +
+        topCounty.map(([cty,val])=>'<div class="brow rowc" data-county="'+esc(cty)+'" title="Show active cases in '+esc(cty)+'"><span style="color:var(--plat)">'+esc(cty)+'</span><div class="btrack"><div class="bfill" style="width:'+(val/maxCty*100)+'%"></div></div><span class="bval">'+fmt$(val)+'</span></div>').join('') + '</div>') +
+      wCard('pipeline', 'Case Pipeline · active', '<span class="more" data-jump="active">all cases →</span>',
+        '<div class="bars-h pipe">' + PIPE.map(p=>{
+          const list = pipe[p.k], w = pipeMax ? list.length/pipeMax*100 : 0;
+          return '<div class="brow rowc'+(list.length?'':' pipe-0')+'" data-pipe="'+p.k+'" title="'+(list.length?'Show the '+list.length+' case'+(list.length===1?'':'s')+' at '+p.l:'Nothing at this stage')+'">' +
+            '<span style="color:var(--plat)">'+p.l+'</span><div class="btrack"><div class="bfill" style="width:'+w.toFixed(1)+'%"></div></div>' +
+            '<span class="bval">'+(list.length||'—')+'</span></div>';
+        }).join('') + '</div>' +
+        '<div style="font-size:9.5px;color:var(--plat-faint);margin-top:8px;letter-spacing:.3px">Stage is read from each case\u2019s hearing history and discovery status.</div>') +
+      wCard('attention', 'Needs Attention', (attn.length>8?'<span class="more" data-focus-attn>all '+attn.length+' →</span>':''),
+        '<div class="mini-list">' +
+        (attn.slice(0,8).map(a=>'<div class="mrow" data-case="'+a.c.id+'"><span class="att-dot '+a.tone+'"></span><span class="mn">'+esc(displayName(a.c))+'</span><span class="mv att-why">'+esc(a.why)+'</span></div>').join('') || '<div class="empty" style="padding:20px">Nothing needs attention. ✓</div>') + '</div>') +
     '</div>';
 
   barChart($('#dash-chart'), ms.map(m=>({label:m.label, a:m.collected, b:m.fees, tipHtml:'<b>'+m.label+'</b><br>Collected: <b style="color:var(--gold-hi)">'+fmt$(m.collected)+'</b><br>Billed: <b style="color:#AEB6C2">'+fmt$(m.fees)+'</b><br>Cases: '+m.opened})), {money:true, gid:'d', bFill:'plat'});
   ring($('#dash-ring'), k.fees? k.coll/k.fees : 0, 168, Math.round((k.fees?k.coll/k.fees:0)*100)+'%', 'collected / billed');
-  donut($('#dash-donut'), topCharge.map(([ch,n],i)=>({label:ch, val:n, color:CHART_COLORS[i]})), 158);
   $$('#view .pcard').forEach((el,i)=>el.onclick = pulse[i].go);
+  $$('#view [data-fold-w]').forEach(b=>b.onclick = e=>{ e.stopPropagation();
+    const p = dashPrefs(), k2 = b.dataset.foldW; p.fold[k2] = !p.fold[k2]; save(); renderView() });
+  $$('#view [data-county]').forEach(el=>el.onclick = ()=>{
+    Object.assign(F,{q:'',charge:'',level:'',disc:'',tw:false,bal:false,plan:false,focus:null});
+    F.county = el.dataset.county; switchTab('active') });
+  $$('#view [data-pipe]').forEach(el=>el.onclick = ()=>{
+    const st = el.dataset.pipe, list = pipe[st]; if(!list.length) return;
+    focusCases(list.map(c=>c.id), (PIPE.find(p=>p.k===st)||{}).l + ' stage', 'hearing') });
+  const fp = $('#view [data-focus-plans]'); if(fp) fp.onclick = e=>{ e.stopPropagation();
+    focusCases(plansDue.map(c=>c.id), 'Payment plans due') };
+  const fa = $('#view [data-focus-attn]'); if(fa) fa.onclick = e=>{ e.stopPropagation();
+    focusCases(attn.map(a=>a.c.id), 'Needs attention') };
   $$('#view [data-case]').forEach(el=>el.onclick = ()=>openEditor(el.dataset.case));
   $$('#view [data-jump]').forEach(el=>el.onclick = e=>{ e.stopPropagation(); const j = el.dataset.jump; if(j === 'calsync') openCal(); else switchTab(j) });
+  const A2 = window.__aiRows || [];
+  /* The intelligence panel diagnoses; the widgets below are where the work
+     happens. If a finding has a home down there, Review goes to it rather than
+     printing the same list twice. */
+  const go = i => { const r = A2[i]; if(!r) return;
+    if(r.widget && wShown(r.widget)) revealWidget(r.widget);
+    else if(r.ids && r.ids.length) focusCases(r.ids, r.label || 'Flagged by intelligence', r.sort);
+    else if(r.jump){ if(r.jump === 'calsync') openCal(); else switchTab(r.jump) } };
+  $$('#view [data-aiact]').forEach(el=>el.onclick = e=>{ e.stopPropagation(); go(+el.dataset.aiact) });
+  $$('#view [data-aireview]').forEach(b=>b.onclick = e=>{ e.stopPropagation(); go(+b.dataset.aireview) });
+  $$('#view [data-aisnooze]').forEach(b=>b.onclick = e=>{ e.stopPropagation(); const r = A2[+b.dataset.aisnooze]; if(!r) return;
+    aiHide(r.key, r.sig, 7); renderView(); toast('Snoozed for a week — it returns if the issue is still there') });
+  $$('#view [data-aidismiss]').forEach(b=>b.onclick = e=>{ e.stopPropagation(); const r = A2[+b.dataset.aidismiss]; if(!r) return;
+    aiHide(r.key, r.sig, 0); renderView(); toast('Dismissed — it comes back if this changes') });
+  const ar = $('#ai-restore'); if(ar) ar.onclick = ()=>{ DB.settings.aiHide = {}; save(); renderView(); toast('Hidden alerts restored') };
   const fd = $('#view [data-filter-disc]'); if(fd) fd.onclick = ()=>{ Object.assign(F,{disc:'Outstanding'}); switchTab('active') };
 }
 
@@ -3443,6 +3752,7 @@ function buildPal(q){
     {cat:'Actions', label:'⬇ Download backup', fn:exportBackup},
     {cat:'Actions', label:'⇪ Import data', fn:openImport},
     {cat:'Actions', label:'⇄ Client list check (compare a Clio export)', fn:()=>openRecon()},
+    {cat:'Actions', label:'▦ Customize dashboard panels', fn:()=>customizeDash($('#btn-more'))},
     {cat:'Actions', label:'⎙ Print case list', fn:()=>window.print()},
     {cat:'Actions', label:'⚙ Settings', fn:openSettings},
     {cat:'Actions', label:'🔒 Lock tracker', fn:lockNow},
@@ -3504,6 +3814,7 @@ function boot(){
   $('#btn-settings').onclick = openSettings;
   $('#btn-lock').onclick = lockNow;
   $('#btn-import').onclick = openImport;
+  const bdc = $('#btn-dashcfg'); if(bdc) bdc.onclick = e=>{ const m = $('#hmenu'); if(m) m.classList.remove('show'); customizeDash(e.currentTarget) };
   $('#btn-export').onclick = exportBackup;
   $('#btn-csv').onclick = ()=>exportCSV(curTab==='payments'?'payments':'cases');
   $('#btn-print').onclick = doPrint;
