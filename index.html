@@ -854,11 +854,11 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
       </div>
       <button class="sync-pill busy" id="sync-pill" style="display:none" tabindex="-1" aria-hidden="true" title="Cloud sync on — click to sync now (auto every 60s)"><span class="sd"></span><span id="sync-pill-txt">syncing…</span></button>
       <div class="hdr-acts">
-        <button class="icon-btn" id="btn-add" title="Add case  ·  N" aria-label="Add case" fdprocessedid="1wzs8h"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
-        <button class="icon-btn" id="btn-pay" title="Log payment  ·  P" aria-label="Log payment" fdprocessedid="glidl7"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v18.8"></path><path d="M16.5 7.2c-.9-1.3-2.6-2-4.5-2-2.5 0-4.4 1.3-4.4 3.4 0 2.1 1.8 2.9 4.4 3.5 2.7.6 4.6 1.5 4.6 3.7 0 2.2-2 3.5-4.6 3.5-2.1 0-3.9-.8-4.8-2.2"></path></svg></button>
-        <button class="icon-btn" id="btn-palette" title="Search  ·  Ctrl K" aria-label="Search" fdprocessedid="t20alt"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg></button>
+        <button class="icon-btn" id="btn-add" title="Add case  ·  N" aria-label="Add case"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+        <button class="icon-btn" id="btn-pay" title="Log payment  ·  P" aria-label="Log payment"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v18.8"></path><path d="M16.5 7.2c-.9-1.3-2.6-2-4.5-2-2.5 0-4.4 1.3-4.4 3.4 0 2.1 1.8 2.9 4.4 3.5 2.7.6 4.6 1.5 4.6 3.7 0 2.2-2 3.5-4.6 3.5-2.1 0-3.9-.8-4.8-2.2"></path></svg></button>
+        <button class="icon-btn" id="btn-palette" title="Search  ·  Ctrl K" aria-label="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg></button>
         <div class="hmenu-wrap">
-          <button class="icon-btn" id="btn-more" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false" fdprocessedid="7qja00r"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+          <button class="icon-btn" id="btn-more" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
 
         </div>
       </div>
@@ -890,8 +890,8 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
 </div></div>
 
 <div class="overlay" id="ov-settings"><div class="modal" style="width:min(680px,94vw)" role="dialog" aria-modal="true">
-  <div class="modal-h"><div class="t">Settings</div><button class="x-btn" data-close="ov-settings" fdprocessedid="87fa6c">×</button></div>
-  <div class="modal-b" id="settings-body"><div class="fsec" style="border-top:0;padding-top:0;margin-top:0"><div class="fsec-t">Identity</div><div class="frow" style="grid-template-columns:2fr 1fr 1fr"><div style=""><label class="fl">Firm Name</label><input class="fi" id="s-firm" type="text" value="Gerard W. Mannion" fdprocessedid="evp4ns"></div><div style=""><label class="fl">Initials</label><input class="fi" id="s-user" type="text" value="GM" fdprocessedid="gr1o97"></div><div style=""><label class="fl">Tracking Since</label><input class="fi" id="s-firmstart" type="date" value="2025-11-11"></div></div></div><div class="fsec"><div class="fsec-t">Security</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-pin" fdprocessedid="50yn6f">Set a PIN</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:9px">PIN is hashed and stored on this device only. Data never leaves your computer.</div></div><div class="fsec"><div class="fsec-t">Compensation</div><div class="frow" style="grid-template-columns:1fr 1fr"><div style=""><label class="fl">Base Salary (annual)</label><input class="fi" id="s-salary" type="number" value="50000" fdprocessedid="w9gn9j"></div><div style=""><label class="fl">Commission Basis</label><select class="fi" id="s-tier-basis" fdprocessedid="4exz6d"><option value="collected" selected="">Collected (cash in)</option><option value="billed">Billed (fees booked)</option></select></div></div><div class="frow" style="grid-template-columns:repeat(4,1fr)"><div style=""><label class="fl">Starting Rate %</label><input class="fi" id="s-tier-start" type="number" value="10" fdprocessedid="tcbzb"></div><div style=""><label class="fl">First Bump At ($/qtr)</label><input class="fi" id="s-tier-th" type="number" value="162500" fdprocessedid="rm3ybs"></div><div style=""><label class="fl">Bump Every ($)</label><input class="fi" id="s-tier-step" type="number" value="25000" fdprocessedid="7tykbj"></div><div style=""><label class="fl">Bump Size (%)</label><input class="fi" id="s-tier-bump" type="number" value="2" fdprocessedid="6ltrlr"></div></div><div class="frow" style="grid-template-columns:1fr 1fr"><div style=""><label class="fl">Manual Mode Default % (new cases)</label><select class="fi" id="s-base" fdprocessedid="6vl0kq"><option value="10" selected="">10%</option><option value="11">11%</option><option value="12">12%</option><option value="13">13%</option><option value="14">14%</option><option value="15">15%</option><option value="16">16%</option><option value="17">17%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option><option value="21">21%</option><option value="22">22%</option><option value="23">23%</option><option value="24">24%</option><option value="25">25%</option></select></div><div style="align-self:end;font-size:11px;color:var(--plat-faint);padding-bottom:8px">Tiered vs Manual is switched on the Income tab.</div></div><div class="frow" style="grid-template-columns:1fr 1fr 1fr"><div style=""><label class="fl">Guarantee $/month (while new)</label><input class="fi" id="s-g-amt" type="number" value="10000" fdprocessedid="v6wj6p"></div><div style=""><label class="fl">Guarantee Start</label><input class="fi" id="s-g-start" type="date" value="2025-11-11"></div><div style=""><label class="fl">Guarantee End</label><input class="fi" id="s-g-end" type="date" value="2026-05-15"></div></div><div style="font-size:11px;color:var(--plat-faint)">During the guarantee you’re paid the flat monthly amount — revenue still builds the quarterly ladder but pays no commission. Clear the dates to disable.</div></div><div class="fsec"><div class="fsec-t">Monthly Actuals (authoritative history)</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.6;margin-bottom:12px">Real collected totals from your old tracker. Month views, goals and the commission ladder use these plus any payments you log here. Cases / payments counts are optional.</div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;margin-bottom:4px"><span class="fl" style="margin:0">Month</span><span class="fl" style="margin:0">Collected</span><span class="fl" style="margin:0">Billed</span><span class="fl" style="margin:0">Cases</span><span class="fl" style="margin:0">Pays</span><span></span></div><div id="s-actuals"><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2025-11"><span style="font-size:12px;color:var(--plat)">2025-11</span><input class="fi" data-af="coll" type="number" value="25350" title="Collected" fdprocessedid="8g07f6"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="9geoeg"><input class="fi" data-af="cases" type="number" placeholder="—" value="8" fdprocessedid="vnr1r9"><input class="fi" data-af="pays" type="number" placeholder="—" value="8" fdprocessedid="wdgeq"><button class="x-btn" data-adel="2025-11" title="Remove" fdprocessedid="siuwd">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2025-12"><span style="font-size:12px;color:var(--plat)">2025-12</span><input class="fi" data-af="coll" type="number" value="82000" title="Collected" fdprocessedid="ljhhio"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="g61ab"><input class="fi" data-af="cases" type="number" placeholder="—" value="17" fdprocessedid="z9d3rk"><input class="fi" data-af="pays" type="number" placeholder="—" value="17" fdprocessedid="0awygr"><button class="x-btn" data-adel="2025-12" title="Remove" fdprocessedid="nll13wh">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-01"><span style="font-size:12px;color:var(--plat)">2026-01</span><input class="fi" data-af="coll" type="number" value="63400" title="Collected" fdprocessedid="llb8nd"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="rnflfk"><input class="fi" data-af="cases" type="number" placeholder="—" value="16" fdprocessedid="bx9bd5"><input class="fi" data-af="pays" type="number" placeholder="—" value="18" fdprocessedid="jus8zc"><button class="x-btn" data-adel="2026-01" title="Remove" fdprocessedid="12txk3">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-02"><span style="font-size:12px;color:var(--plat)">2026-02</span><input class="fi" data-af="coll" type="number" value="75950" title="Collected" fdprocessedid="u07drh"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="u1sjo"><input class="fi" data-af="cases" type="number" placeholder="—" value="18" fdprocessedid="jjr7ev"><input class="fi" data-af="pays" type="number" placeholder="—" value="19" fdprocessedid="tkefcr"><button class="x-btn" data-adel="2026-02" title="Remove" fdprocessedid="owmv09">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-03"><span style="font-size:12px;color:var(--plat)">2026-03</span><input class="fi" data-af="coll" type="number" value="78500" title="Collected" fdprocessedid="5xe428"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="fio81f"><input class="fi" data-af="cases" type="number" placeholder="—" value="21" fdprocessedid="2lmlp"><input class="fi" data-af="pays" type="number" placeholder="—" value="25" fdprocessedid="mpb8g"><button class="x-btn" data-adel="2026-03" title="Remove" fdprocessedid="k59gtj">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-04"><span style="font-size:12px;color:var(--plat)">2026-04</span><input class="fi" data-af="coll" type="number" value="86650" title="Collected" fdprocessedid="1cz1xl"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="kaktpf"><input class="fi" data-af="cases" type="number" placeholder="—" value="23" fdprocessedid="xgjhpd"><input class="fi" data-af="pays" type="number" placeholder="—" value="31" fdprocessedid="940zcp"><button class="x-btn" data-adel="2026-04" title="Remove" fdprocessedid="wxbkth">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-05"><span style="font-size:12px;color:var(--plat)">2026-05</span><input class="fi" data-af="coll" type="number" value="67200" title="Collected" fdprocessedid="2fk6gq"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="nzzj2s"><input class="fi" data-af="cases" type="number" placeholder="—" value="18" fdprocessedid="0wtbwc"><input class="fi" data-af="pays" type="number" placeholder="—" value="39" fdprocessedid="wxxia"><button class="x-btn" data-adel="2026-05" title="Remove" fdprocessedid="imgee">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-06"><span style="font-size:12px;color:var(--plat)">2026-06</span><input class="fi" data-af="coll" type="number" value="96550" title="Collected" fdprocessedid="s73p6v"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)" fdprocessedid="egbkb"><input class="fi" data-af="cases" type="number" placeholder="—" value="21" fdprocessedid="0cgzre"><input class="fi" data-af="pays" type="number" placeholder="—" value="39" fdprocessedid="a3lizi"><button class="x-btn" data-adel="2026-06" title="Remove" fdprocessedid="flz0cm">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-07"><span style="font-size:12px;color:var(--plat)">2026-07</span><input class="fi" data-af="coll" type="number" value="20350" title="Collected" fdprocessedid="s3wcj9"><input class="fi" data-af="billed" type="number" placeholder="—" value="17000" title="Billed (overrides computed month)" fdprocessedid="5bb2z"><input class="fi" data-af="cases" type="number" placeholder="—" value="4" fdprocessedid="1gbi9"><input class="fi" data-af="pays" type="number" placeholder="—" value="13" fdprocessedid="zw648"><button class="x-btn" data-adel="2026-07" title="Remove" fdprocessedid="q60ty">×</button></div></div><div style="display:flex;gap:8px;align-items:center"><input class="fi" id="s-act-new" type="month" style="width:160px"><input class="fi" id="s-act-newv" type="number" placeholder="Collected $" style="width:140px" fdprocessedid="0pa20f"><button class="btn" id="s-act-add" fdprocessedid="zifuqp">+ Add month</button></div></div><div class="fsec"><div class="fsec-t">Legacy Baseline (carry-forward from old tracker)</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.6;margin-bottom:12px">Year-to-date adjustments that bridge timing gaps between itemized cases and your old tracker’s 2026 totals (billed uses real signed dates the saved file didn’t contain). Zero them after importing a full backup.</div><label class="cbrow" style="margin-bottom:12px"><input type="checkbox" id="s-cfon"> Apply baseline to KPIs</label><div class="frow" style="grid-template-columns:repeat(3,1fr)"><div style=""><label class="fl">Billed adj. 2026</label><input class="fi" id="s-cf-fees" type="number" value="138250" fdprocessedid="urfr49"></div><div style=""><label class="fl">Collected adj. 2026</label><input class="fi" id="s-cf-col" type="number" value="130100" fdprocessedid="3cebtp"></div><div style="align-self:end"><button class="btn btn-red" id="s-cf-zero" style="width:100%" fdprocessedid="d8iem">Zero Out</button></div></div></div><div class="fsec"><div class="fsec-t">Preferences</div><div style="display:flex;gap:24px;flex-wrap:wrap"><label class="cbrow"><input type="checkbox" id="s-wx" checked=""> Minneapolis weather in header</label><label class="cbrow"><input type="checkbox" id="s-conf" checked=""> Confetti on paid-in-full</label></div></div><div class="fsec"><div class="fsec-t">Cloud Sync — every device, auto every 60s</div><div style="font-size:12px;color:var(--plat);line-height:1.7;margin-bottom:12px">● <b style="color:var(--green)">Connected.</b> Changes push automatically (about 5s after an edit, plus a 60-second heartbeat and on close) and every device with this token pulls the latest on open and every minute. Last sync: 8/25/2026, 8:35:05 PM</div><div class="bal-disp" style="margin-bottom:12px;user-select:all">Gist ID: fd535f270374aa3bcf8c6cb4adf90676</div><div class="frow" style="grid-template-columns:2fr 1.2fr;margin-bottom:12px"><div style=""><label class="fl">Replace GitHub token (paste a new one any time)</label><input class="fi" id="s-sync-token2" type="password" placeholder="github_pat_… or ghp_…" fdprocessedid="8sulih"></div><div style=""><label class="fl">&nbsp;</label><button class="btn btn-gold" id="s-sync-retoken" style="width:100%" fdprocessedid="12lbmc">Update Token &amp; Sync</button></div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" id="s-sync-now" fdprocessedid="7cmorm9">Sync Now</button><button class="btn" id="s-sync-recover" fdprocessedid="be36a">Recover Unsynced Work</button><button class="btn" id="s-sync-force" fdprocessedid="hgn41k">Match Cloud Exactly</button><button class="btn btn-red" id="s-sync-off" fdprocessedid="2z25o">Disconnect This Device</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:10px">Other devices: open the tracker file there, then paste the same token here in Settings — it finds your data automatically.</div></div><div class="fsec"><div class="fsec-t">Connections</div><div class="mini-list" style="margin-bottom:12px"><div class="mrow" style="cursor:default"><span class="md">Clio</span><span class="mn"><span style="color:var(--plat-faint)">Not connected</span></span><span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-clio" fdprocessedid="gu9xgq">Open</button></span></div><div class="mrow" style="cursor:default"><span class="md">Google Calendar</span><span class="mn"><b style="color:var(--green)">183</b> events feeding in</span><span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-gcal" fdprocessedid="bkffxm">Open</button></span></div></div></div><div class="fsec"><div class="fsec-t">Automatic Backup</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.65;margin-bottom:10px">A snapshot is taken automatically every <b style="color:var(--plat)">3 days</b> and kept here — the last 4 are held on this device, and the newest is mirrored into your private sync gist. Nothing asks you to do anything.<br>Last snapshot <b style="color:var(--plat)">8/25/2026, 6:44:46 PM</b> · next around <b style="color:var(--plat)">8/28/2026</b></div></div><div class="fsec"><div class="fsec-t">Data</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-audit" fdprocessedid="qxt5uy">Find Duplicates</button><button class="btn btn-gold" id="s-backup" fdprocessedid="5vnzeo">Download Backup (JSON)</button><button class="btn" id="s-csv" fdprocessedid="kzewgg">Export Cases CSV</button><button class="btn" id="s-csvp" fdprocessedid="33dcqj">Export Payments CSV</button><button class="btn btn-red" id="s-wipe" fdprocessedid="z7dmvd">Wipe All Data</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:10px">172 case rows · 111 payments · 205 KB local</div></div><div class="modal-f" style="border:0;padding:18px 0 4px"><button class="btn" data-close="ov-settings" fdprocessedid="3jk0x">Close</button><button class="btn btn-gold" id="s-save" fdprocessedid="7q7yva">Save Settings</button></div></div>
+  <div class="modal-h"><div class="t">Settings</div><button class="x-btn" data-close="ov-settings">×</button></div>
+  <div class="modal-b" id="settings-body"><div class="fsec" style="border-top:0;padding-top:0;margin-top:0"><div class="fsec-t">Identity</div><div class="frow" style="grid-template-columns:2fr 1fr 1fr"><div style=""><label class="fl">Firm Name</label><input class="fi" id="s-firm" type="text" value="Gerard W. Mannion"></div><div style=""><label class="fl">Initials</label><input class="fi" id="s-user" type="text" value="GM"></div><div style=""><label class="fl">Tracking Since</label><input class="fi" id="s-firmstart" type="date" value="2025-11-11"></div></div></div><div class="fsec"><div class="fsec-t">Security</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-pin">Set a PIN</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:9px">PIN is hashed and stored on this device only. Data never leaves your computer.</div></div><div class="fsec"><div class="fsec-t">Compensation</div><div class="frow" style="grid-template-columns:1fr 1fr"><div style=""><label class="fl">Base Salary (annual)</label><input class="fi" id="s-salary" type="number" value="50000"></div><div style=""><label class="fl">Commission Basis</label><select class="fi" id="s-tier-basis"><option value="collected" selected="">Collected (cash in)</option><option value="billed">Billed (fees booked)</option></select></div></div><div class="frow" style="grid-template-columns:repeat(4,1fr)"><div style=""><label class="fl">Starting Rate %</label><input class="fi" id="s-tier-start" type="number" value="10"></div><div style=""><label class="fl">First Bump At ($/qtr)</label><input class="fi" id="s-tier-th" type="number" value="162500"></div><div style=""><label class="fl">Bump Every ($)</label><input class="fi" id="s-tier-step" type="number" value="25000"></div><div style=""><label class="fl">Bump Size (%)</label><input class="fi" id="s-tier-bump" type="number" value="2"></div></div><div class="frow" style="grid-template-columns:1fr 1fr"><div style=""><label class="fl">Manual Mode Default % (new cases)</label><select class="fi" id="s-base"><option value="10" selected="">10%</option><option value="11">11%</option><option value="12">12%</option><option value="13">13%</option><option value="14">14%</option><option value="15">15%</option><option value="16">16%</option><option value="17">17%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option><option value="21">21%</option><option value="22">22%</option><option value="23">23%</option><option value="24">24%</option><option value="25">25%</option></select></div><div style="align-self:end;font-size:11px;color:var(--plat-faint);padding-bottom:8px">Tiered vs Manual is switched on the Income tab.</div></div><div class="frow" style="grid-template-columns:1fr 1fr 1fr"><div style=""><label class="fl">Guarantee $/month (while new)</label><input class="fi" id="s-g-amt" type="number" value="10000"></div><div style=""><label class="fl">Guarantee Start</label><input class="fi" id="s-g-start" type="date" value="2025-11-11"></div><div style=""><label class="fl">Guarantee End</label><input class="fi" id="s-g-end" type="date" value="2026-05-15"></div></div><div style="font-size:11px;color:var(--plat-faint)">During the guarantee you’re paid the flat monthly amount — revenue still builds the quarterly ladder but pays no commission. Clear the dates to disable.</div></div><div class="fsec"><div class="fsec-t">Monthly Actuals (authoritative history)</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.6;margin-bottom:12px">Real collected totals from your old tracker. Month views, goals and the commission ladder use these plus any payments you log here. Cases / payments counts are optional.</div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;margin-bottom:4px"><span class="fl" style="margin:0">Month</span><span class="fl" style="margin:0">Collected</span><span class="fl" style="margin:0">Billed</span><span class="fl" style="margin:0">Cases</span><span class="fl" style="margin:0">Pays</span><span></span></div><div id="s-actuals"><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2025-11"><span style="font-size:12px;color:var(--plat)">2025-11</span><input class="fi" data-af="coll" type="number" value="25350" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="8"><input class="fi" data-af="pays" type="number" placeholder="—" value="8"><button class="x-btn" data-adel="2025-11" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2025-12"><span style="font-size:12px;color:var(--plat)">2025-12</span><input class="fi" data-af="coll" type="number" value="82000" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="17"><input class="fi" data-af="pays" type="number" placeholder="—" value="17"><button class="x-btn" data-adel="2025-12" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-01"><span style="font-size:12px;color:var(--plat)">2026-01</span><input class="fi" data-af="coll" type="number" value="63400" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="16"><input class="fi" data-af="pays" type="number" placeholder="—" value="18"><button class="x-btn" data-adel="2026-01" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-02"><span style="font-size:12px;color:var(--plat)">2026-02</span><input class="fi" data-af="coll" type="number" value="75950" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="18"><input class="fi" data-af="pays" type="number" placeholder="—" value="19"><button class="x-btn" data-adel="2026-02" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-03"><span style="font-size:12px;color:var(--plat)">2026-03</span><input class="fi" data-af="coll" type="number" value="78500" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="21"><input class="fi" data-af="pays" type="number" placeholder="—" value="25"><button class="x-btn" data-adel="2026-03" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-04"><span style="font-size:12px;color:var(--plat)">2026-04</span><input class="fi" data-af="coll" type="number" value="86650" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="23"><input class="fi" data-af="pays" type="number" placeholder="—" value="31"><button class="x-btn" data-adel="2026-04" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-05"><span style="font-size:12px;color:var(--plat)">2026-05</span><input class="fi" data-af="coll" type="number" value="67200" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="18"><input class="fi" data-af="pays" type="number" placeholder="—" value="39"><button class="x-btn" data-adel="2026-05" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-06"><span style="font-size:12px;color:var(--plat)">2026-06</span><input class="fi" data-af="coll" type="number" value="96550" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="21"><input class="fi" data-af="pays" type="number" placeholder="—" value="39"><button class="x-btn" data-adel="2026-06" title="Remove">×</button></div><div class="frow" style="grid-template-columns:110px 1fr 1fr 80px 80px 30px;align-items:center;margin-bottom:8px" data-act="2026-07"><span style="font-size:12px;color:var(--plat)">2026-07</span><input class="fi" data-af="coll" type="number" value="20350" title="Collected"><input class="fi" data-af="billed" type="number" placeholder="—" value="17000" title="Billed (overrides computed month)"><input class="fi" data-af="cases" type="number" placeholder="—" value="4"><input class="fi" data-af="pays" type="number" placeholder="—" value="13"><button class="x-btn" data-adel="2026-07" title="Remove">×</button></div></div><div style="display:flex;gap:8px;align-items:center"><input class="fi" id="s-act-new" type="month" style="width:160px"><input class="fi" id="s-act-newv" type="number" placeholder="Collected $" style="width:140px"><button class="btn" id="s-act-add">+ Add month</button></div></div><div class="fsec"><div class="fsec-t">Legacy Baseline (carry-forward from old tracker)</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.6;margin-bottom:12px">Year-to-date adjustments that bridge timing gaps between itemized cases and your old tracker’s 2026 totals (billed uses real signed dates the saved file didn’t contain). Zero them after importing a full backup.</div><label class="cbrow" style="margin-bottom:12px"><input type="checkbox" id="s-cfon"> Apply baseline to KPIs</label><div class="frow" style="grid-template-columns:repeat(3,1fr)"><div style=""><label class="fl">Billed adj. 2026</label><input class="fi" id="s-cf-fees" type="number" value="138250"></div><div style=""><label class="fl">Collected adj. 2026</label><input class="fi" id="s-cf-col" type="number" value="130100"></div><div style="align-self:end"><button class="btn btn-red" id="s-cf-zero" style="width:100%">Zero Out</button></div></div></div><div class="fsec"><div class="fsec-t">Preferences</div><div style="display:flex;gap:24px;flex-wrap:wrap"><label class="cbrow"><input type="checkbox" id="s-wx" checked=""> Minneapolis weather in header</label><label class="cbrow"><input type="checkbox" id="s-conf" checked=""> Confetti on paid-in-full</label></div></div><div class="fsec"><div class="fsec-t">Cloud Sync — every device, auto every 60s</div><div style="font-size:12px;color:var(--plat);line-height:1.7;margin-bottom:12px">● <b style="color:var(--green)">Connected.</b> Changes push automatically (about 5s after an edit, plus a 60-second heartbeat and on close) and every device with this token pulls the latest on open and every minute. Last sync: 8/25/2026, 8:35:05 PM</div><div class="bal-disp" style="margin-bottom:12px;user-select:all">Gist ID: fd535f270374aa3bcf8c6cb4adf90676</div><div class="frow" style="grid-template-columns:2fr 1.2fr;margin-bottom:12px"><div style=""><label class="fl">Replace GitHub token (paste a new one any time)</label><input class="fi" id="s-sync-token2" type="password" placeholder="github_pat_… or ghp_…"></div><div style=""><label class="fl">&nbsp;</label><button class="btn btn-gold" id="s-sync-retoken" style="width:100%">Update Token &amp; Sync</button></div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" id="s-sync-now">Sync Now</button><button class="btn" id="s-sync-recover">Recover Unsynced Work</button><button class="btn" id="s-sync-force">Match Cloud Exactly</button><button class="btn btn-red" id="s-sync-off">Disconnect This Device</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:10px">Other devices: open the tracker file there, then paste the same token here in Settings — it finds your data automatically.</div></div><div class="fsec"><div class="fsec-t">Connections</div><div class="mini-list" style="margin-bottom:12px"><div class="mrow" style="cursor:default"><span class="md">Clio</span><span class="mn"><span style="color:var(--plat-faint)">Not connected</span></span><span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-clio">Open</button></span></div><div class="mrow" style="cursor:default"><span class="md">Google Calendar</span><span class="mn"><b style="color:var(--green)">183</b> events feeding in</span><span class="mv"><button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" id="s-gcal">Open</button></span></div></div></div><div class="fsec"><div class="fsec-t">Automatic Backup</div><div style="font-size:11.5px;color:var(--plat-dim);line-height:1.65;margin-bottom:10px">A snapshot is taken automatically every <b style="color:var(--plat)">3 days</b> and kept here — the last 4 are held on this device, and the newest is mirrored into your private sync gist. Nothing asks you to do anything.<br>Last snapshot <b style="color:var(--plat)">8/25/2026, 6:44:46 PM</b> · next around <b style="color:var(--plat)">8/28/2026</b></div></div><div class="fsec"><div class="fsec-t">Data</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="s-audit">Find Duplicates</button><button class="btn btn-gold" id="s-backup">Download Backup (JSON)</button><button class="btn" id="s-csv">Export Cases CSV</button><button class="btn" id="s-csvp">Export Payments CSV</button><button class="btn btn-red" id="s-wipe">Wipe All Data</button></div><div style="font-size:11px;color:var(--plat-faint);margin-top:10px">172 case rows · 111 payments · 205 KB local</div></div><div class="modal-f" style="border:0;padding:18px 0 4px"><button class="btn" data-close="ov-settings">Close</button><button class="btn btn-gold" id="s-save">Save Settings</button></div></div>
 </div></div>
 
 <div class="overlay" id="ov-import"><div class="modal" style="width:min(640px,94vw)" role="dialog" aria-modal="true">
@@ -916,20 +916,20 @@ select.sel{font-size:11.5px;padding:7px 26px 7px 10px}
 
 <div class="hmenu" id="hmenu" role="menu" style="left: 1152px; top: 85.8435px;">
             <div class="hmenu-hd">Connections</div>
-            <button class="hmi" id="btn-cal" fdprocessedid="ros4bd"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span><span>Google Calendar</span><span class="tag on">on</span></button>
-            <button class="hmi" id="btn-clio" fdprocessedid="dymzr3"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg></span><span>Clio</span><span class="tag">off</span></button>
+            <button class="hmi" id="btn-cal"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span><span>Google Calendar</span><span class="tag on">on</span></button>
+            <button class="hmi" id="btn-clio"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 13.4a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"></path><path d="M13.4 10.6a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"></path></svg></span><span>Clio</span><span class="tag">off</span></button>
             <div class="hsep"></div>
             <div class="hmenu-hd">Data</div>
             <button class="hmi" id="btn-storage"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><ellipse cx="12" cy="6" rx="8" ry="3"></ellipse><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"></path><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg></span><span>Storage &amp; space</span></button>
             <button class="hmi" id="btn-dashcfg"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect></svg></span><span>Customize dashboard</span></button>
             <button class="hmi" id="btn-recon"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l-3-3"></path><path d="M20 17H9l3 3"></path></svg></span><span>Client list check</span></button>
-            <button class="hmi" id="btn-import" fdprocessedid="018vb"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 20h16"></path></svg></span><span>Import</span></button>
-            <button class="hmi" id="btn-export" fdprocessedid="xjgpvs"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg></span><span>Backup now</span></button>
-            <button class="hmi" id="btn-csv" fdprocessedid="vz9lbg"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg></span><span>Export CSV</span></button>
-            <button class="hmi" id="btn-print" fdprocessedid="e66qc"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M6 15h12v6H6z"></path></svg></span><span>Print</span></button>
+            <button class="hmi" id="btn-import"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 20h16"></path></svg></span><span>Import</span></button>
+            <button class="hmi" id="btn-export"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg></span><span>Backup now</span></button>
+            <button class="hmi" id="btn-csv"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg></span><span>Export CSV</span></button>
+            <button class="hmi" id="btn-print"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M6 15h12v6H6z"></path></svg></span><span>Print</span></button>
             <div class="hsep"></div>
-            <button class="hmi" id="btn-settings" fdprocessedid="x02wy"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.1 14.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.87 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.87-1.2l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3.1 14.5H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9.9 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.87 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0 1.2 2.87H21a2 2 0 1 1 0 4z"></path></svg></span><span>Settings</span></button>
-            <button class="hmi" id="btn-lock" fdprocessedid="exrmr"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span><span>Lock &nbsp;·&nbsp; L</span></button>
+            <button class="hmi" id="btn-settings"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.1 14.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.87 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.87-1.2l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3.1 14.5H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9.9 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.87 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0 1.2 2.87H21a2 2 0 1 1 0 4z"></path></svg></span><span>Settings</span></button>
+            <button class="hmi" id="btn-lock"><span class="hmi-i"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span><span>Lock &nbsp;·&nbsp; L</span></button>
 </div>
 <div id="toasts"></div>
 <div id="confetti"></div>
@@ -1672,6 +1672,7 @@ function caseRow(c, i, resolved, isSub, hasKids, collapsed){
     : '<span class="casenum" onclick="event.stopPropagation();copyText(\''+esc(c.caseNo)+'\',\''+esc(c.caseNo)+'\')" title="Click to copy">'+esc(c.caseNo)+'</span>';
   const doc = c.docName ? ' <span onclick="event.stopPropagation();openDocFor(\''+c.id+'\')" title="'+esc(c.docName)+(c.docBlob?' — click to open':' — from your old tracker · click for how to re-attach')+'" style="cursor:pointer;opacity:'+(c.docBlob?'.95':'.45')+'">📄</span>' : '';
   const nm = displayName(c);
+  const clioTag = c.clioNo ? '<div style="font-size:10px;color:var(--plat-faint);margin-top:2px;letter-spacing:.2px" title="Clio matter">'+esc(c.clioNo)+'</div>' : '';
   const nameHtml = isSub
     ? '<div class="cname" style="padding-left:20px;color:var(--plat-dim)"><span style="color:var(--gold-dim)">↳</span> '+(nm && nm!==''?esc(nm):'companion file')+' '+badges(c)+'</div>'
     : '<div class="cname">'
@@ -1690,7 +1691,7 @@ function caseRow(c, i, resolved, isSub, hasKids, collapsed){
   return '<tr class="rowc'+(isSub?' subrow':'')+(att?' att att-'+att.level:'')+'" data-id="'+c.id+'"'+(att?' title="'+esc(att.why)+'"':'')+'>'
     + '<td class="idx">'+(isSub?'':i)+'</td>'
     + '<td>'+nameHtml+'</td>'
-    + '<td>'+nh+doc+icBlock+'</td>'
+    + '<td>'+nh+doc+icBlock+clioTag+'</td>'
     + '<td class="chg">'+(()=>{ const st = statuteFor(c);
         const block = (c.expungement?'<div class="chg-lv" style="color:var(--gold-hi);font-weight:700;letter-spacing:.4px">Expungement</div>':'')+'<div class="chg-lv">'+esc(c.level||'')+(c.degree?' · '+esc(c.degree):'')+'</div><div class="chg-main">'+esc(c.charge==='Other'? (c.chargeOther||'Other') : c.charge||'—')+(c.refusal?' · Refusal':'')+'</div>';
         return st ? '<a href="'+esc(st)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="MN statute">'+block+'</a>' : block })()+'</td>'
@@ -4054,7 +4055,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 <div class="overlay" id="ov-clio"><div class="modal" style="width:min(760px,95vw)" role="dialog" aria-modal="true">
   <div class="modal-h"><div><div class="t">Clio</div>
-    <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Matters, calendar and billing, wired straight into this tracker.</div></div>
+    <div style="font-size:11px;color:var(--plat-dim);margin-top:3px">Your matters, tied to these files through the firm worker; the calendar bridge keys on the matter number.</div></div>
     <button class="x-btn" data-close="ov-clio">×</button></div>
   <div class="modal-b" id="clio-body"></div>
 </div></div>
@@ -4168,10 +4169,11 @@ function calMatch(ev){
   if(ev.kind === 'personal') return {caseId:null, how:'personal'};
   const keys = DB.calKeys || {};
   if(ev.matterNo && keys[ev.matterNo]) return {caseId: keys[ev.matterNo], how:'matter'};
+  if(ev.matterNo && Object.keys(keys).length) return {caseId:null, how:'none'};   /* someone else's matter — never guess by surname */
   const pool = DB.cases.filter(c => !c.sub);
   const cty = calCounty(ev);
   const narrow = (hits, k) => {
-    if(hits.length > 1 && k.fi){ const n = hits.filter(c => (c.first||'').toLowerCase().startsWith(k.fi)); if(n.length) hits = n }
+    if(hits.length && k.fi){ hits = hits.filter(c => (c.first||'').toLowerCase().startsWith(k.fi)) }
     if(hits.length > 1){ const a = hits.filter(c => !c.resolved); if(a.length) hits = a }
     if(hits.length > 1 && cty){ const n = hits.filter(c => (c.county||'') === cty); if(n.length) hits = n }
     if(hits.length > 1 && ev.date){ const n = hits.filter(c => (c.hearings||[]).some(h => h.date === ev.date)); if(n.length === 1) hits = n }
@@ -4186,7 +4188,7 @@ function calMatch(ev){
   }
   for(const k of nameKeys){                              /* typo tolerance, e.g. Robak → Roback */
     const kn = calNorm(k.last); if(kn.length < 5) continue;
-    let hits = narrow(pool.filter(c => calLev(calNorm(c.last), kn) === 1), k);
+    let hits = narrow(pool.filter(c => !c.resolved && calLev(calNorm(c.last), kn) === 1), k);
     if(hits.length === 1) return {caseId: hits[0].id, how:'fuzzy'};
   }
   return {caseId:null, how:'none'};
@@ -4206,7 +4208,8 @@ function calApply(silent){
     if(ev.status === 'cancelled'){ if(h && !(h.resolution||'').startsWith('Complete')){ c.hearings.splice(c.hearings.indexOf(h),1); gone++; c.updatedAt = stamp } continue }
     if(!h){
       h = c.hearings.find(x => !x.calId && x.date === ev.date);
-      if(h){ h.calId = ev.uid }
+      if(h){ h.calId = ev.uid; if(!h.time && ev.time) h.time = ev.time }
+      else if(c.hearings.some(x => x.calId && x.date === ev.date && (x.time||'') === (ev.time||''))) continue;   /* same hearing, second entry */
       else { c.hearings.push({type: ev.type || 'Other', date: ev.date, time: ev.time || '', resolution:'', calId: ev.uid}); added++; c.updatedAt = stamp; continue }
     }
     if(h.date !== ev.date || (ev.time && h.time !== ev.time)){ h.date = ev.date; if(ev.time) h.time = ev.time; moved++; c.updatedAt = stamp }
@@ -4408,7 +4411,7 @@ function renderCal(){
   if(!calMonth){ const n = new Date(); calMonth = {y:n.getFullYear(), m:n.getMonth()} }
   $('#cal-sub').innerHTML = CAL.length
     ? q.linked+' events linked to client files · '+(q.unlinked ? '<b style="color:var(--orange)">'+q.unlinked+' unmatched</b>' : 'all matched')+' · feed updated '+(q.feedAge||'—')
-    : 'No calendar feed yet — setup steps are under Links';
+    : 'No calendar feed yet — setup steps are under Links &amp; setup';
   const tab = (id, label) => '<button class="btn'+(calView===id?' btn-gold':'')+'" data-cv="'+id+'">'+label+'</button>';
   const head = '<div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:14px">'
     + tab('agenda','Agenda') + tab('month','Month') + tab('links','Links &amp; setup')
@@ -4483,13 +4486,22 @@ function renderCal(){
         + '<td>'+(c ? '<b>'+esc(displayName(c))+'</b><br><span style="font-size:10px;color:var(--plat-faint)">'+how+'</span>'
                     : '<span style="color:'+(m.how==='ignored'||m.how==='personal'?'var(--plat-faint)':'var(--orange)')+';font-size:11px">'+how+'</span>')+'</td>'
         + '<td>'+sel(e.uid, (DB.calLinks||{})[e.uid] || (c?c.id:''))+'</td></tr>' };
-    const setup = '<div class="card glass" style="margin-top:14px"><div class="card-title">Automatic feed — one-time setup</div>'
-      + '<div style="font-size:12px;color:var(--plat-dim);line-height:1.75">'
-      + 'A robot in your GitHub repo reads your calendar every 15 minutes into your private store. Nothing about clients is ever public.<br>'
+    const fcfg = calCfg();
+    const setup = '<div class="card glass" style="margin-top:14px"><div class="card-title">Live feed — one-time setup</div>'
+      + '<div style="font-size:12px;color:var(--plat-dim);line-height:1.75;margin-bottom:10px">'
+      + 'A tiny worker of your own reads the calendar\'s private iCal address and hands this page the events; the tracker asks it on load and every 15 minutes. Nothing about clients is ever public.<br>'
       + '<b style="color:var(--plat)">1.</b> Google Calendar → your calendar ⋮ → <b style="color:var(--plat)">Settings and sharing</b> → <b style="color:var(--plat)">Integrate calendar</b> → copy the <b style="color:var(--plat)">Secret address in iCal format</b>.<br>'
-      + '<b style="color:var(--plat)">2.</b> GitHub repo → Actions → <i>set up a workflow yourself</i> → name it <code>calendar-sync.yml</code>, paste the file I gave you, commit.<br>'
-      + '<b style="color:var(--plat)">3.</b> Repo → Settings → Secrets and variables → Actions → add <code>GCAL_ICS_URL</code>, <code>SYNC_GIST_ID</code> = <code>'+esc((syncCfg()||{}).gistId||'your gist id')+'</code>, and <code>GIST_TOKEN</code> (gist scope).'
-      + '</div></div>';
+      + '<b style="color:var(--plat)">2.</b> Cloudflare → Workers &amp; Pages → Create → <i>Start with Hello World</i> → name it <code>revenuetracker-cal</code> → Edit code → paste the source below → Deploy.<br>'
+      + '<b style="color:var(--plat)">3.</b> Worker → Settings → Variables and Secrets: <code>ICS_URL</code> (secret, the address from step 1) and <code>ALLOW_ORIGIN</code> = <code>https://gmannion5149.github.io</code>. Deploy again.<br>'
+      + '<b style="color:var(--plat)">4.</b> Paste the worker address (https://revenuetracker-cal.&lt;you&gt;.workers.dev) here and press Test.'
+      + '</div>'
+      + '<div class="frow" style="grid-template-columns:2fr auto auto;align-items:end;gap:10px">'
+      + fld('Live feed address', inp('cal-feed-url', fcfg.feedUrl || '', 'https://revenuetracker-cal.yourname.workers.dev'))
+      + '<button class="btn btn-gold" id="cal-feed-test" style="margin-bottom:1px">Save &amp; test</button>'
+      + '<button class="btn" id="cal-feed-src" style="margin-bottom:1px">Show feed worker</button></div>'
+      + (fcfg.feedError ? '<div style="font-size:11px;color:#F1948A;margin-top:8px">' + esc(fcfg.feedError) + '</div>' : '')
+      + '<pre id="cal-feed-src-box" style="display:none;margin-top:12px;max-height:300px;overflow:auto;background:rgba(4,8,15,.65);border:1px solid var(--ge);border-radius:10px;padding:12px;font-size:10.5px;line-height:1.5;color:var(--plat-dim);white-space:pre;user-select:all"></pre>'
+      + '</div>';
     body = (evs.length ? '<div class="tblwrap" style="max-height:48vh"><table class="tbl"><thead><tr><th>When</th><th>Event</th><th>Kind</th><th>Client file</th><th>Link to</th></tr></thead><tbody>'
       + evs.map(row).join('')+'</tbody></table></div>' : '<div class="empty" style="padding:26px">No upcoming events in the feed.</div>') + setup;
   }
@@ -4498,7 +4510,18 @@ function renderCal(){
   $('#cal-on').onchange = e => { calCfg().on = e.target.checked; save(); refresh() };
   $('#cal-auto').onchange = e => { calCfg().autoApply = e.target.checked; save(); if(e.target.checked) calApply(true) };
   $('#cal-meet').onchange = e => { calCfg().applyMeetings = e.target.checked; save(); calApply(true); renderCal() };
-  $('#cal-refresh').onclick = async ()=>{ if(!syncCfg()){ toast('Connect cloud sync first (Settings)'); return } toast('Checking the calendar feed…'); await syncNow(true); renderCal() };
+  $('#cal-refresh').onclick = async ()=>{
+    if(calFeedUrl()){ toast('Asking the calendar feed…'); await calFeedFetch(true); renderCal(); return }
+    if(!syncCfg()){ toast('Set the live feed address under Links & setup, or connect cloud sync'); return }
+    toast('Checking the calendar feed…'); await syncNow(true); renderCal() };
+  const ft = $('#cal-feed-test'); if(ft) ft.onclick = async ()=>{
+    const v = ($('#cal-feed-url').value || '').trim().replace(/\/+$/, '');
+    calCfg().feedUrl = v; calCfg().feedError = null; save();
+    if(!v){ clearInterval(calFeedTimer); toast('Live feed address cleared'); renderCal(); return }
+    ft.disabled = true; ft.textContent = 'Testing…';
+    const ok = await calFeedFetch(true); if(ok) calFeedTimerStart();
+    renderCal(); refresh() };
+  const fs = $('#cal-feed-src'); if(fs) fs.onclick = ()=>{ const box = $('#cal-feed-src-box'); if(box.style.display === 'none'){ box.textContent = calFeedWorkerSrc(); box.style.display = 'block' } else box.style.display = 'none' };
   const pv = $('#cm-prev'), nx = $('#cm-next'), td = $('#cm-today');
   if(pv) pv.onclick = ()=>{ calMonth.m--; if(calMonth.m<0){ calMonth.m=11; calMonth.y-- } renderCal() };
   if(nx) nx.onclick = ()=>{ calMonth.m++; if(calMonth.m>11){ calMonth.m=0; calMonth.y++ } renderCal() };
@@ -4621,177 +4644,113 @@ function wireAutoBak(){
 }
 
 /* ═════════════════ CLIO ═════════════════
-   A real client for Clio Manage's v4 REST API, wired the only two ways
-   a browser page can actually reach it:
+   Wired through the firm's own Clio worker (the same one GWMNotes and
+   Defense Operations use). The worker holds the Clio OAuth token, so
+   this page never sees a secret and never needs its own handshake:
+   it asks the worker for matters, the worker asks Clio.
 
-     relay  — you deploy the small worker printed in the Clio panel.
-              It holds the client secret, runs the OAuth handshake and
-              proxies /api/v4/*, which is what makes the calls legal
-              from a browser. Clio sends no cross-origin headers of its
-              own, so this is the mode that works from a hosted page.
-     token  — paste an access token and the page calls Clio directly.
-              Fine inside a desktop shell or an extension; a plain
-              browser tab is stopped by the same-origin rule.
+   Only matters whose responsible attorney is Gerard Mannion come
+   across. Each one is tied to a case here by its Clio matter id, and
+   the matter number (02511-Acuna-Nino) is what the calendar bridge
+   keys on. Nothing is ever deleted or closed from here; when Clio and
+   the tracker disagree about a status, the Clio panel says so and the
+   change is one click, never automatic. */
 
-   Everything above the transport is shared: matters become cases,
-   Clio calendar entries flow through the same pipeline Google Calendar
-   already uses, and bills reconcile against what you have billed. */
-
-const CLIO_REGIONS = {
-  us: {label:'United States', host:'app.clio.com'},
-  ca: {label:'Canada',        host:'ca.app.clio.com'},
-  eu: {label:'Europe',        host:'eu.app.clio.com'},
-  au: {label:'Australia',     host:'au.app.clio.com'}
-};
-let clioBusy = false, clioTimer = null;
+const CLIO_FIRM_RELAY   = 'https://gwm-clio-api.gmannion.workers.dev';
+const CLIO_MY_NAME      = 'Gerard Mannion';
+const CLIO_CLIENT_ID    = '7GPSasDi2azVtPxlSzdFfcwj3zNC3O9vsUt1Emry';                 /* firm Clio app (public id) */
+const CLIO_REDIRECT_URI = 'https://gmannion5149.github.io/GWMNotes/callback.html';   /* hands the code to the worker */
+const CLIO_MATTER_BASE  = 'https://app.clio.com/nc/#/matters/';
+let clioBusy = false, clioTimer = null, calFeedTimer = null;
 
 function clioCfg(){
   const s = DB.settings;
   if(!s.clio) s.clio = {};
-  const d = {on:false, mode:'relay', region:'us', relay:'', token:'', refresh:'', expAt:0,
-             autoMin:30, lastSync:null, lastError:null, lastCounts:null,
-             pullMatters:true, pullCalendar:true, pullBills:false, importNew:false, user:''};
+  const d = {on:true, mode:'firm', relay:CLIO_FIRM_RELAY, attorney:CLIO_MY_NAME, autoMin:30,
+             lastSync:null, lastError:null, lastCounts:null, importNew:true, user:'', firmOk:false, extra:[]};
   for(const k in d) if(s.clio[k] === undefined) s.clio[k] = d[k];
+  /* configs written by the old relay/token panel are retired in place */
+  if(s.clio.mode !== 'firm'){ s.clio.mode = 'firm'; s.clio.on = true; s.clio.importNew = true; if(!/gwm-clio-api/.test(s.clio.relay||'')) s.clio.relay = CLIO_FIRM_RELAY }
+  if(!s.clio.relay) s.clio.relay = CLIO_FIRM_RELAY;
   return s.clio;
 }
 function clioSaveCfg(){ try{ persist() }catch(e){} }
-function clioHost(){ return (CLIO_REGIONS[clioCfg().region] || CLIO_REGIONS.us).host }
-function clioRelay(){ return (clioCfg().relay || '').trim().replace(/\/+$/, '') }
-function clioBase(){
-  const c = clioCfg();
-  return (c.mode === 'relay' && clioRelay()) ? clioRelay() + '/api/v4' : 'https://' + clioHost() + '/api/v4';
-}
-function clioConnected(){ const c = clioCfg(); return !!(c.on && c.token) }
-function clioMatterUrl(id){ return 'https://' + clioHost() + '/matters/' + id }
-
-function clioNetHint(e){
-  const c = clioCfg();
-  if(location.protocol === 'file:')
-    return 'A page opened straight off the disk has no origin to call from. Open the tracker at its web address and try again.';
-  if(c.mode === 'token')
-    return 'The browser blocked the call to Clio. Clio does not answer browser origins directly — switch Clio to Relay mode and point it at your worker.';
-  return 'Could not reach the relay at ' + (clioRelay() || '(not set)') + ' — ' + ((e && e.message) || 'no response');
-}
+function clioRelay(){ return (clioCfg().relay || CLIO_FIRM_RELAY).trim().replace(/\/+$/, '') }
+function clioConnected(){ const c = clioCfg(); return !!(c.on && c.firmOk) }
+function clioMatterUrl(id){ return CLIO_MATTER_BASE + id }
+function clioMatterIdOf(c){ return String(c.clioId || (String(c.clio||'').match(/matters\/(\d+)/)||[])[1] || '') }
 
 async function clioFetch(path, opts){
-  const c = clioCfg(); opts = opts || {};
-  const url = /^https?:/.test(path) ? path : clioBase() + path;
+  opts = opts || {};
+  const url = /^https?:/.test(path) ? path : clioRelay() + path;
   const h = Object.assign({'Accept':'application/json'}, opts.headers || {});
-  if(c.token) h['Authorization'] = 'Bearer ' + c.token;
-  h['X-Clio-Region'] = c.region || 'us';
   if(opts.body && !h['Content-Type']) h['Content-Type'] = 'application/json';
   let r;
-  try{
-    r = await fetch(url, {method: opts.method || 'GET', headers: h, body: opts.body,
-                          credentials: c.mode === 'relay' ? 'include' : 'omit', cache: 'no-store'});
-  }catch(e){ throw new Error(clioNetHint(e)) }
-
-  if(r.status === 401 && !opts._retried){
-    if(await clioRefreshToken()) return clioFetch(path, Object.assign({}, opts, {_retried:true}));
-    throw new Error('Clio rejected the credentials (401). Reconnect from the Clio panel.');
+  try{ r = await fetch(url, {method: opts.method || 'GET', headers: h, body: opts.body, cache: 'no-store'}) }
+  catch(e){ throw new Error('Could not reach the Clio worker at ' + clioRelay() + (location.protocol === 'file:' ? ' — open the tracker at its web address' : '')) }
+  let txt = ''; try{ txt = await r.text() }catch(e){}
+  let j = null; try{ j = txt ? JSON.parse(txt) : {} }catch(e){ j = {raw: txt} }
+  if(r.status === 401 || (j && j.reauthorize)){
+    const c = clioCfg(); c.firmOk = false; clioSaveCfg(); paintHmenu();
+    throw new Error('Clio authorization on the worker has expired — press Reconnect in the Clio panel');
   }
-  if(r.status === 429 && !opts._retried){
-    const wait = Math.min(20, parseInt(r.headers.get('Retry-After') || '5', 10) || 5);
-    await new Promise(res => setTimeout(res, wait * 1000));
-    return clioFetch(path, Object.assign({}, opts, {_retried:true}));
-  }
-  if(!r.ok){
-    let detail = ''; try{ detail = (await r.text()).slice(0, 200) }catch(e){}
-    throw new Error('Clio returned ' + r.status + (detail ? ' — ' + detail : ''));
-  }
-  if(r.status === 204) return null;
-  return r.json();
+  if(!r.ok) throw new Error((j && (j.error || j.message)) || ('Clio worker returned ' + r.status));
+  return j;
 }
 
-/* follows Clio's page_token paging until the list runs out */
-async function clioAll(path, params, cap){
-  const out = []; cap = cap || 3000;
-  const qs = new URLSearchParams(Object.assign({limit:200}, params || {})).toString();
-  let next = path + (qs ? '?' + qs : ''), guard = 0;
-  while(next && out.length < cap && guard++ < 40){
-    const j = await clioFetch(next);
-    const data = j && j.data;
-    if(!Array.isArray(data)) break;
-    out.push.apply(out, data);
-    const nx = j.meta && j.meta.paging && j.meta.paging.next;
-    next = nx ? String(nx).replace(/^https?:\/\/[^/]+\/api\/v4/, '') : null;
-  }
-  return out;
-}
-
-async function clioRefreshToken(){
+/* ── status / reconnect ─────────────────────────────────── */
+async function clioStatus(){
   const c = clioCfg();
-  if(c.mode !== 'relay' || !clioRelay() || !c.refresh) return false;
-  try{
-    const r = await fetch(clioRelay() + '/refresh', {method:'POST', credentials:'include',
-      headers:{'Content-Type':'application/json'}, body: JSON.stringify({refresh_token: c.refresh, region: c.region})});
-    if(!r.ok) return false;
-    const j = await r.json();
-    if(!j || !j.access_token) return false;
-    c.token = j.access_token;
-    if(j.refresh_token) c.refresh = j.refresh_token;
-    c.expAt = Date.now() + ((+j.expires_in || 3600) * 1000);
-    clioSaveCfg(); return true;
-  }catch(e){ return false }
+  const j = await clioFetch('/status');
+  c.firmOk = !!(j && j.connected);
+  c.user = c.firmOk ? ((j.user && (j.user.name || j.user.email)) || 'Clio') : '';
+  c.lastError = c.firmOk ? null : 'The worker is not connected to Clio — press Reconnect';
+  clioSaveCfg(); paintHmenu();
+  return c.firmOk;
+}
+function clioReconnect(){
+  const url = 'https://app.clio.com/oauth/authorize?response_type=code&client_id=' + encodeURIComponent(CLIO_CLIENT_ID)
+            + '&redirect_uri=' + encodeURIComponent(CLIO_REDIRECT_URI);
+  const w = window.open(url, 'gwmClioAuth', 'width=560,height=720');
+  if(!w){ toast('Your browser blocked the Clio window — allow pop-ups for this page and try again', null, 8000); return }
+  toast('Sign in to Clio in the window that opened; this page updates by itself');
+  let polls = 0;
+  const t = setInterval(async () => {
+    polls++;
+    if(w.closed || polls > 60){ clearInterval(t); if(await clioStatus().catch(()=>false)){ toast('Clio connected'); clioSync(true) } renderClioBody() }
+  }, 3000);
+}
+window.addEventListener('message', async ev => {
+  const d = ev.data;
+  if(!d || typeof d !== 'object' || (d.type !== 'clio-connected' && d.type !== 'clio-auth-failed')) return;
+  let ok = false; try{ ok = new URL(CLIO_REDIRECT_URI).origin === ev.origin }catch(e){}
+  if(!ok && ev.origin !== location.origin) return;
+  if(d.type === 'clio-auth-failed'){ toast('Clio authorization failed' + (d.error ? ' — ' + esc(d.error) : ''), null, 9000); return }
+  if(await clioStatus().catch(()=>false)){ toast('Clio connected'); clioSync(true) }
+});
+
+/* ── matters ────────────────────────────────────────────── */
+function clioNormMatter(m){
+  /* the worker's flat shape → one shape the rest of this file reads */
+  return {
+    id: String(m.id), display_number: String(m.display_number || ''), description: m.description || '',
+    status: m.status || '', open_date: m.open_date || '', close_date: m.close_date || '',
+    practice_area: m.practice_area || '',
+    responsible_attorney: typeof m.responsible_attorney === 'string' ? m.responsible_attorney : ((m.responsible_attorney && m.responsible_attorney.name) || ''),
+    client: { name: m.client_name || (m.client && m.client.name) || '',
+              first_name: m.client_first || (m.client && m.client.first_name) || '',
+              last_name:  m.client_last  || (m.client && m.client.last_name)  || '' }
+  };
+}
+async function clioMyMatters(){
+  const cfg = clioCfg();
+  const j = await clioFetch('/matters?scope=my&status=all&limit=1000');
+  const list = ((j && j.matters) || []).map(clioNormMatter);
+  const me = (cfg.attorney || '').trim().toLowerCase();
+  return me ? list.filter(m => String(m.responsible_attorney || '').trim().toLowerCase() === me) : list;
 }
 
-async function clioWhoAmI(){
-  try{
-    const j = await clioFetch('/users/who_am_i.json?fields=id,name,email');
-    return j && j.data;
-  }catch(e){
-    const j = await clioFetch('/users.json?fields=id,name,email&limit=1');   /* narrower tokens */
-    return j && j.data && j.data[0];
-  }
-}
-
-/* ── connect / disconnect ───────────────────────────────── */
-function clioStartOAuth(){
-  const c = clioCfg();
-  if(!clioRelay()) return toast('Set the relay address first');
-  const back = location.origin + location.pathname;
-  location.href = clioRelay() + '/connect?region=' + encodeURIComponent(c.region)
-                + '&redirect=' + encodeURIComponent(back);
-}
-
-/* the relay hands the tokens back in the URL fragment, so they never
-   reach a server log */
-function clioCatchReturn(){
-  const h = location.hash || '';
-  if(h.indexOf('clio') === -1) return false;
-  const q = new URLSearchParams(h.replace(/^#/, ''));
-  const tok = q.get('clio_token'), err = q.get('clio_error');
-  if(!tok && !err) return false;
-  history.replaceState(null, '', location.pathname + location.search);
-  const c = clioCfg();
-  if(err){ c.lastError = err; clioSaveCfg(); toast('Clio: ' + esc(err), null, 9000); return true }
-  c.token = tok;
-  c.refresh = q.get('clio_refresh') || c.refresh;
-  c.expAt = Date.now() + ((+q.get('expires_in') || 3600) * 1000);
-  c.on = true; c.lastError = null; clioSaveCfg();
-  toast('Clio connected');
-  setTimeout(() => clioSync(true), 400);
-  return true;
-}
-
-async function clioTest(){
-  const c = clioCfg();
-  const who = await clioWhoAmI();
-  c.user = who ? (who.name || who.email || ('user ' + who.id)) : '';
-  c.lastError = null; c.on = true; clioSaveCfg();
-  return c.user;
-}
-
-function clioDisconnect(){
-  const c = clioCfg();
-  c.on = false; c.token = ''; c.refresh = ''; c.expAt = 0; c.user = ''; c.lastError = null;
-  clioSaveCfg(); clearInterval(clioTimer); paintHmenu();
-}
-
-/* ── matters → cases ────────────────────────────────────── */
-const CLIO_MATTER_FIELDS = 'id,display_number,custom_number,description,status,open_date,close_date,'
-  + 'practice_area{id,name},client{id,name,first_name,last_name,type},responsible_attorney{id,name}';
-
+const clioN = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z ]/g,'').trim();
 function clioSplitName(m){
   const cl = m.client || {};
   if(cl.first_name || cl.last_name) return {first: cl.first_name || '', last: cl.last_name || ''};
@@ -4802,166 +4761,150 @@ function clioSplitName(m){
   return p.length > 1 ? {first: p[0], last: p[p.length - 1]} : {first:'', last: n};
 }
 
-function clioFindCase(m){
-  const byId = DB.cases.find(c => c.clioId && String(c.clioId) === String(m.id));
-  if(byId) return byId;
-  const byLink = DB.cases.find(c => c.clio && c.clio.indexOf('/matters/' + m.id) > -1);
-  if(byLink) return byLink;
-  const dn = String(m.display_number || '').trim();
-  if(dn){ const byNo = DB.cases.find(c => !c.clioId && (c.caseNo || '').trim() === dn); if(byNo) return byNo }
-  const nm = clioSplitName(m);
-  if(nm.last){
-    const hits = DB.cases.filter(c => !c.sub && !c.clioId && calNorm(c.last) === calNorm(nm.last)
-                 && (!nm.first || !c.first || calNorm(c.first).charAt(0) === calNorm(nm.first).charAt(0)));
-    if(hits.length === 1) return hits[0];
-  }
-  return null;
-}
-
+/* the fields a matter owns on a case — never the court file number,
+   never the status; those are the tracker's to keep */
 function clioApplyMatter(c, m, stamp){
   let touched = false;
-  const set = (k, v) => { if(v != null && v !== '' && c[k] !== v){ c[k] = v; touched = true } };
+  const set = (k, v) => { v = v == null ? '' : v; if(c[k] !== v){ c[k] = v; touched = true } };
   set('clioId', String(m.id));
-  set('clio', clioMatterUrl(m.id));
-  if(!c.caseNo && m.display_number) set('caseNo', String(m.display_number));
-  if(!c.dateOpened && m.open_date) set('dateOpened', m.open_date);
-  if(m.status === 'Closed' && !c.resolved){
-    c.resolved = true; c.status = 'closed';
-    c.closedDate = m.close_date || todayISO(); touched = true;
-  }
+  set('clioNo', m.display_number);
+  set('clioStatus', m.status);
+  set('clioRa', m.responsible_attorney);
+  set('clioOpen', m.open_date);
+  set('clioClose', m.close_date);
+  if(!c.clio) set('clio', clioMatterUrl(m.id));
+  c.clioSyncedAt = stamp;
   if(touched) c.updatedAt = stamp;
   return touched;
 }
 
+/* a case built from a matter this tracker has never seen */
+function clioNewCase(m, stamp, resolvedToo){
+  const c = blankCase(null);
+  const cl = m.client || {}, full = clioN(cl.name).replace(/\s+/g,' ').trim(), toks = full ? full.split(' ') : [];
+  c.first = cl.first_name || toks[0] || ''; c.last = cl.last_name || toks[toks.length - 1] || '';
+  const fl = clioN(c.first), ll = clioN(c.last);
+  c.mid = toks.filter(t => t !== fl && t !== ll).map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(' ');
+  c.name = c.last + ', ' + [c.first, c.mid].filter(Boolean).join(' ');
+  c.caption = 'State of Minnesota v. ' + [c.first, c.mid, c.last].filter(Boolean).join(' ');
+  c.dateOpened = m.open_date || todayISO();
+  c.caseNoNote = 'PENDING'; c.chargeOther = String(m.description || '').slice(0, 140); if(c.chargeOther) c.charge = 'Other';
+  c.fee = null;
+  if(resolvedToo && m.status === 'Closed'){ c.resolved = true; c.status = 'closed'; c.closedDate = m.close_date || todayISO() }
+  clioApplyMatter(c, m, stamp);
+  return c;
+}
+
 async function clioPullMatters(res){
   const cfg = clioCfg();
-  const ms = await clioAll('/matters.json', {fields: CLIO_MATTER_FIELDS, order:'id(asc)'});
+  const ms = await clioMyMatters();
   const stamp = new Date().toISOString();
-  DB.calKeys = DB.calKeys || {};
-  for(const m of ms){
-    let c = clioFindCase(m);
-    if(!c){
-      if(!cfg.importNew){ res.unmatched++; continue }
-      const nm = clioSplitName(m);
-      c = blankCase(null);
-      c.first = nm.first; c.last = nm.last;
-      c.name = (!nm.last && m.client && m.client.name) ? m.client.name : '';
-      c.caseNo = String(m.display_number || '');
-      c.dateOpened = m.open_date || todayISO();
-      c.caption = String(m.description || '').slice(0, 140);
-      c.fee = null;
-      DB.cases.push(c);
-      res.created++;
+  const byId = {}; ms.forEach(m => byId[m.id] = m);
+  const used = {};
+
+  /* 1 · cases that already point at a matter */
+  for(const c of DB.cases){
+    const lid = clioMatterIdOf(c);
+    if(lid && byId[lid]){ if(clioApplyMatter(c, byId[lid], stamp)) res.updated++; used[lid] = 1; res.linked++ }
+    else if(lid && c.clioNo){ res.linked++ }          /* tied to a matter outside this list (another attorney) — left as is */
+  }
+
+  /* 2 · the rest match by client name, one confident hit only. Two rounds:
+         first the files whose open date points at one matter, then the
+         files left over take whichever of the client's matters is still free. */
+  const days = (a, b) => Math.abs((new Date(a) - new Date(b)) / 864e5);
+  const candsFor = c => {
+    const last = clioN(c.last || (c.name||'').split(',')[0]);
+    const first = clioN(c.first || ((c.name||'').split(',')[1]||'').trim().split(' ')[0]);
+    if(!last) return [];
+    const lt = last.split(' ');
+    return ms.filter(m => {
+      const ml = clioN(m.client.last_name), mf = clioN(m.client.first_name);
+      const lastOk = ml === last || (lt.length > 1 && lt.includes(ml)) || (ml.indexOf(' ') > -1 && ml.split(' ').includes(last));
+      const firstOk = !first || !mf || mf === first || mf.slice(0,3) === first.slice(0,3) || first.startsWith(mf) || mf.startsWith(first);
+      return lastOk && firstOk;
+    });
+  };
+  const claim = (c, m) => { if(clioApplyMatter(c, m, stamp)) res.updated++; used[m.id] = 1; res.linked++ };
+  for(const c of DB.cases){
+    if(clioMatterIdOf(c)) continue;
+    let cands = candsFor(c);
+    if(cands.length > 1 && c.dateOpened){ const near = cands.filter(m => m.open_date && days(m.open_date, c.dateOpened) <= 45); if(near.length === 1) cands = near }
+    if(cands.length === 1) claim(c, cands[0]);
+  }
+  for(const c of DB.cases){
+    if(clioMatterIdOf(c)) continue;
+    const cands = candsFor(c);
+    if(cands.length < 2) continue;
+    const free = cands.filter(m => !used[m.id]);
+    if(free.length === 1) claim(c, free[0]);
+    else if(!free.length && cands.length){ /* every matter of this client is taken by a sibling file: share the one closest in time */
+      const sib = cands.slice().sort((a, b) => days(a.open_date || '2000-01-01', c.dateOpened || '2000-01-01') - days(b.open_date || '2000-01-01', c.dateOpened || '2000-01-01'))[0];
+      if(sib) claim(c, sib);
     }
-    if(clioApplyMatter(c, m, stamp)) res.updated++;
-    res.linked++;
-    const key = String(m.display_number || '').replace(/\D/g, '');
-    if(key) DB.calKeys[key] = c.id;
   }
-  res.matters = ms.length;
-}
 
-/* ── Clio calendar → the same pipeline Google Calendar feeds ──
-   Google events and Clio events sit side by side in CAL; each side
-   only ever replaces its own. */
-const CLIO_CAL_FIELDS = 'id,summary,description,start_at,end_at,all_day,location,'
-  + 'matter{id,display_number,description},calendar_owner{id,name}';
-
-function clioHM(iso){
-  if(!iso || iso.length < 16) return '';
-  const d = new Date(iso);
-  if(isNaN(d)) return '';
-  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-}
-function clioLocalDate(iso, allDay){
-  if(!iso) return '';
-  if(allDay || iso.length <= 10) return iso.slice(0,10);
-  const d = new Date(iso);
-  if(isNaN(d)) return iso.slice(0,10);
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
-function clioCalToEvent(e){
-  const allDay = !!e.all_day;
-  const d = clioLocalDate(e.start_at, allDay);
-  if(!d) return null;
-  let title = String(e.summary || '').trim();
-  const mt = e.matter || null;
-  if(mt && mt.display_number && title.indexOf(String(mt.display_number)) === -1)
-    title = title + ' (' + mt.display_number + ' - ' + String(mt.description || '').slice(0, 40) + ')';
-  const ev = calParse({
-    uid: 'clio:' + e.id, id: 'clio:' + e.id, title: title, date: d,
-    time: allDay ? '' : clioHM(e.start_at),
-    end:  allDay ? '' : clioHM(e.end_at),
-    loc: e.location || '', desc: e.description || '', allDay: allDay, status: 'confirmed'
-  });
-  if(!ev) return null;
-  ev.src = 'clio';
-  ev.clioMatterId = mt ? String(mt.id) : '';
-  const key = mt && mt.display_number ? String(mt.display_number).replace(/\D/g, '') : '';
-  if(key) ev.matterNo = key;
-  return ev;
-}
-
-async function clioPullCalendar(res){
-  const from = new Date(Date.now() - 60 * 864e5).toISOString();
-  const to   = new Date(Date.now() + 400 * 864e5).toISOString();
-  const es = await clioAll('/calendar_entries.json',
-    {fields: CLIO_CAL_FIELDS, from: from, to: to, order:'start_at(asc)'});
-  const mine = es.map(clioCalToEvent).filter(Boolean);
-  /* a Clio entry attached to a linked matter needs no name guessing */
-  DB.calLinks = DB.calLinks || {};
-  for(const ev of mine){
-    if(!ev.clioMatterId) continue;
-    const c = DB.cases.find(x => String(x.clioId) === ev.clioMatterId);
-    if(c) DB.calLinks[ev.uid] = c.id;
+  /* 3 · matters with no case here: open ones become cases, closed ones wait in the panel */
+  for(const m of ms){
+    if(used[m.id]) continue;
+    if(cfg.importNew && m.status === 'Open'){ DB.cases.push(clioNewCase(m, stamp)); used[m.id] = 1; res.created++ }
   }
-  CAL = CAL.filter(e => e.src !== 'clio').concat(mine);
-  calSaveLocal();
-  res.events = mine.length;
-}
+  cfg.extra = ms.filter(m => !used[m.id]).map(m => ({id:m.id, dn:m.display_number, name:m.client.name, status:m.status, open:m.open_date, close:m.close_date, desc:m.description}));
+  res.unmatched = cfg.extra.length;
 
-/* ── bills → what Clio thinks you have billed and collected ── */
-const CLIO_BILL_FIELDS = 'id,number,issued_at,due_at,state,total,balance,matter{id}';
-
-async function clioPullBills(res){
-  const bs = await clioAll('/bills.json', {fields: CLIO_BILL_FIELDS, order:'id(asc)'}, 1500);
-  const byMatter = {};
-  for(const b of bs){
-    const mid = b.matter && String(b.matter.id); if(!mid) continue;
-    const t = +b.total || 0, bal = +b.balance || 0;
-    const r = byMatter[mid] || (byMatter[mid] = {billed:0, paid:0, open:0, n:0});
-    r.billed += t; r.paid += Math.max(0, t - bal); r.open += bal; r.n++;
+  /* 4 · matter-number keys for the calendar bridge; the lead file wins over a companion */
+  DB.calKeys = DB.calKeys || {};
+  const cid = {}; DB.cases.forEach(x => cid[x.id] = x);
+  for(const c of DB.cases){
+    const k = String(c.clioNo || '').replace(/\D/g, ''); if(!k) continue;
+    const cur = cid[DB.calKeys[k]];
+    if(!cur || (cur.sub && !c.sub)) DB.calKeys[k] = c.id;
   }
-  DB.clioBills = byMatter;
-  res.bills = bs.length;
+  res.matters = ms.length; res.open = ms.filter(m => m.status === 'Open').length; res.closed = res.matters - res.open;
 }
 
-function clioBillsFor(c){
-  if(!c || !c.clioId) return null;
-  return (DB.clioBills || {})[String(c.clioId)] || null;
+/* cases and Clio disagree about being open — surfaced, never applied */
+function clioStatusGaps(){
+  const out = [];
+  for(const c of DB.cases){
+    if(!c.clioId || c.sub) continue;
+    if(c.clioStatus === 'Closed' && !c.resolved) out.push({c, kind:'clio-closed'});
+    else if(c.clioStatus === 'Open' && c.resolved) out.push({c, kind:'clio-open'});
+  }
+  return out;
+}
+function clioResolveHere(id){
+  const c = DB.cases.find(x => x.id === id); if(!c) return;
+  c.resolved = true; c.status = 'closed'; c.closedDate = c.clioClose || todayISO(); c.updatedAt = new Date().toISOString();
+  save(); refresh(); renderClioBody(); toast('<b>' + esc(displayName(c)) + '</b> moved to Resolved · ' + usDate(c.closedDate));
+}
+function clioAddExtra(id){
+  const cfg = clioCfg(); const x = (cfg.extra || []).find(e => e.id === id); if(!x) return;
+  const m = {id:x.id, display_number:x.dn, description:x.desc, status:x.status, open_date:x.open, close_date:x.close, responsible_attorney:cfg.attorney,
+             client:{name:x.name, first_name:'', last_name:''}};
+  const c = clioNewCase(m, new Date().toISOString(), true);
+  DB.cases.push(c); cfg.extra = cfg.extra.filter(e => e.id !== id);
+  const k = x.dn.replace(/\D/g, ''); if(k){ DB.calKeys = DB.calKeys || {}; DB.calKeys[k] = c.id }
+  save(); refresh(); renderClioBody();
+  toast('<b>' + esc(displayName(c)) + '</b> added' + (c.resolved ? ' to Resolved' : '') + ' from Clio matter ' + esc(x.dn));
 }
 
 /* ── one sync ───────────────────────────────────────────── */
 async function clioSync(manual){
   const cfg = clioCfg();
   if(clioBusy) return;
-  if(!clioConnected()){ if(manual) toast('Connect Clio first'); return }
   clioBusy = true; paintHmenu();
-  const res = {matters:0, linked:0, created:0, updated:0, unmatched:0, events:0, bills:0};
+  const res = {matters:0, open:0, closed:0, linked:0, created:0, updated:0, unmatched:0};
   try{
-    if(cfg.expAt && Date.now() > cfg.expAt - 60000) await clioRefreshToken();
-    if(!cfg.user) await clioTest();
-    if(cfg.pullMatters)  await clioPullMatters(res);
-    if(cfg.pullCalendar) await clioPullCalendar(res);
-    if(cfg.pullBills)    await clioPullBills(res);
-    if(cfg.pullCalendar){ calAutolink(); if(calCfg().autoApply) calApply(true) }
+    if(!(await clioStatus())) throw new Error('The worker is not connected to Clio — press Reconnect in the Clio panel');
+    await clioPullMatters(res);
+    calAutolink(); if(calCfg().autoApply) calApply(true);
     cfg.lastSync = new Date().toISOString(); cfg.lastError = null; cfg.lastCounts = res;
     save(); refresh(); renderView();
-    if(manual) toast('Clio synced — <b>' + res.linked + '</b> matter' + (res.linked === 1 ? '' : 's') + ' linked'
+    if(manual) toast('Clio synced — <b>' + res.linked + '</b> case' + (res.linked === 1 ? '' : 's') + ' tied to matters'
       + (res.created ? ' · <b>' + res.created + '</b> new' : '')
       + (res.updated ? ' · <b>' + res.updated + '</b> updated' : '')
-      + (res.events ? ' · <b>' + res.events + '</b> calendar entries' : ''), null, 7000);
+      + (res.unmatched ? ' · <b>' + res.unmatched + '</b> waiting in the panel' : ''), null, 7000);
   }catch(e){
     cfg.lastError = e.message; clioSaveCfg();
     if(manual) toast('Clio sync failed — ' + esc(e.message), null, 9000);
@@ -4971,227 +4914,209 @@ async function clioSync(manual){
     if(ov && ov.classList.contains('show')) renderClioBody();
   }
 }
-
 function clioAutoTimer(){
   clearInterval(clioTimer);
   const cfg = clioCfg();
-  if(!clioConnected() || !cfg.autoMin) return;
+  if(!cfg.on || !cfg.autoMin) return;
   clioTimer = setInterval(() => clioSync(false), Math.max(5, cfg.autoMin) * 60000);
 }
+function clioCreateMatter(c){ toast('Open a new matter in Clio, then Sync — it ties itself to <b>' + esc(displayName(c)) + '</b> by name', null, 7000); window.open('https://app.clio.com/nc/#/matters/new', '_blank', 'noopener') }
 
-/* create a matter in Clio from a case that has none */
-async function clioCreateMatter(c){
-  if(!clioConnected()) return toast('Connect Clio first');
-  if(c.clioId) return toast('This case already points at a Clio matter');
-  const nm = displayName(c);
+/* ═════════════════ GOOGLE CALENDAR · live feed ═════════════════
+   A tiny worker (source under Show feed worker) reads the calendar's
+   private iCal address and answers /events as JSON. The tracker asks
+   it on load and every 15 minutes, then runs the same bridge the old
+   gist feed used, so hearings keep following the calendar. */
+function calFeedUrl(){ return (calCfg().feedUrl || '').trim().replace(/\/+$/, '') }
+async function calFeedFetch(manual){
+  const cfg = calCfg(), url = calFeedUrl();
+  if(!url) return false;
   try{
-    const body = JSON.stringify({data:{
-      description: (c.caption || autoCaption(c) || nm).slice(0, 200),
-      status: c.resolved ? 'Closed' : 'Open',
-      open_date: c.dateOpened || todayISO()
-    }});
-    const j = await clioFetch('/matters.json?fields=' + encodeURIComponent(CLIO_MATTER_FIELDS), {method:'POST', body: body});
-    const m = j && j.data; if(!m) throw new Error('Clio did not return the new matter');
-    clioApplyMatter(c, m, new Date().toISOString());
-    save(); refresh();
-    toast('Created Clio matter <b>' + esc(m.display_number || m.id) + '</b> for ' + esc(nm));
-  }catch(e){ toast('Could not create the matter — ' + esc(e.message), null, 9000) }
+    const r = await fetch(url + '/events', {cache:'no-store'});
+    if(!r.ok) throw new Error('feed answered ' + r.status);
+    const j = await r.json();
+    if(!calIngest(j)) throw new Error('the feed had no events list');
+    cfg.feedError = null; save(); paintHmenu();
+    if(manual) toast('Calendar feed refreshed — <b>' + CAL.filter(e => e.src !== 'clio').length + '</b> events');
+    return true;
+  }catch(e){
+    cfg.feedError = e.message; clioSaveCfg();
+    if(manual) toast('Calendar feed failed — ' + esc(e.message), null, 9000);
+    return false;
+  }
 }
-
-/* ── the Clio panel ─────────────────────────────────────── */
-function openClio(){ renderClioBody(); openOv('ov-clio') }
-
-function clioWorkerSrc(){
+function calFeedTimerStart(){
+  clearInterval(calFeedTimer);
+  if(!calFeedUrl()) return;
+  calFeedTimer = setInterval(() => calFeedFetch(false), 15 * 60000);
+}
+function calFeedWorkerSrc(){
   return [
-'/* Clio relay - deploy free on Cloudflare Workers.',
-'   Worker > Settings > Variables (encrypted):',
-'     CLIO_ID, CLIO_SECRET, ALLOW_ORIGIN  (ALLOW_ORIGIN = this tracker\'s URL origin)',
-'   In your Clio developer app, set the redirect URI to:',
-'     https://<your-worker>.workers.dev/callback                              */',
+'/* Case Revenue Tracker · calendar feed worker — deploy free on Cloudflare Workers.',
+'   Worker → Settings → Variables and Secrets:',
+'     ICS_URL       (secret)  the "Secret address in iCal format" of your Google Calendar',
+'     ALLOW_ORIGIN  (text)    https://gmannion5149.github.io',
+'   Then paste the worker address into the tracker: Calendar → Links & setup → Live feed address. */',
 '',
-'const HOST = r => ({us:"app.clio.com", ca:"ca.app.clio.com",',
-'                    eu:"eu.app.clio.com", au:"au.app.clio.com"}[r] || "app.clio.com");',
+'const WINDOW_BACK = 120, WINDOW_AHEAD = 450;   /* days */',
+'const TZ = "America/Chicago";',
 '',
+'function unfold(t){ return t.replace(/\\r\\n/g, "\\n").replace(/\\n[ \\t]/g, "") }',
+'function unesc(s){ return String(s || "").replace(/\\\\n/g, "\\n").replace(/\\\\,/g, ",").replace(/\\\\;/g, ";").replace(/\\\\\\\\/g, "\\\\") }',
+'function local(d){',
+'  const p = new Intl.DateTimeFormat("en-CA", {timeZone: TZ, year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false}).formatToParts(d);',
+'  const g = k => (p.find(x => x.type === k) || {}).value;',
+'  return { date: g("year") + "-" + g("month") + "-" + g("day"), time: (g("hour") === "24" ? "00" : g("hour")) + ":" + g("minute") };',
+'}',
+'function when(raw, params){',
+'  const m = raw.match(/^(\\d{4})(\\d{2})(\\d{2})(?:T(\\d{2})(\\d{2})(\\d{2})?(Z)?)?$/);',
+'  if(!m) return null;',
+'  if(!m[4] || /VALUE=DATE\\b/.test(params)) return { date: m[1] + "-" + m[2] + "-" + m[3], time: "", allDay: true };',
+'  if(m[7]) return Object.assign(local(new Date(Date.UTC(+m[1], +m[2]-1, +m[3], +m[4], +m[5], +(m[6]||0)))), {allDay:false});',
+'  return { date: m[1] + "-" + m[2] + "-" + m[3], time: m[4] + ":" + m[5], allDay: false };   /* TZID=America/Chicago or floating */',
+'}',
+'function parse(ics){',
+'  const out = [], lines = unfold(ics).split("\\n");',
+'  let ev = null;',
+'  for(const line of lines){',
+'    if(line === "BEGIN:VEVENT"){ ev = {}; continue }',
+'    if(line === "END:VEVENT"){ if(ev) out.push(ev); ev = null; continue }',
+'    if(!ev) continue;',
+'    const i = line.indexOf(":"); if(i < 0) continue;',
+'    const head = line.slice(0, i), val = line.slice(i + 1);',
+'    const semi = head.indexOf(";"), key = semi < 0 ? head : head.slice(0, semi), params = semi < 0 ? "" : head.slice(semi + 1);',
+'    if(key === "UID") ev.uid = val;',
+'    else if(key === "SUMMARY") ev.title = unesc(val);',
+'    else if(key === "LOCATION") ev.loc = unesc(val);',
+'    else if(key === "DESCRIPTION") ev.desc = unesc(val).slice(0, 600);',
+'    else if(key === "STATUS") ev.status = val.toLowerCase();',
+'    else if(key === "DTSTART") ev.start = when(val, params);',
+'    else if(key === "DTEND") ev.end = when(val, params);',
+'    else if(key === "RRULE") ev.rrule = val;',
+'    else if(key === "RECURRENCE-ID") ev.recur = val;',
+'  }',
+'  return out;',
+'}',
+'function inWindow(date){',
+'  const d = new Date(date + "T12:00:00Z"), now = Date.now();',
+'  return d >= now - WINDOW_BACK * 864e5 && d <= now + WINDOW_AHEAD * 864e5;',
+'}',
 'export default {',
-'  async fetch(req, env) {',
-'    const u = new URL(req.url), p = u.pathname;',
-'    const cors = {',
-'      "Access-Control-Allow-Origin": env.ALLOW_ORIGIN,',
-'      "Access-Control-Allow-Credentials": "true",',
-'      "Access-Control-Allow-Headers": "Authorization,Content-Type,X-Clio-Region",',
-'      "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS"',
-'    };',
-'    if (req.method === "OPTIONS") return new Response(null, { headers: cors });',
-'',
-'    if (p === "/connect") {',
-'      const region = u.searchParams.get("region") || "us";',
-'      const back = u.searchParams.get("redirect") || env.ALLOW_ORIGIN;',
-'      const state = btoa(JSON.stringify({ region, back }));',
-'      const a = new URL("https://" + HOST(region) + "/oauth/authorize");',
-'      a.searchParams.set("response_type", "code");',
-'      a.searchParams.set("client_id", env.CLIO_ID);',
-'      a.searchParams.set("redirect_uri", u.origin + "/callback");',
-'      a.searchParams.set("state", state);',
-'      return Response.redirect(a.toString(), 302);',
+'  async fetch(req, env){',
+'    const cors = { "Access-Control-Allow-Origin": env.ALLOW_ORIGIN || "*", "Access-Control-Allow-Methods": "GET,OPTIONS",',
+'                   "Access-Control-Allow-Headers": "Content-Type", "Cache-Control": "no-store" };',
+'    if(req.method === "OPTIONS") return new Response(null, {headers: cors});',
+'    const p = new URL(req.url).pathname;',
+'    if(p !== "/events") return new Response("calendar feed ok", {headers: cors});',
+'    if(!env.ICS_URL) return new Response(JSON.stringify({error:"ICS_URL secret is not set on the worker"}), {status:500, headers:{...cors, "Content-Type":"application/json"}});',
+'    const r = await fetch(env.ICS_URL, {cf:{cacheTtl: 240}});',
+'    if(!r.ok) return new Response(JSON.stringify({error:"Google answered " + r.status}), {status:502, headers:{...cors, "Content-Type":"application/json"}});',
+'    const events = [];',
+'    for(const e of parse(await r.text())){',
+'      if(!e.uid || !e.start || !e.start.date) continue;',
+'      if(!inWindow(e.start.date)) continue;',
+'      const uid = e.uid.replace(/@google\\.com$/, "") + (e.recur ? "_" + e.recur.replace(/\\D/g, "") : "");',
+'      events.push({ uid, id: uid, title: e.title || "", date: e.start.date, time: e.start.time || "", end: (e.end && e.end.time) || "",',
+'                    allDay: !!e.start.allDay, loc: e.loc || "", desc: e.desc || "", status: e.status || "confirmed" });',
 '    }',
-'',
-'    if (p === "/callback") {',
-'      const code = u.searchParams.get("code");',
-'      const st = JSON.parse(atob(u.searchParams.get("state") || "e30="));',
-'      const body = new URLSearchParams({',
-'        grant_type: "authorization_code", code,',
-'        client_id: env.CLIO_ID, client_secret: env.CLIO_SECRET,',
-'        redirect_uri: u.origin + "/callback"',
-'      });',
-'      const r = await fetch("https://" + HOST(st.region) + "/oauth/token", {',
-'        method: "POST",',
-'        headers: { "Content-Type": "application/x-www-form-urlencoded" },',
-'        body',
-'      });',
-'      const j = await r.json();',
-'      const frag = j.access_token',
-'        ? "#clio_token=" + j.access_token +',
-'          "&clio_refresh=" + (j.refresh_token || "") +',
-'          "&expires_in=" + (j.expires_in || 3600)',
-'        : "#clio_error=" + encodeURIComponent(j.error_description || j.error || "token exchange failed");',
-'      return Response.redirect(st.back + frag, 302);',
-'    }',
-'',
-'    if (p === "/refresh" && req.method === "POST") {',
-'      const b = await req.json();',
-'      const body = new URLSearchParams({',
-'        grant_type: "refresh_token", refresh_token: b.refresh_token,',
-'        client_id: env.CLIO_ID, client_secret: env.CLIO_SECRET',
-'      });',
-'      const r = await fetch("https://" + HOST(b.region || "us") + "/oauth/token", {',
-'        method: "POST",',
-'        headers: { "Content-Type": "application/x-www-form-urlencoded" },',
-'        body',
-'      });',
-'      return new Response(await r.text(), { status: r.status,',
-'        headers: { ...cors, "Content-Type": "application/json" } });',
-'    }',
-'',
-'    if (p.startsWith("/api/v4/")) {',
-'      const region = req.headers.get("X-Clio-Region") || "us";',
-'      const r = await fetch("https://" + HOST(region) + p + u.search, {',
-'        method: req.method,',
-'        headers: {',
-'          Authorization: req.headers.get("Authorization") || "",',
-'          Accept: "application/json",',
-'          "Content-Type": req.headers.get("Content-Type") || "application/json"',
-'        },',
-'        body: ["GET", "HEAD"].includes(req.method) ? undefined : await req.text()',
-'      });',
-'      return new Response(await r.text(), { status: r.status,',
-'        headers: { ...cors, "Content-Type": "application/json" } });',
-'    }',
-'',
-'    return new Response("clio relay ok", { headers: cors });',
+'    events.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));',
+'    return new Response(JSON.stringify({generatedAt: new Date().toISOString(), count: events.length, events}),',
+'                        {headers: {...cors, "Content-Type": "application/json"}});',
 '  }',
 '};'
   ].join('\n');
 }
 
+/* ── the Clio panel ─────────────────────────────────────── */
+function openClio(){ renderClioBody(); openOv('ov-clio') }
+
 function renderClioBody(){
   const c = clioCfg(), on = clioConnected();
   const counts = c.lastCounts || {};
-  const linkedCases = DB.cases.filter(x => x.clioId).length;
+  const linked = DB.cases.filter(x => x.clioId).length, mains = DB.cases.filter(x => !x.sub).length;
   const gcalN = (typeof CAL !== 'undefined' ? CAL.filter(e => e.src !== 'clio').length : 0);
+  const ccfg = calCfg();
+  const gaps = clioStatusGaps();
+  const extra = (c.extra || []).slice().sort((a, b) => (b.open || '').localeCompare(a.open || ''));
 
   const status = on
     ? '<div class="bal-disp" style="margin-bottom:14px;border-color:rgba(46,204,113,.45);background:rgba(46,204,113,.07);color:#A8F3C6">'
-      + '● Connected' + (c.user ? ' as <b style="color:#A8F3C6">' + esc(c.user) + '</b>' : '') + ' · ' + esc((CLIO_REGIONS[c.region] || CLIO_REGIONS.us).label)
-      + (c.lastSync ? ' · last sync ' + new Date(c.lastSync).toLocaleString() : ' · not synced yet') + '</div>'
-    : '<div class="bal-disp" style="margin-bottom:14px">○ Not connected</div>';
-
+      + '● Connected' + (c.user ? ' as <b style="color:#A8F3C6">' + esc(c.user) + '</b>' : '') + ' through the firm worker'
+      + (c.lastSync ? ' · synced ' + new Date(c.lastSync).toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : ' · not synced yet') + '</div>'
+    : '<div class="bal-disp" style="margin-bottom:14px">○ Not connected — press <b>Reconnect</b> and sign in to Clio once</div>';
   const err = c.lastError
-    ? '<div class="bal-disp" style="margin-bottom:14px;border-color:rgba(231,76,60,.5);background:rgba(231,76,60,.08);color:#F1948A">'
-      + esc(c.lastError) + '</div>' : '';
+    ? '<div class="bal-disp" style="margin-bottom:14px;border-color:rgba(231,76,60,.5);background:rgba(231,76,60,.08);color:#F1948A">' + esc(c.lastError) + '</div>' : '';
 
-  const stats = on ? '<div class="frow" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">'
-    + [['Matters linked', linkedCases], ['New last sync', counts.created || 0],
-       ['Calendar entries', counts.events || 0], ['Unmatched', counts.unmatched || 0]]
-      .map(x => '<div><div class="p-label">' + x[0] + '</div><div style="font-size:19px;font-weight:800">' + x[1] + '</div></div>').join('')
-    + '</div>' : '';
+  const stat = (l, v, sub) => '<div><div class="p-label">' + l + '</div><div style="font-size:19px;font-weight:800">' + v + '</div>' + (sub ? '<div style="font-size:10px;color:var(--plat-faint)">' + sub + '</div>' : '') + '</div>';
+  const stats = '<div class="frow" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">'
+    + stat('My matters', counts.matters != null ? counts.matters : '—', counts.matters != null ? counts.open + ' open · ' + counts.closed + ' closed' : 'sync to count')
+    + stat('Cases tied', linked, 'of ' + DB.cases.length + ' files · ' + mains + ' clients')
+    + stat('Waiting', extra.length, 'in Clio, not here')
+    + stat('Status gaps', gaps.length, 'Clio and tracker differ')
+    + '</div>';
+
+  const extraRows = extra.length ? '<div class="mini-list" style="margin-bottom:10px">' + extra.map(x =>
+      '<div class="mrow" style="cursor:default"><span class="md">' + esc(x.dn) + '</span>'
+      + '<span class="mn"><b style="color:var(--plat)">' + esc(x.name) + '</b> · ' + esc(x.status) + (x.open ? ' · opened ' + usDate(x.open) : '') + (x.desc ? ' · ' + esc(String(x.desc).slice(0, 48)) : '') + '</span>'
+      + '<span class="mv"><button class="btn btn-ghost" style="padding:4px 9px;font-size:11px" data-cl-add="' + esc(x.id) + '">Add' + (x.status === 'Closed' ? ' as resolved' : '') + '</button></span></div>').join('') + '</div>'
+    : '<div style="font-size:11.5px;color:var(--plat-faint);margin-bottom:10px">Every one of your Clio matters has a file here.</div>';
+
+  const gapRows = gaps.length ? '<div class="mini-list" style="margin-bottom:10px">' + gaps.map(g =>
+      '<div class="mrow" style="cursor:default"><span class="md">' + esc(g.c.clioNo || '') + '</span>'
+      + '<span class="mn"><b style="color:var(--plat)">' + esc(displayName(g.c)) + '</b> · ' + (g.kind === 'clio-closed' ? 'closed in Clio' + (g.c.clioClose ? ' ' + usDate(g.c.clioClose) : '') + ', still active here' : 'resolved here, still open in Clio') + '</span>'
+      + '<span class="mv">' + (g.kind === 'clio-closed' ? '<button class="btn btn-ghost" style="padding:4px 9px;font-size:11px" data-cl-res="' + g.c.id + '">Resolve here</button>' : '<span style="font-size:10.5px;color:var(--plat-faint)">close it in Clio</span>') + '</span></div>').join('') + '</div>'
+    : '<div style="font-size:11.5px;color:var(--plat-faint);margin-bottom:10px">Open and closed line up on every tied file.</div>';
 
   $('#clio-body').innerHTML =
     status + err + stats +
 
-    '<div class="fsec" style="border-top:0;padding-top:0;margin-top:0"><div class="fsec-t">How this page reaches Clio</div>' +
-    '<div class="frow" style="grid-template-columns:1fr 1fr">' +
-      fld('Mode', selc('cl-mode', [['relay','Relay (recommended)'],['token','Direct token']], c.mode)) +
-      fld('Region', selc('cl-region', Object.keys(CLIO_REGIONS).map(k => [k, CLIO_REGIONS[k].label]), c.region)) +
+    '<div class="fsec" style="border-top:0;padding-top:0;margin-top:0"><div class="fsec-t">Connection</div>' +
+    '<div class="frow" style="grid-template-columns:2fr 1fr">' +
+      fld('Firm Clio worker', inp('cl-relay', c.relay, CLIO_FIRM_RELAY)) +
+      fld('Responsible attorney', inp('cl-att', c.attorney, CLIO_MY_NAME)) + '</div>' +
+    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">The worker holds the Clio sign-in for the whole firm, so this page never touches a secret. Only matters where the responsible attorney is the name above come across.</div>' +
+    '<div style="display:flex;gap:10px;margin-top:11px;flex-wrap:wrap">' +
+      '<button class="btn" id="cl-test">Check connection</button>' +
+      '<button class="btn" id="cl-oauth">Reconnect</button>' +
+      '<button class="btn btn-gold" id="cl-sync"' + (clioBusy ? ' disabled' : '') + '>' + (clioBusy ? 'Syncing…' : 'Sync now') + '</button>' +
+      '<span style="flex:1"></span>' + fld('', selc('cl-auto', [['0','Auto-sync off'],['15','Every 15 minutes'],['30','Every 30 minutes'],['60','Hourly'],['240','Every 4 hours']], String(c.autoMin))) +
     '</div>' +
-    (c.mode === 'relay' ?
-      '<div class="frow" style="grid-template-columns:1fr">' +
-        fld('Relay address', inp('cl-relay', c.relay, 'https://clio-relay.yourname.workers.dev')) + '</div>' +
-      '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Clio’s API answers servers, not browsers — it sends no cross-origin headers, and its OAuth client needs a secret that must never sit in a page anyone can view. The relay is a small worker that holds the secret, runs the handshake and forwards <code>/api/v4/*</code>. Deploy it once; this panel does the rest.</div>' +
-      '<div style="display:flex;gap:10px;margin-top:11px;flex-wrap:wrap">' +
-        '<button class="btn" id="cl-worker">Show relay source</button>' +
-        '<button class="btn btn-gold" id="cl-oauth">' + (on ? 'Re-authorise' : 'Connect to Clio') + '</button></div>' +
-      '<pre id="cl-worker-src" style="display:none;margin-top:12px;max-height:300px;overflow:auto;background:rgba(4,8,15,.65);border:1px solid var(--ge);border-radius:10px;padding:12px;font-size:10.5px;line-height:1.5;color:var(--plat-dim);white-space:pre;user-select:all"></pre>'
-    :
-      '<div class="frow" style="grid-template-columns:2fr 1fr">' +
-        fld('Access token', '<input class="fi" id="cl-token" type="password" placeholder="paste a Clio access token" value="' + esc(c.token) + '">') +
-        fld('&nbsp;', '<button class="btn btn-gold" id="cl-token-save" style="width:100%">Save &amp; Test</button>') + '</div>' +
-      '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Direct mode calls <code>https://' + esc(clioHost()) + '/api/v4</code> straight from this page. That works inside a desktop shell or a browser extension; a plain browser tab is stopped by the same-origin rule before the request leaves.</div>'
-    ) + '</div>' +
+    '<label class="cbrow" style="margin-top:12px"><input type="checkbox" id="cl-import"' + (c.importNew ? ' checked' : '') + '> Create a file here for any <b>open</b> Clio matter with no match (closed ones wait below)</label>' +
+    '</div>' +
 
-    '<div class="fsec"><div class="fsec-t">What comes across</div>' +
-    '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px">' +
-      cb('cl-p-matters', 'Matters → cases', c.pullMatters) +
-      cb('cl-p-cal', 'Clio calendar → hearings', c.pullCalendar) +
-      cb('cl-p-bills', 'Bills → billed / collected check', c.pullBills) + '</div>' +
-    '<label class="cbrow" style="margin-bottom:12px"><input type="checkbox" id="cl-import"' + (c.importNew ? ' checked' : '') + '> Create a case here for any Clio matter with no match yet</label>' +
-    '<div class="frow" style="grid-template-columns:1fr 1fr">' +
-      fld('Auto-sync', selc('cl-auto', [['0','Off'],['15','Every 15 minutes'],['30','Every 30 minutes'],['60','Hourly'],['240','Every 4 hours']], String(c.autoMin))) +
-      fld('&nbsp;', '<button class="btn btn-gold" id="cl-sync" style="width:100%"' + (on ? '' : ' disabled') + '>' + (clioBusy ? 'Syncing…' : 'Sync Now') + '</button>') +
-    '</div>' +
-    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7">Matters match to cases by Clio id first, then matter number, then client surname — one confident hit only, never a guess between two. Clio calendar entries run through the same pipeline as Google Calendar, and a matter already tied to a case skips the name matching entirely.</div>' +
-    '</div>' +
+    '<div class="fsec"><div class="fsec-t">In Clio, not in the tracker</div>' + extraRows + '</div>' +
+    '<div class="fsec"><div class="fsec-t">Status gaps</div>' + gapRows +
+    '<div style="font-size:11px;color:var(--plat-faint);line-height:1.6">Nothing changes on its own. A matter closed in Clio stays active here until you press Resolve.</div></div>' +
 
     '<div class="fsec"><div class="fsec-t">Google Calendar</div>' +
-    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7;margin-bottom:11px">Still connected and untouched — the ICS feed keeps flowing into the same hearing list, alongside Clio rather than instead of it. ' +
-      (gcalN ? '<b style="color:var(--green)">' + gcalN + '</b> events in the feed right now.' : 'No feed on this device yet.') + '</div>' +
-    '<button class="btn" id="cl-gcal">Open the Calendar panel</button></div>' +
+    '<div style="font-size:11.5px;color:var(--plat-dim);line-height:1.7;margin-bottom:11px">' +
+      (gcalN ? '<b style="color:var(--green)">' + gcalN + '</b> events in the feed' : 'No feed on this device yet') +
+      (ccfg.feedAt ? ' · updated ' + new Date(ccfg.feedAt).toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : '') +
+      (calFeedUrl() ? ' · live worker feed' + (ccfg.feedError ? ' · <span style="color:#F1948A">' + esc(ccfg.feedError) + '</span>' : '') : ' · <span style="color:var(--orange)">no live feed address yet — set it under Calendar → Links &amp; setup</span>') + '</div>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="cl-gcal">Open the Calendar panel</button>' +
+      (calFeedUrl() ? '<button class="btn" id="cl-gfetch">Fetch feed now</button>' : '') + '</div></div>' +
 
     '<div class="modal-f" style="border:0;padding:18px 0 4px">' +
-      (on ? '<button class="btn btn-red" id="cl-off">Disconnect</button>' : '') +
       '<button class="btn" data-close="ov-clio">Close</button>' +
       '<button class="btn btn-gold" id="cl-save">Save</button></div>';
 
   const g = id => document.getElementById(id);
-  g('cl-mode').onchange = e => { c.mode = e.target.value; clioSaveCfg(); renderClioBody() };
-  g('cl-region').onchange = e => { c.region = e.target.value; clioSaveCfg(); renderClioBody() };
-
-  const w = g('cl-worker'); if(w) w.onclick = () => {
-    const box = g('cl-worker-src');
-    if(box.style.display === 'none'){ box.textContent = clioWorkerSrc(); box.style.display = 'block' }
-    else box.style.display = 'none';
+  g('cl-test').onclick = async () => {
+    c.relay = (g('cl-relay').value || '').trim() || CLIO_FIRM_RELAY; clioSaveCfg();
+    g('cl-test').disabled = true; g('cl-test').textContent = 'Checking…';
+    try{ const ok = await clioStatus(); toast(ok ? 'Clio worker is connected' + (c.user ? ' as <b>' + esc(c.user) + '</b>' : '') : 'The worker is not signed in to Clio — press Reconnect') }
+    catch(e){ c.lastError = e.message; clioSaveCfg(); toast('Could not reach the worker — ' + esc(e.message), null, 9000) }
+    renderClioBody();
   };
-  const oa = g('cl-oauth'); if(oa) oa.onclick = () => {
-    const rl = g('cl-relay'); if(rl) c.relay = (rl.value || '').trim();
-    clioSaveCfg(); clioStartOAuth();
-  };
-  const ts = g('cl-token-save'); if(ts) ts.onclick = async () => {
-    c.token = (g('cl-token').value || '').trim(); c.mode = 'token'; clioSaveCfg();
-    ts.disabled = true; ts.textContent = 'Testing…';
-    try{ const who = await clioTest(); toast('Clio connected' + (who ? ' as <b>' + esc(who) + '</b>' : '')); clioAutoTimer() }
-    catch(e){ c.lastError = e.message; c.on = false; clioSaveCfg(); toast('Clio rejected that token — ' + esc(e.message), null, 9000) }
-    paintHmenu(); renderClioBody();
-  };
-  g('cl-sync').onclick = () => clioSync(true);
+  g('cl-oauth').onclick = () => clioReconnect();
+  g('cl-sync').onclick = () => { c.relay = (g('cl-relay').value || '').trim() || CLIO_FIRM_RELAY; c.attorney = (g('cl-att').value || '').trim() || CLIO_MY_NAME; clioSaveCfg(); clioSync(true) };
   g('cl-gcal').onclick = () => { closeOv('ov-clio'); openCal() };
-  const off = g('cl-off'); if(off) off.onclick = () => askConfirm('Disconnect Clio?',
-    'The link to Clio is dropped on this device. Cases keep their matter numbers and links — nothing here is deleted.',
-    () => { clioDisconnect(); renderClioBody(); toast('Clio disconnected') }, 'Disconnect');
+  const gf = g('cl-gfetch'); if(gf) gf.onclick = async () => { gf.disabled = true; await calFeedFetch(true); renderClioBody() };
+  $$('#clio-body [data-cl-add]').forEach(b => b.onclick = () => clioAddExtra(b.dataset.clAdd));
+  $$('#clio-body [data-cl-res]').forEach(b => b.onclick = () => askConfirm('Resolve this file?', 'Clio shows the matter closed. The case moves to Resolved with that close date; nothing is deleted.', () => clioResolveHere(b.dataset.clRes), 'Resolve'));
   g('cl-save').onclick = () => {
-    const rl = g('cl-relay'); if(rl) c.relay = (rl.value || '').trim();
-    const tk = g('cl-token'); if(tk) c.token = (tk.value || '').trim();
-    c.pullMatters = g('cl-p-matters').checked;
-    c.pullCalendar = g('cl-p-cal').checked;
-    c.pullBills = g('cl-p-bills').checked;
+    c.relay = (g('cl-relay').value || '').trim() || CLIO_FIRM_RELAY;
+    c.attorney = (g('cl-att').value || '').trim() || CLIO_MY_NAME;
     c.importNew = g('cl-import').checked;
     c.autoMin = +g('cl-auto').value || 0;
     clioSaveCfg(); clioAutoTimer(); paintHmenu();
@@ -5203,25 +5128,15 @@ function renderClioBody(){
 function clioCaseHtml(c){
   if(!c) return '';
   const dim = 'font-size:11.5px;color:var(--plat-faint);line-height:1.7';
-  if(!clioConnected())
-    return '<div style="' + dim + '">Clio is not connected on this device. Connect it from the menu and matters, court dates and bills line up against this case automatically.</div>';
   if(!c.clioId)
-    return '<div style="' + dim + '">No Clio matter is tied to this case yet — the ⋯ menu on its row can create one, or the next sync links it by matter number or surname.</div>';
-
-  const b = clioBillsFor(c);
-  const link = '<a href="' + esc(clioMatterUrl(c.clioId)) + '" target="_blank" rel="noopener" style="color:var(--gold-hi);text-decoration:none">Open matter ' + esc(c.caseNo || c.clioId) + ' in Clio →</a>';
-  if(!b) return '<div style="' + dim + '">Linked to a Clio matter. ' + link + '<br>Turn on <b>Bills → billed / collected check</b> in the Clio panel to compare the money side.</div>';
-
-  const here = (c.fee || 0), col = collectedOf(c);
-  const row = (l, a, bb) => {
-    const gap = Math.round(a - bb);
-    return '<div class="mrow" style="cursor:default"><span class="md">' + l + '</span>'
-      + '<span class="mn">here ' + fmt$(a) + ' · Clio ' + fmt$(bb) + '</span>'
-      + '<span class="mv" style="color:' + (Math.abs(gap) < 1 ? 'var(--green)' : 'var(--orange)') + '">'
-      + (Math.abs(gap) < 1 ? 'matches' : (gap > 0 ? '+' : '\u2212') + fmt$(Math.abs(gap)) + ' here') + '</span></div>';
-  };
-  return '<div class="mini-list" style="margin-bottom:9px">' + row('Billed', here, b.billed) + row('Collected', col, b.paid) + '</div>'
-    + '<div style="' + dim + '">' + b.n + ' bill' + (b.n === 1 ? '' : 's') + ' in Clio · ' + fmt$(b.open) + ' still open there. ' + link + '</div>';
+    return '<div style="' + dim + '">' + (clioConnected() ? 'No Clio matter is tied to this file yet — the next sync ties it by client name, or open the matter in Clio and sync.' : 'Clio is not connected on this device — open the Clio panel from the menu.') + '</div>';
+  const link = '<a href="' + esc(clioMatterUrl(c.clioId)) + '" target="_blank" rel="noopener" style="color:var(--gold-hi);text-decoration:none">Open in Clio →</a>';
+  return '<div class="mini-list" style="margin-bottom:9px">'
+    + '<div class="mrow" style="cursor:default"><span class="md">Matter</span><span class="mn"><b style="color:var(--plat)">' + esc(c.clioNo || c.clioId) + '</b></span><span class="mv">' + link + '</span></div>'
+    + '<div class="mrow" style="cursor:default"><span class="md">Status</span><span class="mn">' + esc(c.clioStatus || '—') + (c.clioOpen ? ' · opened ' + usDate(c.clioOpen) : '') + (c.clioClose ? ' · closed ' + usDate(c.clioClose) : '') + '</span>'
+    + '<span class="mv" style="color:' + ((c.clioStatus === 'Closed') === !!c.resolved ? 'var(--green)' : 'var(--orange)') + '">' + ((c.clioStatus === 'Closed') === !!c.resolved ? 'matches' : 'differs here') + '</span></div>'
+    + '<div class="mrow" style="cursor:default"><span class="md">Attorney</span><span class="mn">' + esc(c.clioRa || '—') + '</span><span class="mv" style="font-size:10px;color:var(--plat-faint)">' + (c.clioSyncedAt ? 'synced ' + new Date(c.clioSyncedAt).toLocaleDateString() : '') + '</span></div>'
+    + '</div>';
 }
 
 /* the header menu shows what is live at a glance */
@@ -5240,13 +5155,13 @@ function paintHmenu(){
 /* ── boot ───────────────────────────────────────────────── */
 function clioBoot(){
   if(!DB) return;
-  clioCfg();
-  if(clioCatchReturn()) return;
+  const cfg = clioCfg();
   paintHmenu();
-  if(clioConnected()){
+  if(cfg.on){
     clioAutoTimer();
     setTimeout(() => clioSync(false), 2500);
   }
+  if(calFeedUrl()){ calFeedTimerStart(); setTimeout(() => calFeedFetch(false), 1200) }
 }
 </script>
 
