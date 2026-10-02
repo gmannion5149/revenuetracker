@@ -818,6 +818,10 @@ function upgradeCase(c){
 function settleAfterLoad(){
   let changed = false;
   for(const c of DB.cases){
+    /* Older files carry no open date (only Clio's). Without one, an undated "collected" lump was
+       ignored and a paid-in-full case looked unpaid. Take Clio's open date, or the created date. */
+    if(!c.dateOpened){ const d = isISODate(c.clioOpen) ? c.clioOpen : isISODate(String(c.createdAt||'').slice(0,10)) ? String(c.createdAt).slice(0,10) : '';
+      if(d){ c.dateOpened = d; c.dateOpenedFrom = isISODate(c.clioOpen) ? 'clio' : 'created'; hist(c, 'Open date filled in from '+(c.dateOpenedFrom === 'clio' ? 'Clio' : 'the date the file was created')+': '+usDate(d)); touch(c); changed = true } }
     const p = c.plan; if(p && p.active && p.start && p.total == null){ p.total = D(Math.max(0, balanceAsOf(c, addDays(p.since||todayISO(), -1)))); changed = true }
     if(c.commPaid) for(const k of Object.keys(c.commPaid)){ const r = c.commPaid[k]; if(r && r.amt == null){ const m = commOf(c); if(m){ r.amt = D(k === 'open' ? m.open.full : m.close.full); changed = true } } }
   }
