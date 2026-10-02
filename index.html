@@ -1459,7 +1459,14 @@ const Backends = {
       const c = SYNC; if(!c || !c.token) throw new Error('No GitHub token on this device');
       const r = await fetch('https://api.github.com'+path, {method, headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', ...(etag?{'If-None-Match':etag}:{}), ...(body?{'Content-Type':'application/json'}:{})}, body:body?JSON.stringify(body):undefined});
       if(r.status === 304) return {notModified:true};
-      if(!r.ok) throw new Error('GitHub '+r.status+(r.status===401?' (token invalid or expired)':r.status===404?' (gist not found)':''));
+      if(!r.ok){
+        let msg = ''; try{ msg = (await r.json()).message || '' }catch(e){}
+        const reset = +(r.headers.get('x-ratelimit-reset') || 0), res = r.headers.get('x-ratelimit-resource') || '';
+        const limited = (r.status === 403 || r.status === 429) && (/rate limit/i.test(msg) || r.headers.get('x-ratelimit-remaining') === '0');
+        const err = /** @type {any} */ (new Error('GitHub '+r.status+(r.status===401?' (token invalid or expired)':r.status===404?' (gist not found)':limited?' (GitHub\'s '+(res==='gist_update'?'hourly save':'request')+' limit reached'+(reset?'; resumes '+new Date(reset*1000).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}):'')+')':'')));
+        if(limited && reset) err.resumeAt = new Date(reset*1000 + 15e3).toISOString();
+        throw err;
+      }
       const j = await r.json(); j.__etag = r.headers.get('etag'); return j;
     },
     async content(f){ if(!f) return null; if(f.truncated){ const rr = await fetch(f.raw_url); return await rr.text() } return f.content },
@@ -1529,7 +1536,7 @@ async function syncNow(manual){
   }catch(e){
     c.lastError = e.message; c.lastErrorAt = nowISO(); SyncState.error = e.message;
     /* GitHub answers 403/429 when writes come too fast; back off instead of retrying every minute */
-    if(/\b(403|429)\b/.test(e.message)) c.backoffUntil = new Date(Date.now() + 10 * 60e3).toISOString();
+    if(/\b(403|429)\b/.test(e.message)) c.backoffUntil = e.resumeAt || new Date(Date.now() + 10 * 60e3).toISOString();
     setSyncCfg(c);
     if(manual) toast('Sync failed: '+esc(e.message), null, 9000);
   }finally{ syncBusy = false; SyncState.phase = 'idle'; paintSync() }
