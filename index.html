@@ -407,6 +407,14 @@ button,input,select,textarea{font-family:var(--f-text)}
 .lock-card{background:var(--panel);border-color:var(--line-2);box-shadow:var(--shadow),var(--bevel)}
 .lock-title{font-size:22px}
 
+/* dismissible notes, dropdowns that replace button rows */
+.note.has-x{position:relative;padding-right:40px}
+.note-x{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:6px;border:1px solid transparent;background:none;color:var(--text-2);font-size:18px;line-height:1;cursor:pointer}
+.note-x:hover{color:var(--text);border-color:var(--line-2);background:var(--panel-2)}
+.ddl{min-width:210px;height:36px;padding-right:30px;font-weight:600;cursor:pointer}
+.period .ddl{min-width:120px;height:30px;border:0;box-shadow:none;background:transparent}
+.caret{font-size:11px;opacity:.75;margin-left:2px}
+
 /* payment inbox */
 .inbox-strip{display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;padding:11px 14px;border-radius:10px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:linear-gradient(90deg,var(--accent-bg),transparent 70%),var(--panel);color:var(--text);font-size:14.5px;box-shadow:var(--bevel)}
 .inbox-strip:hover{border-color:var(--accent)}
@@ -485,8 +493,7 @@ button,input,select,textarea{font-family:var(--f-text)}
       <button class="ibtn inbox-btn" id="btn-inbox" title="Payment inbox (I)" aria-label="Payment inbox"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5l1.5 3h5L16 13h5"/><path d="M5.5 5h13L21 13v6H3v-6z"/></svg><span class="badge" id="inbox-n" hidden></span></button>
       <button class="sync" id="sync-pill" title="Cloud sync"><i></i><span id="sync-txt">sync</span></button>
       <button class="ibtn" id="btn-search" title="Find a client or case number (Ctrl K)" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
-      <button class="ibtn" id="btn-pay" title="Record a payment (P)"><span aria-hidden="true">$</span><span class="lbl-txt">Payment</span></button>
-      <button class="ibtn prim" id="btn-add" title="New case (N)"><span aria-hidden="true">＋</span><span class="lbl-txt">Case</span></button>
+      <button class="ibtn prim" id="btn-new" title="Record a payment (P) or add a case (N)" aria-haspopup="true"><span aria-hidden="true">＋</span><span class="lbl-txt">New</span> <span class="caret" aria-hidden="true">▾</span></button>
       <button class="ibtn" id="btn-menu" title="Settings and data" aria-label="Menu"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div></header>
@@ -1480,11 +1487,17 @@ const Backends = {
   }
 };
 function backend(){ return SYNC ? Backends[SYNC.kind || 'gist'] : null }
+/** content fingerprint, independent of key order and of save counters, so two devices that already
+    agree never push to each other (which used to ping-pong and trip GitHub's write limits) */
+function canon(v){ if(Array.isArray(v)) return '['+v.map(canon).join(',')+']'; if(v && typeof v === 'object') return '{'+Object.keys(v).filter(k => v[k] !== undefined).sort().map(k => JSON.stringify(k)+':'+canon(v[k])).join(',')+'}'; return JSON.stringify(v === undefined ? null : v) }
+function contentSig(db){ return canon({c:(db.cases||[]).slice().sort((a,b)=>String(a.id).localeCompare(String(b.id))), s:db.settings||{}, d:db.deleted||{}, t:db.deletedTx||{}}) }
 
 async function syncNow(manual){
   if(DEMO) return;
   const c = SYNC; if(!c){ if(manual && typeof openSettings === 'function') openSettings('sync'); return }
-  if(syncBusy) return; syncBusy = true;
+  if(syncBusy) return;
+  if(!manual && c.backoffUntil && Date.now() < Date.parse(c.backoffUntil)) return;
+  syncBusy = true;
   await flushSave();
   SyncState.phase = 'busy'; paintSync();
   try{
@@ -1492,14 +1505,17 @@ async function syncNow(manual){
       const remote = await backend().pull(attempt > 0);
       if(remote && !remote.notModified && remote.cases && remote.meta){
         if((remote.meta.appVersion||0) > APP_VERSION) notifyUpdate();
-        if(!DB.cases.length && !(DB.meta.rev > 0)){ DB = remote; normalizeDB(); await migrateDB(); settleAfterLoad() }
+        if(!DB.cases.length && !(DB.meta.rev > 0)){ DB = remote; normalizeDB(); await migrateDB(); settleAfterLoad(); await writeDB() }
         else {
           const before = JSON.stringify({c:DB.cases, s:DB.settings, d:DB.deletedTx});
           try{ await Store.set('conflict', JSON.stringify(DB)) }catch(e){ Store.del('conflict') }
+          const remoteSig = contentSig(remote);
           DB = smartMerge(DB, remote, c.lastSyncAt || null); normalizeDB(); await migrateDB(); settleAfterLoad();
           if(before !== JSON.stringify({c:DB.cases, s:DB.settings, d:DB.deletedTx})){ invalidate(); if(typeof refresh === 'function') refresh(); }
+          await writeDB();
+          /* nothing here that the cloud lacks: in sync, no push */
+          if(contentSig(DB) === remoteSig) c.lastPushRev = DB.meta.rev;
         }
-        await writeDB();
       }
       if(!c.lastPushRev || DB.meta.rev > c.lastPushRev || !remote){
         try{ await backend().push(DB) }catch(e){ if(e.retry) continue; throw e }
@@ -1507,11 +1523,14 @@ async function syncNow(manual){
       }
       break;
     }
-    c.lastSyncAt = nowISO(); delete c.lastError; SyncState.error = null; SyncState.lastOk = c.lastSyncAt;
+    c.lastSyncAt = nowISO(); delete c.lastError; delete c.backoffUntil; SyncState.error = null; SyncState.lastOk = c.lastSyncAt;
     setSyncCfg(c); await pushPre7();
     if(manual) toast('Sync complete');
   }catch(e){
-    c.lastError = e.message; c.lastErrorAt = nowISO(); SyncState.error = e.message; setSyncCfg(c);
+    c.lastError = e.message; c.lastErrorAt = nowISO(); SyncState.error = e.message;
+    /* GitHub answers 403/429 when writes come too fast; back off instead of retrying every minute */
+    if(/\b(403|429)\b/.test(e.message)) c.backoffUntil = new Date(Date.now() + 10 * 60e3).toISOString();
+    setSyncCfg(c);
     if(manual) toast('Sync failed: '+esc(e.message), null, 9000);
   }finally{ syncBusy = false; SyncState.phase = 'idle'; paintSync() }
 }
@@ -2218,6 +2237,11 @@ async function applyNumFont(data){
   const a = mk('NumUser', 'U+30-39, U+24, U+25'), b = mk('NumUserAll', 'U+24-25, U+2B-2E, U+30-39, U+2212');
   await a.load(); await b.load(); document.fonts.add(a); document.fonts.add(b);
 }
+/** One dropdown selection list in place of a row of buttons. opts: [[value, label, disabled?]] (labels are plain text). */
+function ddl(id, opts, cur, label){ return '<select class="fi sel ddl" id="'+id+'" aria-label="'+esc(label||'')+'">'+opts.map(o => '<option value="'+esc(o[0])+'"'+(String(o[0])===String(cur)?' selected':'')+(o[2]?' disabled':'')+'>'+esc(o[1])+'</option>').join('')+'</select>' }
+function onDdl(id, fn){ const el = document.getElementById(id); if(el) el.onchange = () => fn(el.value) }
+/** a single "Actions ▾" button that opens a menu */
+function menuBtn(id, label, cls){ return '<button class="btn '+(cls||'')+'" id="'+id+'" aria-haspopup="true">'+label+' <span aria-hidden="true" class="caret">▾</span></button>' }
 function toast(msg, undoFn, ms){
   const host = $('#toasts'); if(!host) return;
   const t = document.createElement('div'); t.className = 'toast';
@@ -2390,16 +2414,22 @@ function goTo(spec){
   go(v);
 }
 
+/* ── the "unconfirmed pay rules" banner can be hidden; it comes back only if the list changes ── */
+function rulesNoteSig(){ return unverifiedRules().map(u => (u.rule ? u.rule.id : 'g')+':'+u.field).sort().join('|') }
+function rulesNoteShown(){ const sig = rulesNoteSig(); return !!sig && DB.settings.hideRulesNote !== sig }
+function hideRulesNote(){ DB.settings.hideRulesNote = rulesNoteSig(); markS('hideRulesNote'); save(); renderView(); toast('Hidden. It comes back only if a pay rule changes. You can still review them under Settings → Pay rules.') }
+const NOTE_X = '<button class="note-x" onclick="event.stopPropagation(); hideRulesNote()" aria-label="Hide this notice" title="Hide">×</button>';
+
 /* ── period control ── */
 function periodControl(onChange, opts){
   opts = opts || {};
   const p = P(), r = R(), types = [['month','Month'],['quarter','Quarter'],['year','Year'],['ytd','YTD'],['custom','Custom']];
   const html = '<div class="period" role="group" aria-label="Reporting period">' +
-    '<div class="seg">'+types.map(([k,l]) => '<button aria-pressed="'+(p.type===k)+'" data-pt="'+k+'">'+l+'</button>').join('')+'</div>' +
+    ddl('ptype', types, p.type, 'Period type') +
     (p.type === 'custom' ? '<input type="date" id="pc-from" value="'+r.from+'" aria-label="From"><span class="faint">to</span><input type="date" id="pc-to" value="'+r.to+'" aria-label="To">'
       : '<span class="stepper"><button class="step" data-step="-1" aria-label="Previous period">‹</button><span class="lbl">'+esc(r.label)+'</span><button class="step" data-step="1" aria-label="Next period">›</button></span>') + '</div>';
   setTimeout(() => {
-    $$('[data-pt]').forEach(b => b.onclick = () => { const t = b.dataset.pt, cur = R(); UI.period = t === 'custom' ? {type:'custom', from:cur.from, to:cur.to} : {type:t, y:+cur.to.slice(0,4), m:+cur.to.slice(5,7)-1, q:Math.floor((+cur.to.slice(5,7)-1)/3)}; if(t === 'ytd' || t === 'year') UI.period.y = +cur.to.slice(0,4); saveUI(); onChange() });
+    onDdl('ptype', t => { const cur = R(); UI.period = t === 'custom' ? {type:'custom', from:cur.from, to:cur.to} : {type:t, y:+cur.to.slice(0,4), m:+cur.to.slice(5,7)-1, q:Math.floor((+cur.to.slice(5,7)-1)/3)}; if(t === 'ytd' || t === 'year') UI.period.y = +cur.to.slice(0,4); saveUI(); onChange() });
     $$('[data-step]').forEach(b => b.onclick = () => { stepPeriod(+b.dataset.step); onChange() });
     const f = $('#pc-from'), t = $('#pc-to'); if(f && t){ const ch = () => { if(isISODate(f.value) && isISODate(t.value) && t.value >= f.value){ UI.period = {type:'custom', from:f.value, to:t.value}; saveUI(); onChange() } }; f.onchange = ch; t.onchange = ch }
   }, 0);
@@ -2499,7 +2529,7 @@ function renderOverview(){
   const top = billables().map(c => ({c, owed:owedOf(c, d), pd:pastDueOf(c, d)})).filter(x => x.owed > 0).sort((a,b)=>b.owed-a.owed).slice(0,8);
   v.innerHTML =
     '<div class="bar"><h1 class="h1">Overview</h1><span class="sp"></span>'+periodControl(renderOverview)+'</div>' +
-    (unverifiedRules().length ? '<div class="note warn mb">Some pay rules are carried over from the old tracker and have not been confirmed: '+unverifiedRules().slice(0,4).map(u=>'<b>'+esc(ruleFieldLabel(u.field))+'</b>').join(', ')+(unverifiedRules().length>4?' and '+(unverifiedRules().length-4)+' more':'')+'. <button class="btn sm" onclick="openSettings(\'pay\')">Review pay rules</button></div>' : '') +
+    (rulesNoteShown() ? '<div class="note warn mb has-x">'+NOTE_X+'Some pay rules are carried over from the old tracker and have not been confirmed: '+unverifiedRules().slice(0,4).map(u=>'<b>'+esc(ruleFieldLabel(u.field))+'</b>').join(', ')+(unverifiedRules().length>4?' and '+(unverifiedRules().length-4)+' more':'')+'. <button class="btn sm" onclick="openSettings(\'pay\')">Review pay rules</button></div>' : '') +
     ((mine => mine.length ? '<button class="inbox-strip mb" onclick="openInbox()"><span class="led"></span><b class="num">'+mine.length+'</b> Clio payment'+(mine.length===1?' is':'s are')+' waiting for you · newest '+esc(mine[0].payer)+' <span class="num">'+moneyc(mine[0].amount)+'</span><span class="go">Review</span></button>' : '')(inboxItems().filter(payLikelyMine))) +
     '<div class="grid g4 mb">' +
       metric('coll', 'var(--green)', 'Payments collected', money(col.net), esc(r.label)+' · net of refunds', deltaHtml(col.net, colP.net, pr.short, true), 'collections?tab=tx&from='+r.from+'&to='+r.to) +
@@ -2654,12 +2684,9 @@ function renderCases(){
     '<div class="bar"><h1 class="h1">Cases<small>'+rows.length+' of '+all.length+' clients · as of '+longDate(d)+'</small></h1><span class="sp"></span>' +
       '<input class="fi search" id="cq" type="search" placeholder="Name, case number or Clio matter  ( / )" value="'+esc(CF.q)+'" aria-label="Search cases">' +
       '<label class="faint" style="font-size:13px">As of <input class="fi" style="width:auto;height:32px;display:inline-block" type="date" id="casof" value="'+(CF.asOf||'')+'" aria-label="As of date"></label>' +
-      '<button class="btn" id="ccols" aria-haspopup="true">Columns</button><button class="btn" id="cdens" title="Table density">'+(UI.density==='compact'?'Comfortable':'Compact')+'</button><button class="btn" id="cexp">Export</button><button class="btn prim" id="cadd">＋ Case</button></div>' +
-    '<div class="bar" role="toolbar" aria-label="Saved views" style="gap:6px">' +
-      CASE_VIEWS.map(([k,l]) => '<button class="pill" aria-pressed="'+(CF.view===k)+'" data-view="'+k+'">'+l+' <span class="n">'+cnt(k)+'</span></button>').join('') +
-      saved.map(s => '<button class="pill" aria-pressed="'+(CF.view===s.id)+'" data-view="'+s.id+'" title="Saved view">★ '+esc(s.name)+'</button>').join('') +
-      '<button class="btn ghost sm" id="csave">'+(sv?'Remove view':'Save this view')+'</button></div>' +
-    (sel.length ? '<div class="note info mb" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>'+sel.length+' selected</b><span class="sp" style="flex:1"></span><button class="btn sm" data-bulk="close">Close cases</button><button class="btn sm" data-bulk="receive">Mark commission received</button><button class="btn sm" data-bulk="writeoff">Write off balances</button><button class="btn sm" data-bulk="export">Export selected</button><button class="btn ghost sm" data-bulk="clear">Clear</button></div>' : '') +
+      menuBtn('copts', 'Options')+'<button class="btn prim" id="cadd">＋ Case</button></div>' +
+    '<div class="bar">'+ddl('cview', [...CASE_VIEWS.map(([k,l]) => [k, l+'  ('+cnt(k)+')']), ...saved.map(s => [s.id, '★ '+s.name])], CF.view, 'Show')+'</div>' +
+    (sel.length ? '<div class="note info mb" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>'+sel.length+' selected</b><span class="sp" style="flex:1"></span>'+ddl('cbulk', [['', 'Do with selected…'], ['close','Close cases'], ['receive','Mark commission received'], ['writeoff','Write off balances'], ['export','Export selected'], ['clear','Clear selection']], '', 'Do with selected')+'</div>' : '') +
     '<div class="tbl-wrap" id="ctw"><table class="t" aria-label="Case ledger">'+tableHead('cases', cols, CF.sort)+'<tbody>' +
       (rows.length ? rows.map(r => caseRowHtml(r, cols, d)).join('') : '<tr><td colspan="'+cols.length+'"><div class="empty">No clients match this view.'+(CF.q?' <button class="btn sm" id="cclr">Clear search</button>':'')+'</div></td></tr>') +
     '</tbody>' + (rows.length ? '<tfoot><tr>'+cols.map(c => '<td class="'+(c.cls||'')+'">'+({client:rows.length+' clients (filtered total)', fee:money(tot.fee), paid:money(tot.paid), bal:money(tot.bal)+(tot.credit?'<span class="sub-amt">credits '+money(tot.credit)+'</span>':''), pd:tot.pd?'<span class="warn">'+money(tot.pd)+'</span>':'—', comm:money(tot.comm), npay:String(rows.reduce((t,r)=>t+(r.npay||0),0))}[c.k]||'')+'</td>').join('')+'</tr></tfoot>' : '') +
@@ -2668,22 +2695,26 @@ function renderCases(){
   wireTable(v, 'cases', k => { CF.sort = CF.sort.k === k ? {k, dir:-CF.sort.dir} : {k, dir:['name','cat','county','source','next','status'].includes(k) ? 1 : -1}; renderCases() });
   const cq = $('#cq'); cq.oninput = () => { CF.q = cq.value; const p = cq.selectionStart; UI.casesScroll = 0; renderCases(); const n = $('#cq'); n.focus(); n.setSelectionRange(p, p) };
   $('#casof').onchange = e => { CF.asOf = e.target.value; renderCases() };
-  $$('#view [data-view]').forEach(b => b.onclick = () => { CF.view = b.dataset.view; CF.sel = new Set(); UI.casesScroll = 0; const s = saved.find(x => x.id === CF.view); if(s){ CF.q = s.q || ''; if(s.sort) CF.sort = s.sort } renderCases() });
-  $('#ccols').onclick = e => { e.stopPropagation(); columnMenu(e.currentTarget, 'cases', CASE_COLS, renderCases) };
-  $('#cdens').onclick = () => { UI.density = UI.density === 'compact' ? 'comfortable' : 'compact'; saveUI(); applyTheme(); renderCases() };
-  $('#cexp').onclick = exportCasesCSV; $('#cadd').onclick = () => openCaseForm(null);
+  onDdl('cview', k => { CF.view = k; CF.sel = new Set(); UI.casesScroll = 0; const s = saved.find(x => x.id === CF.view); if(s){ CF.q = s.q || ''; if(s.sort) CF.sort = s.sort } renderCases() });
+  const saveView = () => {
   const cc = $('#cclr'); if(cc) cc.onclick = () => { CF.q = ''; renderCases() };
-  $('#csave').onclick = () => {
     if(sv){ DB.settings.savedViews = saved.filter(x => x.id !== sv.id); markS('savedViews'); save(); CF.view = 'open'; renderCases(); return }
     askConfirm('Save this view', 'Saves the current view ('+esc((CASE_VIEWS.find(x=>x[0]===CF.view)||['','Custom'])[1])+'), search and sort under a name.<div style="margin-top:10px">'+inp('sv-name', '', 'e.g. Hennepin balances')+'</div>', () => {
       const n = val('sv-name'); if(!n){ toast('Give the view a name'); return false }
       const id = 'sv-'+uuid().slice(0,8); DB.settings.savedViews = [...saved, {id, name:n, base:CF.view, q:CF.q, sort:CF.sort}]; markS('savedViews'); save(); CF.view = id; renderCases() }, 'Save view');
   };
+  $('#copts').onclick = e => { e.stopPropagation(); popMenu(e.currentTarget, [
+    {label:'Columns…', fn:()=>setTimeout(() => columnMenu($('#copts'), 'cases', CASE_COLS, renderCases), 0)},
+    {label:UI.density === 'compact' ? 'Comfortable rows' : 'Compact rows', fn:()=>{ UI.density = UI.density === 'compact' ? 'comfortable' : 'compact'; saveUI(); applyTheme(); renderCases() }},
+    {label:'Export CSV', fn:exportCasesCSV}, '—',
+    {label:sv ? 'Remove this saved view' : 'Save this view…', fn:saveView}
+  ]) };
+  $('#cadd').onclick = () => openCaseForm(null);
   $$('#view tr.row').forEach(tr => tr.onclick = e => { if(e.target.closest('input,[data-copy],a,button')) return; UI.casesScroll = tw.scrollTop; openDrawer(tr.dataset.id) });
   $$('#view [data-open]').forEach(el => el.onclick = e => { e.stopPropagation(); openDrawer(el.dataset.open) });
   $$('#view .rowsel').forEach(cb => cb.onchange = () => { cb.checked ? CF.sel.add(cb.dataset.id) : CF.sel.delete(cb.dataset.id); renderCases() });
   const sa = $('#sel-all'); if(sa){ sa.checked = rows.length > 0 && rows.every(r => CF.sel.has(r.L.id)); sa.onchange = () => { rows.forEach(r => sa.checked ? CF.sel.add(r.L.id) : CF.sel.delete(r.L.id)); renderCases() } }
-  $$('#view [data-bulk]').forEach(b => b.onclick = () => bulkCases(b.dataset.bulk, rows.filter(r => CF.sel.has(r.L.id))));
+  onDdl('cbulk', k => { if(k) bulkCases(k, rows.filter(r => CF.sel.has(r.L.id))) });
 }
 function caseRowHtml(r, cols, d){
   const L = r.L, g = r.g;
@@ -2780,9 +2811,8 @@ function renderDrawer(){
       '<button class="x" id="dr-close" aria-label="Close panel">×</button></div>' +
     '<div class="acts">' +
       '<button class="btn good sm" data-act="pay">$ Record payment</button>' +
-      (bill ? '<button class="btn sm" data-act="refund">Refund</button><button class="btn sm" data-act="adjust">Adjust fee</button>'+(bal > 0 ? '<button class="btn sm bad" data-act="writeoff">Write off</button>' : '')+'<button class="btn sm" data-act="plan">'+(planActive(c)?'Edit plan':'Payment plan')+'</button>' : '<button class="btn prim sm" data-act="edit">Add fee agreement</button>') +
-      '<button class="btn sm" data-act="'+(c.resolved?'reopen':'close')+'">'+(c.resolved?'Reopen':'Close case')+'</button>' +
-      '<button class="btn sm" data-act="edit">Edit details</button><button class="btn ghost sm" data-act="more" aria-haspopup="true">More ▾</button></div>';
+      (bill ? '' : '<button class="btn prim sm" data-act="edit">Add fee agreement</button>') +
+      '<button class="btn sm" data-act="more" aria-haspopup="true">Actions <span class="caret" aria-hidden="true">▾</span></button></div>';
   const tile = (l, v, s, cls) => '<div class="tile"><div class="l">'+l+'</div><div class="v '+(cls||'')+'">'+v+'</div><div class="s">'+(s||'&nbsp;')+'</div></div>';
   const adj = adjAsOf(c);
   let h = !bill ? '<div class="note info" style="margin-top:16px">'+(c.sub && c.sharedFee ? 'This file shares its fee with the lead case.' : 'No fee agreement entered yet. Add the agreed fee to start tracking the balance and commission.')+'</div>' :
@@ -2807,7 +2837,7 @@ function renderDrawer(){
   /* transactions on this agreement and its shared-fee files */
   const files = [c, ...DB.cases.filter(x => x.sub && x.sharedFee && agreementOf(x) === c)];
   const txs = files.flatMap(f => (f.payments||[]).map(p => ({p, f}))).sort((a,b)=>(b.p.date||'').localeCompare(a.p.date||''));
-  h += sec('Payments & refunds', '<button class="btn sm" data-act="pay">＋ Payment</button>'+(bill?'<button class="btn sm" data-act="refund">＋ Refund</button>':''), txs.length ? '<div style="overflow-x:auto"><table class="mini"><thead><tr><th>Date</th><th>Type</th><th>Method</th><th class="hide-s">Account</th><th>Status</th><th class="r">Amount</th><th></th></tr></thead><tbody>' +
+  h += sec('Payments & refunds', (bill ? '<button class="btn sm" data-act="mpay" aria-haspopup="true">＋ Add <span class="caret" aria-hidden="true">▾</span></button>' : '<button class="btn sm" data-act="pay">＋ Payment</button>'), txs.length ? '<div style="overflow-x:auto"><table class="mini"><thead><tr><th>Date</th><th>Type</th><th>Method</th><th class="hide-s">Account</th><th>Status</th><th class="r">Amount</th><th></th></tr></thead><tbody>' +
     txs.map(({p, f}) => { const st = p.status || 'cleared', ty = payType(p), amt = Math.abs(C(p.amount)), neg = ty === 'refund';
       const stc = st === 'cleared' ? 'c-green' : st === 'pending' ? 'c-blue' : 'c-red';
       return '<tr class="'+(st==='failed'?'void':'')+'"><td class="num">'+usDate(p.date)+'</td><td>'+(neg?'Refund':'Payment')+(p.source==='import'?' <span class="faint">· import</span>':'')+'</td><td>'+esc(p.method||'—')+(p.ref?'<div class="faint" style="font-size:12px">ref '+esc(p.ref)+'</div>':'')+'</td><td class="hide-s">'+(p.account==='trust'?chip('Trust','c-gold'):'Operating')+'</td><td>'+chip(PAY_STATUS[st]+(p.statusDate?' '+shortDate(p.statusDate):''), stc)+(p.reconciled?' <span class="pos" title="Reconciled '+esc(p.reconciled)+'">✓</span>':'')+'</td><td class="r '+(neg?'neg':st==='cleared'?'pos':'')+'">'+(neg?'−':'')+moneyc(amt)+'</td><td class="r"><button class="btn ghost sm" data-tx="'+f.id+'|'+p.id+'" aria-label="Payment actions" aria-haspopup="true">⋯</button></td></tr>' }).join('') + '</tbody></table></div>' +
@@ -2815,7 +2845,7 @@ function renderDrawer(){
   if(bill) h += planSection(c);
   if(bill) h += sec('Compensation', '<button class="btn sm" data-act="override">'+(c.commOverride?'Edit exception':'Exception…')+'</button>', calcHtml(c));
   /* related matters */
-  h += sec('Related matters', '<button class="btn sm" data-act="newfee">＋ Fee agreement</button><button class="btn sm" data-act="companion">＋ Companion file</button>',
+  h += sec('Related matters', '<button class="btn sm" data-act="mrel" aria-haspopup="true">＋ Add <span class="caret" aria-hidden="true">▾</span></button>',
     '<table class="mini"><tbody>' + g.map(x => { const own = isBillable(x);
       return '<tr'+(agreementOf(x)!==c?' style="cursor:pointer" data-goto="'+x.id+'"':'')+'><td>'+(x.caseNo?esc(x.caseNo):'<span class="pend">'+esc(x.caseNoNote||'no number')+'</span>')+(x===c?' <span class="faint">· this agreement</span>':'')+'</td><td class="dim">'+esc(chargeText(x)||'—')+'</td><td>'+(x.sub&&x.sharedFee?chip('Shared fee'):own?chip(money(feeOwed(x)),'c-gray'):chip('No fee','c-blue'))+'</td><td class="r">'+(own?(owedOf(x)?money(owedOf(x))+' owed':'paid'):'')+'</td></tr>' }).join('') + '</tbody></table>');
   h += sec('Notes', '', '<div class="hist">'+(c.notes||[]).map((n,i)=>'<div><span class="d">'+usDate((n.date||'').slice(0,10))+'</span><span style="flex:1">'+esc(n.text)+'</span><button class="btn ghost sm" data-delnote="'+i+'" aria-label="Delete note">×</button></div>').join('')+'</div><div style="display:flex;gap:8px;margin-top:8px"><input class="fi" id="dr-note" placeholder="Add a note (payment promises, billing details…)" aria-label="New note"><button class="btn" id="dr-note-add">Add</button></div>');
@@ -2829,7 +2859,7 @@ function planSection(c){
   if(!planActive(c)) return sec('Installment plan', '<button class="btn sm" data-act="plan">Set up plan</button>', '<div class="sub">'+(p && p.endedOn ? 'Plan stopped '+longDate(p.endedOn)+'. ' : '')+'No active plan. Without a plan the balance counts as due '+DB.settings.coll.noPlanDueDays+' days after the open date.</div>');
   const a = planAllocation(c), d = todayISO();
   const paidT = a.sched.reduce((t,s)=>t+s.paid,0), totT = a.sched.reduce((t,s)=>t+s.amount,0);
-  return sec('Installment plan', '<button class="btn sm" data-act="plan">Edit</button><button class="btn sm" data-act="stopplan">Stop</button>',
+  return sec('Installment plan', '<button class="btn sm" data-act="mplan" aria-haspopup="true">Plan <span class="caret" aria-hidden="true">▾</span></button>',
     '<div class="sub" style="margin-bottom:8px">'+moneyc(C(p.amount))+' '+p.frequency.toLowerCase()+' from '+longDate(p.start)+(p.frequency==='Monthly'||p.frequency==='Quarterly'?' (day '+(p.anchorDay||+p.start.slice(8,10))+'; short months use their last day)':'')+' · financed '+moneyc(C(p.total))+' · payments from '+longDate(p.since||p.start)+' count toward it</div>' +
     '<div class="track" style="margin-bottom:10px" role="progressbar" aria-valuenow="'+pct(paidT,totT)+'" aria-valuemin="0" aria-valuemax="100" aria-label="Plan paid"><div class="fill g" style="width:'+Math.min(100,pct(paidT,totT))+'%"></div></div>' +
     '<div style="max-height:280px;overflow-y:auto"><table class="mini"><thead><tr><th>#</th><th>Due</th><th class="r">Installment</th><th class="r">Paid</th><th>Status</th><th class="hide-s">Applied from</th></tr></thead><tbody>' +
@@ -2865,15 +2895,21 @@ function wireDrawer(c){
     stopplan:()=>askConfirm('Stop this payment plan?', 'The schedule stops; the balance stays owed and falls under the no-plan rule ('+DB.settings.coll.noPlanDueDays+' days after opening).', ()=>{ stopPlan(c); refresh() }, 'Stop plan'),
     close:()=>openCloseForm(c), reopen:()=>{ reopenCase(c); refresh(); toast('Reopened') }, edit:()=>openCaseForm(c.id), override:()=>openOverrideForm(c),
     newfee:()=>openCaseForm(null, leadOf(c).id, true), companion:()=>openCaseForm(null, leadOf(c).id, false),
+    mpay:(e)=>popMenu(e.currentTarget, [{label:'Payment', fn:act.pay}, {label:'Refund', fn:act.refund}]),
+    mrel:(e)=>popMenu(e.currentTarget, [{label:'New fee agreement for this client', fn:act.newfee}, {label:'Companion file (shares this fee)', fn:act.companion}]),
+    mplan:(e)=>popMenu(e.currentTarget, [{label:'Edit plan', fn:act.plan}, {label:'Stop plan…', fn:act.stopplan}]),
     more:(e)=>popMenu(e.currentTarget, [
-      {label:'Record a payment', fn:act.pay}, isBillable(c) ? {label:'Refund', fn:act.refund} : null, {label:'Edit details', fn:act.edit},
+      isBillable(c) ? {label:'Refund', fn:act.refund} : null, isBillable(c) ? {label:'Adjust fee', fn:act.adjust} : null,
+      isBillable(c) && balanceAsOf(c) > 0 ? {label:'Write off balance', fn:act.writeoff} : null,
+      isBillable(c) ? {label:planActive(c) ? 'Edit payment plan' : 'Payment plan', fn:act.plan} : null,
+      {label:c.resolved ? 'Reopen case' : 'Close case', fn:c.resolved ? act.reopen : act.close}, {label:'Edit details', fn:act.edit}, '—',
       {label:'New fee agreement for this client', fn:act.newfee}, {label:'Companion file (shares this fee)', fn:act.companion},
       c.clioId || c.clio ? {label:'Open in Clio ↗', fn:()=>window.open(c.clioId ? clioMatterUrl(c.clioId) : c.clio, '_blank', 'noopener')} : null,
       {label:'Export this case (CSV)', fn:()=>exportCaseCSV(c)}, '—',
       {label:'Delete case…', danger:true, fn:()=>askConfirm('Delete '+esc(displayName(c))+'?', 'Removes this file'+(childrenOf(c.id).length?' and its '+childrenOf(c.id).length+' related file(s)':'')+', with every payment on it, on all devices. Use this only for files entered by mistake; close real cases instead.', ()=>{ const files = deleteCase(c); closeDrawer(); refresh(); toast('Deleted', ()=>{ for(const x of files){ delete DB.deleted[x.id]; touch(x); DB.cases.push(x) } save(); refresh() }, 8000) }, 'Delete', true)}
     ])
   };
-  $$('#drawer [data-act]').forEach(b => b.onclick = e => act[b.dataset.act] && act[b.dataset.act](e));
+  $$('#drawer [data-act]').forEach(b => b.onclick = e => { e.stopPropagation(); act[b.dataset.act] && act[b.dataset.act](e) });
   $$('#drawer [data-deladj]').forEach(b => b.onclick = () => { const a = c.adjustments.find(x => x.id === b.dataset.deladj); askConfirm('Remove this adjustment?', esc(ADJ_KINDS[a.kind])+' of '+moneyc(Math.abs(C(a.amount)))+' dated '+usDate(a.date)+'. The fee owed changes back; the removal is kept in the history.', ()=>{ deleteAdjustment(c, a); refresh() }, 'Remove', true) });
   $$('#drawer [data-tx]').forEach(b => b.onclick = e => { e.stopPropagation(); const [fid, pid] = b.dataset.tx.split('|'); const f = caseById(fid), p = f.payments.find(x => x.id === pid); txMenu(b, f, p) });
   $$('#drawer [data-rec]').forEach(b => b.onclick = () => openReceiveForm(c, b.dataset.rec));
@@ -3117,8 +3153,8 @@ let txSort = {k:'date', dir:-1};
 function renderCollections(){
   const v = $('#view'), tabs = [['tx','Transactions'],['plans','Payment plans'],['aging','Aging'],['recon','Reconciliation'],['adj','Refunds & adjustments']];
   v.innerHTML = '<div class="bar"><h1 class="h1">Collections</h1><span class="sp"></span>'+((COL.tab === 'tx' || COL.tab === 'adj') && !COL.from ? periodControl(renderCollections) : '')+'<button class="btn" onclick="openPaymentForm()">$ Record payment</button></div>' +
-    '<div class="bar" role="tablist" style="gap:6px">'+tabs.map(([k,l]) => '<button class="pill" role="tab" aria-selected="'+(COL.tab===k)+'" aria-pressed="'+(COL.tab===k)+'" data-ct="'+k+'">'+l+'</button>').join('')+'</div><div id="col-body"></div>';
-  $$('[data-ct]').forEach(b => b.onclick = () => { COL.tab = b.dataset.ct; COL.from = ''; COL.to = ''; COL.sel = new Set(); renderCollections() });
+    '<div class="bar">'+ddl('ctab', tabs, COL.tab, 'Show')+'</div><div id="col-body"></div>';
+  onDdl('ctab', k => { COL.tab = k; COL.from = ''; COL.to = ''; COL.sel = new Set(); renderCollections() });
   ({tx:colTx, plans:colPlans, aging:colAging, recon:colRecon, adj:colAdj})[COL.tab]($('#col-body'));
 }
 function colRange(){ return COL.from ? {from:COL.from, to:COL.to || COL.from, label:longDate(COL.from)+' – '+longDate(COL.to || COL.from)} : R() }
@@ -3280,8 +3316,8 @@ function renderComp(){
   const uv = unverifiedRules();
   const card = (l, val, sub, cls, go) => '<button class="card metric" '+(go?'data-cgo="'+go+'"':'')+'><span class="lab">'+l+'</span><div class="val '+(cls||'')+'" style="font-size:24px">'+val+'</div><div class="ctx">'+sub+'</div></button>';
   const tabs = [['summary','Summary'],['payouts','All payouts'],['unreceived','Earned, not received'],['banked','Expected at close'],['bonus','Quarterly bonus'],['payroll','Payroll statements']];
-  v.innerHTML = '<div class="bar"><h1 class="h1">My Compensation</h1>'+(years.length>1?'<select class="sel" id="cy" aria-label="Year">'+years.map(x=>'<option'+(x===y?' selected':'')+'>'+x+'</option>').join('')+'</select>':'')+'<span class="sp"></span><button class="btn" id="cmp-stmt">＋ Payroll statement</button><button class="btn" id="cmp-exp">Export statement</button><button class="btn" onclick="openSettings(\'pay\')">Pay rules</button></div>' +
-    (uv.length ? '<div class="note warn mb"><b>Unconfirmed pay rules.</b> '+uv.map(u=>esc(ruleFieldLabel(u.field))).join(', ')+'. These came from the old tracker or are assumptions; figures that depend on them are estimates until you confirm or change them in Pay rules.</div>' : '') +
+  v.innerHTML = '<div class="bar"><h1 class="h1">My Compensation</h1>'+(years.length>1?'<select class="sel" id="cy" aria-label="Year">'+years.map(x=>'<option'+(x===y?' selected':'')+'>'+x+'</option>').join('')+'</select>':'')+'<span class="sp"></span>'+menuBtn('cmp-acts', 'Actions')+'</div>' +
+    (uv.length && rulesNoteShown() ? '<div class="note warn mb has-x">'+NOTE_X+'<b>Unconfirmed pay rules.</b> '+uv.map(u=>esc(ruleFieldLabel(u.field))).join(', ')+'. These came from the old tracker or are assumptions; figures that depend on them are estimates until you confirm or change them in Pay rules.</div>' : '') +
     '<div class="grid g4 mb">' +
       card('Commission earned · '+y, money(I.commYTD), money(I.openYTD)+' opening · '+money(I.closeYTD)+' closing', 'gold', 'payouts') +
       card('Commission received · '+y, money(I.recYTD), 'marked received (by paycheck date)', 'pos', 'payouts') +
@@ -3292,11 +3328,11 @@ function renderComp(){
       card('Salary'+(I.gYTD?' & guarantee':'')+' · '+y, money(I.salYTD + I.gYTD), 'accrued through '+(y===ty?shortDate(today):'Dec 31')+(I.gYTD?' · guarantee '+money(I.gYTD):''), '', '') +
       card('Total income · '+y, money(I.total), 'salary + commission earned + bonus', 'mag', '') +
       card(y===ty?'Projected '+y:'Year total', money(y===ty?I.projected:I.total), y===ty?'salary '+moneyk(I.salFull+I.gFull)+' + commission pace '+moneyk(I.commPace)+' + bonus so far · an estimate':'', 'info', '') + '</div>' +
-    '<div class="bar" role="tablist" style="gap:6px">'+tabs.map(([k,l]) => '<button class="pill" role="tab" aria-pressed="'+(CMP.tab===k)+'" data-ctab="'+k+'">'+l+'</button>').join('')+'</div><div id="cmp-body"></div>';
+    '<div class="bar">'+ddl('cmptab', tabs, CMP.tab, 'Show')+'</div><div id="cmp-body"></div>';
   const cy = $('#cy'); if(cy) cy.onchange = () => { CMP.year = +cy.value; renderComp() };
-  $$('[data-ctab]').forEach(b => b.onclick = () => { CMP.tab = b.dataset.ctab; renderComp() });
+  onDdl('cmptab', k => { CMP.tab = k; renderComp() });
+  $('#cmp-acts').onclick = e => { e.stopPropagation(); popMenu(e.currentTarget, [{label:'＋ Payroll statement', fn:()=>openPayrollForm()}, {label:'Export statement (CSV)', fn:()=>exportStatement(CMP.year)}, {label:'Pay rules', fn:()=>openSettings('pay')}]) };
   $$('[data-cgo]').forEach(b => b.onclick = () => { CMP.tab = b.dataset.cgo; renderComp() });
-  $('#cmp-stmt').onclick = openPayrollForm; $('#cmp-exp').onclick = () => exportStatement(y);
   const b = $('#cmp-body');
   if(CMP.tab === 'summary') compSummary(b, I, y);
   else if(CMP.tab === 'payouts' || CMP.tab === 'unreceived') compPayouts(b, y, CMP.tab === 'unreceived');
@@ -3318,12 +3354,12 @@ function compPayouts(b, y, onlyUn){
   let list = onlyUn ? unreceivedAsOf(today) : payoutEvents().filter(e => +e.date.slice(0,4) === y);
   if(!onlyUn && CMP.show === 'rec') list = list.filter(e => e.status === 'paid'); if(!onlyUn && CMP.show === 'un') list = list.filter(e => e.status === 'earned');
   b.innerHTML = (onlyUn ? '<div class="basis"><span>Payouts you have earned and not marked received. The best way to clear them is <b>＋ Payroll statement</b>: enter what the firm paid and tick what it covered; any difference is kept as a discrepancy to raise with payroll.</span><button class="btn sm prim" onclick="openPayrollForm()">＋ Payroll statement</button></div>' :
-      '<div class="bar">'+[['all','All'],['un','Not received'],['rec','Received']].map(([k,l]) => '<button class="pill" aria-pressed="'+(CMP.show===k)+'" data-show="'+k+'">'+l+'</button>').join('')+'</div>') +
+      '<div class="bar">'+ddl('cmpshow', [['all','All payouts'],['un','Not received'],['rec','Received']], CMP.show || 'all', 'Show')+'</div>') +
     '<div class="tbl-wrap"><table class="t"><thead><tr><th>Earned</th><th>Client · case</th><th>Portion</th><th class="r hide-m">Fee → net</th><th class="c">Rate</th><th class="r">Amount</th><th>Received</th><th></th></tr></thead><tbody>' +
     (list.length ? list.map(e => '<tr class="row" tabindex="0" data-case="'+e.c.id+'"><td class="num">'+usDate(e.date)+'</td><td><b>'+esc(displayName(leadOf(e.c)))+'</b> <span class="faint num" style="font-size:12.5px">'+esc(e.c.caseNo||'')+'</span></td><td>'+(e.kind==='open'?'Opening':'Closing')+(e.status==='guarantee'?' '+chip('Guarantee','c-blue'):'')+'</td><td class="r hide-m dim num">'+money(e.m.fee)+' → '+money(e.m.net)+'</td><td class="c">'+e.m.pct+'%</td><td class="r b">'+moneyc(e.amt)+(e.drift?'<span class="sub-amt warn">now calculates '+moneyc(e.calc)+'</span>':'')+'</td><td>'+(e.status==='paid'?'<span class="pos">'+usDate(e.paidOn)+'</span>'+(e.stmt?' <span class="faint">stmt</span>':''):e.status==='guarantee'?'—':'<span class="gold">not yet</span>')+'</td><td class="r"><button class="btn ghost sm" data-why="'+e.c.id+'|'+e.kind+'" aria-label="How this is calculated">How?</button></td></tr>').join('')
       : '<tr><td colspan="8"><div class="empty">'+(onlyUn?'Every earned payout is marked received.':'No payouts.')+'</div></td></tr>') +
     '</tbody>'+(list.length?'<tfoot><tr><td colspan="5">'+list.length+' payouts</td><td class="r">'+moneyc(list.reduce((t,e)=>t+e.amt,0))+'</td><td colspan="2"></td></tr></tfoot>':'')+'</table></div>';
-  $$('[data-show]').forEach(x => x.onclick = () => { CMP.show = x.dataset.show; renderComp() });
+  onDdl('cmpshow', k => { CMP.show = k; renderComp() });
   $$('#cmp-body tr.row').forEach(tr => tr.onclick = e => { if(e.target.closest('button')) return; openDrawer(tr.dataset.case) });
   $$('[data-why]').forEach(x => x.onclick = e => { e.stopPropagation(); const [id, k] = x.dataset.why.split('|'), c = caseById(id); explain(x, '<b>'+esc(displayName(leadOf(c)))+' · '+(k==='open'?'opening':'closing')+' portion</b>'+calcHtml(c)) });
   wireTable(b, 'payouts', ()=>{});
@@ -3341,7 +3377,7 @@ function compBonus(b, I, y){
   const Q = quarterData(y, CMP.q), r = Q.rule;
   const th = C(r.threshold), st = C(r.step), max = Math.max(Q.nextAt + st, th + 2*st), ticks = []; for(let x = th; x <= max; x += st) ticks.push(x);
   const ev = Q.evs.filter(e => e.bonus || e.cum > th);
-  b.innerHTML = '<div class="bar">'+[0,1,2,3].map(i => '<button class="pill" aria-pressed="'+(CMP.q===i)+'" data-bq="'+i+'"'+(live.includes(i)?'':' disabled')+'>Q'+(i+1)+'</button>').join('')+'</div>' +
+  b.innerHTML = '<div class="bar">'+ddl('cmpq', [0,1,2,3].map(i => [i, 'Q'+(i+1)+' '+y, !live.includes(i)]), CMP.q, 'Quarter')+'</div>' +
     '<div class="grid g21 mb"><section class="card"><div class="card-h"><span class="t">Q'+(CMP.q+1)+' '+y+' ladder</span><span class="s">'+MO3[CMP.q*3]+' – '+MO3[CMP.q*3+2]+' · rule effective '+longDate(r.from)+'</span></div>' +
       '<div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:12px"><div><div class="dim" style="font-size:13px">Collected</div><div class="big">'+money(Q.coll)+'</div></div><div><div class="dim" style="font-size:13px">Tier reached</div><div class="big">'+Q.tier+'%</div></div><div><div class="dim" style="font-size:13px">Bonus</div><div class="big pos">'+moneyc(Q.bonus)+'</div></div>'+(Q.done?'':'<div><div class="dim" style="font-size:13px">Next tier</div><div style="margin-top:8px">'+money(Q.toNext)+' more → <b>'+Q.nextTier+'%</b></div></div>')+'</div>' +
       '<div class="track" style="height:14px"><div class="fill" style="width:'+Math.min(100, Q.coll/max*100)+'%"></div>'+ticks.map(x => '<div class="mark" style="left:'+(x/max*100)+'%;background:var(--gold)" title="'+money(x)+' → '+(+r.cats.regular.pct+bumpAt(x, r))+'%"></div>').join('')+'</div>' +
@@ -3354,7 +3390,7 @@ function compBonus(b, I, y){
       '<div class="sub" style="margin-top:12px">How: each collected dollar past '+money(th)+' earns the band\'s extra % ('+r.bump+'% per '+moneyk(st)+'), times its commissionable share (net ÷ fee'+(r.bonusOnNet?'':', disabled: full dollar')+'). Categories that do not earn the bump (e.g. personal referrals) climb the ladder at 0 bonus.</div></section></div>' +
     '<div class="tbl-wrap"><table class="t"><thead><tr><th>Date</th><th>Source</th><th class="r">Amount</th><th class="r">Quarter total</th><th class="c">Tier</th><th class="c">Share</th><th class="r">Bonus</th></tr></thead><tbody>' +
     (ev.length ? ev.map(e => '<tr'+(e.c?' class="row" tabindex="0" data-case="'+e.c.id+'"':'')+'><td class="num">'+usDate(e.date)+'</td><td>'+(e.c?esc(displayName(leadOf(e.c))):'<i class="dim">Reported monthly total (not itemized)</i>')+(e.noBump?' '+chip('No bump','c-gold'):'')+(e.guarantee?' '+chip('Guarantee','c-blue'):'')+(e.amt<0?' '+chip(e.kind==='refund'?'Refund':'Reversal','c-red'):'')+'</td><td class="r">'+moneyc(e.amt)+'</td><td class="r dim">'+money(e.cum)+'</td><td class="c">'+e.tier+'%</td><td class="c dim">'+Math.round(e.ratio*100)+'%</td><td class="r b '+(e.bonus<0?'neg':'pos')+'">'+moneyc(e.bonus)+'</td></tr>').join('') : '<tr><td colspan="7"><div class="empty">No collections past '+money(th)+' this quarter.</div></td></tr>') + '</tbody></table></div>';
-  $$('[data-bq]').forEach(x => x.onclick = () => { CMP.q = +x.dataset.bq; renderComp() });
+  onDdl('cmpq', k => { CMP.q = +k; renderComp() });
   const s = DB.settings;
   const fin = $('#bq-fin'); if(fin) fin.onclick = () => askConfirm('Finalize Q'+(CMP.q+1)+' '+y+'?', 'Freezes the bonus at '+moneyc(Q.calc)+'. Later edits to rules or records will show a difference instead of changing it.', () => { s.bonusFinal[Q.key] = {amt:D(Q.calc), on:todayISO()}; markS('bonusFinal'); logEv('Finalized '+Q.key+' bonus '+moneyc(Q.calc)); save(); refresh() }, 'Finalize');
   const uf = $('#bq-unfin'); if(uf) uf.onclick = () => { delete s.bonusFinal[Q.key]; markS('bonusFinal'); save(); refresh() };
@@ -3419,9 +3455,10 @@ const RPT = {tab:'collections', dim:'charge'};
 let RPT_LAST = null;   /* rows behind the visible report, for CSV export */
 function renderReports(){
   const v = $('#view'), tabs = [['collections','Collections'],['cohort','Fees vs. collected'],['balances','Balances'],['mix','By type, source, county'],['adjust','Refunds & write-offs'],['comp','Compensation'],['goals','Goals'],['forecast','Forecast']];
-  v.innerHTML = '<div class="bar"><h1 class="h1">Reports</h1><span class="sp"></span>'+periodControl(renderReports)+'<button class="btn" onclick="exportReportCSV()">Export</button><button class="btn" onclick="window.print()">Print</button></div>' +
-    '<div class="bar" role="tablist" style="gap:6px">'+tabs.map(([k,l]) => '<button class="pill" role="tab" aria-pressed="'+(RPT.tab===k)+'" data-rt="'+k+'">'+l+'</button>').join('')+'</div><div id="rpt"></div>';
-  $$('[data-rt]').forEach(b => b.onclick = () => { RPT.tab = b.dataset.rt; renderReports() });
+  v.innerHTML = '<div class="bar"><h1 class="h1">Reports</h1><span class="sp"></span>'+periodControl(renderReports)+menuBtn('rpt-acts', 'Actions')+'</div>' +
+    '<div class="bar">'+ddl('rtab', tabs, RPT.tab, 'Report')+'</div><div id="rpt"></div>';
+  onDdl('rtab', k => { RPT.tab = k; renderReports() });
+  $('#rpt-acts').onclick = e => { e.stopPropagation(); popMenu(e.currentTarget, [{label:'Export this report (CSV)', fn:exportReportCSV}, {label:'Print', fn:()=>window.print()}]) };
   ({collections:rCollections, cohort:rCohort, balances:rBalances, mix:rMix, adjust:rAdjust, comp:rComp, goals:rGoals, forecast:rForecast})[RPT.tab]($('#rpt'));
 }
 function basisNote(t){ return '<div class="basis"><span>'+t+'</span></div>' }
@@ -3479,11 +3516,11 @@ function rMix(el){
   for(const c of cs){ const k = keyOf(c); (groups[k] = groups[k] || []).push(c) }
   const rows = Object.entries(groups).map(([k, list]) => ({k, s:cohortOf(list)})).sort((a,b)=>b.s.fees-a.s.fees);
   RPT_LAST = [['Cohort', r.label, 'by '+dims.find(x=>x[0]===RPT.dim)[1]], [dims.find(x=>x[0]===RPT.dim)[1],'Agreements','Fees agreed','Collected to date','Collection rate %','Average fee','Still owed','Past due'], ...rows.map(x => [x.k, x.s.n, D(x.s.fees), D(x.s.coll), x.s.rate, D(x.s.avg), D(x.s.owed), D(x.s.pd)])];
-  el.innerHTML = '<div class="bar">'+dims.map(([k,l]) => '<button class="pill" aria-pressed="'+(RPT.dim===k)+'" data-dim="'+k+'">'+l+'</button>').join('')+'</div>' +
+  el.innerHTML = '<div class="bar">'+ddl('rdim', dims.map(([k,l]) => [k, 'By '+l.toLowerCase()]), RPT.dim, 'Group by')+'</div>' +
     basisNote('<b>Cohort basis:</b> fee agreements opened '+esc(r.label)+' ('+cs.length+'), with everything collected on them to date. '+(RPT.dim==='source'?'Client source is a field on each case; cases without one show as Not recorded.':'')) +
     (rows.length ? '<div class="tbl-wrap free"><table class="t"><thead><tr><th>'+dims.find(x=>x[0]===RPT.dim)[1]+'</th><th class="r">Agreements</th><th class="r">Fees agreed</th><th class="r">Collected</th><th class="r">Rate</th><th class="r hide-s">Avg fee</th><th class="r">Still owed</th><th class="r hide-m">Past due</th></tr></thead><tbody>' +
       rows.map(x => '<tr><td>'+esc(x.k)+'</td><td class="r">'+x.s.n+'</td><td class="r">'+money(x.s.fees)+'</td><td class="r pos">'+money(x.s.coll)+'</td><td class="r b">'+x.s.rate+'%</td><td class="r hide-s">'+money(x.s.avg)+'</td><td class="r">'+money(x.s.owed)+'</td><td class="r hide-m '+(x.s.pd?'warn':'')+'">'+money(x.s.pd)+'</td></tr>').join('') + '</tbody></table></div>' : '<div class="card empty">No fee agreements opened in '+esc(r.label)+'.</div>');
-  $$('[data-dim]').forEach(b => b.onclick = () => { RPT.dim = b.dataset.dim; rMix(el) });
+  onDdl('rdim', k => { RPT.dim = k; rMix(el) });
 }
 function rAdjust(el){
   const r = R();
@@ -3570,8 +3607,8 @@ let SET_TAB = 'pay';
 const SET_TABS = [['pay','Pay rules'],['coll','Collections rules'],['look','Appearance'],['sync','Cloud sync'],['clio','Clio'],['mail','Payment emails'],['monthly','Monthly totals'],['data','Backups & import'],['security','Security']];
 function openSettings(tab){
   if(tab) SET_TAB = tab;
-  openModal({title:'Settings', wide:true, body:'<div class="bar" style="gap:6px" role="tablist">'+SET_TABS.map(([k,l]) => '<button class="pill" role="tab" aria-pressed="'+(SET_TAB===k)+'" data-st="'+k+'">'+l+'</button>').join('')+'</div><div id="set-body"></div>', foot:''});
-  $$('[data-st]').forEach(b => b.onclick = () => { SET_TAB = b.dataset.st; $$('[data-st]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); renderSet() });
+  openModal({title:'Settings', wide:true, body:'<div class="bar">'+ddl('settab', SET_TABS, SET_TAB, 'Settings section')+'</div><div id="set-body"></div>', foot:''});
+  onDdl('settab', k => { SET_TAB = k; renderSet() });
   renderSet();
 }
 function renderSet(){ const el = $('#set-body'); if(!el) return; ({pay:setPay, coll:setColl, look:setLook, sync:setSync, clio:setClio, mail:setMail, monthly:setMonthly, data:setData, security:setSecurity})[SET_TAB](el) }
@@ -4065,8 +4102,7 @@ async function boot(){
   payBoot();
   if(state === 'empty' && !DB.cases.length) showWelcome();
   $('#sync-pill').onclick = () => SYNC ? syncNow(true) : openSettings('sync');
-  $('#btn-add').onclick = () => openCaseForm(null);
-  $('#btn-pay').onclick = () => openPaymentForm();
+  $('#btn-new').onclick = e => { e.stopPropagation(); popMenu(e.currentTarget, [{label:'Record a payment', tag:'P', fn:()=>openPaymentForm()}, {label:'New case or fee agreement', tag:'N', fn:()=>openCaseForm(null)}]) };
   $('#btn-search').onclick = openPalette;
   $('#btn-menu').onclick = e => { e.stopPropagation(); openMainMenu(e.currentTarget) };
   $('#drawer-scrim').onclick = closeDrawer;
