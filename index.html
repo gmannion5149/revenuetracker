@@ -631,8 +631,8 @@ function parseDateLoose(s){
    The key lives only in memory. Forgetting the passcode means erasing this
    device's copy and pulling again from the cloud; it never unlocks the data.
    Without a passcode, values are stored as before (plain JSON). */
-const LS = { data:'crt2_data_v1', sync:'crt2_sync', autobak:'crt2_autobak', conflict:'crt2_conflict_backup', pre7:'crt2_premigrate_v7', ui:'crt2_ui', pin:'crt2_pin', meta:'crt2_enc_meta', probe:'crt2_probe' };
-const SECURE_KEYS = ['data','sync','autobak','conflict','pre7'];
+const LS = { data:'crt2_data_v1', sync:'crt2_sync', autobak:'crt2_autobak', conflict:'crt2_conflict_backup', pre7:'crt2_premigrate_v7', ui:'crt2_ui', pin:'crt2_pin', meta:'crt2_enc_meta', probe:'crt2_probe', payevents:'crt2_payevents' };
+const SECURE_KEYS = ['data','sync','autobak','conflict','pre7','payevents'];
 const ENC_PREFIX = 'ENC1:';
 const Store = {
   /** @type {CryptoKey|null} */ key: null,
@@ -839,6 +839,7 @@ function settleAfterLoad(){
 /* ── ordered shedding: safety copies give way before live data ever does ── */
 function isQuotaErr(e){ return !!e && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED' || e.code === 22 || e.code === 1014 || /quota|exceeded/i.test(String(e.message||''))) }
 const SHED = [
+  {l:'the cached Clio payment emails (the firm worker resends them)', fn:()=>{ const had = Store.rawGet(LS.payevents) != null; Store.del('payevents'); return had }},
   {l:'the sync conflict backup', fn:()=>{ const had = Store.rawGet(LS.conflict) != null; Store.del('conflict'); return had }},
   {l:'the auto-backup snapshot (the cloud copy stays)', fn:()=>{ const had = Store.rawGet(LS.autobak) != null; Store.del('autobak'); return had }},
   {l:'the old calendar cache', fn:()=>{ const had = Store.rawGet('crt2_cal') != null; Store.rawDel('crt2_cal'); Store.rawDel('crt2_wx'); return had }},
@@ -2084,14 +2085,29 @@ function foldClioEvents(events){
    Events live in this device's storage; decisions live in the synced data. */
 let PAY_EVENTS = {};                /* key → event, newest copy wins */
 const PayState = {lastCheck:null, lastError:null, phase:'idle', source:null};
-const PAY_EVENT_CAP = 600;
+const PAY_EVENT_CAP = 3000;
+const PAY_LOOKBACK = 365;   /* days of Clio email history read and offered */
 
 function payCfg(){
   const s = DB.settings; if(!s.payInbox) s.payInbox = {};
-  const c = s.payInbox; if(!c.dismissed) c.dismissed = {}; if(!c.since) c.since = addDays(todayISO(), -60); if(c.on == null) c.on = true; if(!c.days) c.days = 60;
+  const c = s.payInbox; if(!c.dismissed) c.dismissed = {}; if(!c.since) c.since = addDays(todayISO(), -PAY_LOOKBACK); if(c.on == null) c.on = true; if(!c.days) c.days = PAY_LOOKBACK;
   return c;
 }
-async function loadPayEvents(){ try{ const v = await Store.get('payevents'); PAY_EVENTS = v ? JSON.parse(v) : {} }catch(e){ PAY_EVENTS = {} } }
+async function loadPayEvents(){
+  try{
+    let v = await Store.get('payevents');
+    /* earlier builds saved these under a key named "undefined"; move them once */
+    if(v == null){ const old = Store.rawGet('undefined'); if(old && /^\{"[^"]*\|(submitted|available|installment|failed|refund)\|/.test(old)){ v = old; await Store.set('payevents', old); Store.rawDel('undefined') } }
+    PAY_EVENTS = v ? JSON.parse(v) : {};
+  }catch(e){ PAY_EVENTS = {} }
+}
+/** one-time: widen the look-back to 12 months (asked for 2026-10-02) */
+function payLookbackYear(){
+  const c = payCfg(); if(c.yearBack) return false;
+  c.yearBack = nowISO(); c.days = Math.max(+c.days || 0, PAY_LOOKBACK);
+  const y = addDays(todayISO(), -PAY_LOOKBACK); if(!c.since || c.since > y) c.since = y;
+  markS('payInbox'); save(); return true;
+}
 function savePayEvents(){
   const keys = Object.keys(PAY_EVENTS); if(keys.length > PAY_EVENT_CAP){ keys.sort((a,b)=>String(PAY_EVENTS[a].at||'').localeCompare(String(PAY_EVENTS[b].at||''))).slice(0, keys.length - PAY_EVENT_CAP).forEach(k => delete PAY_EVENTS[k]) }
   Store.set('payevents', JSON.stringify(PAY_EVENTS)).catch(()=>{});
@@ -2193,6 +2209,22 @@ function linkExistingPay(g, f, p){
   p.upd = nowISO(); hist(f, 'Matched to Clio payment email'+(g.conf ? ' (confirmation '+g.conf+')' : '')); touch(f); save();
 }
 
+/** Tie emails to payments already entered by hand, only when the match is unambiguous: one client
+    by name, same amount, dated within a day, and no other email competing for that payment.
+    Money is unchanged; anything less certain still waits in the inbox for you. */
+function autoLinkRecorded(){
+  const claims = new Map();
+  for(const g of inboxItems()){
+    if(g.status !== 'cleared') continue;
+    const hits = []; for(const c of payMatches(g, 4)){ const s = similarRecorded(g, c); if(s && s.gap <= 1 && !hits.some(h => h.p === s.p)) hits.push(s) }
+    if(hits.length !== 1) continue;
+    const p = hits[0].p; if(!claims.has(p)) claims.set(p, []); claims.get(p).push({g, s:hits[0]});
+  }
+  let n = 0;
+  for(const list of claims.values()) if(list.length === 1){ linkExistingPay(list[0].g, list[0].s.f, list[0].s.p); n++ }
+  return n;
+}
+
 /* ── fetching from the firm worker ── */
 async function payFetch(path){
   const url = clioRelay() + path;
@@ -2209,7 +2241,7 @@ async function checkPayEmails(manual){
   const cfg = payCfg(); if(!cfg.on && !manual) return 0;
   PayState.phase = 'busy';
   try{
-    const j = await payFetch('/gwm/payments?days='+(cfg.days || 45));
+    const j = await payFetch('/gwm/payments?days='+(cfg.days || PAY_LOOKBACK));
     const n = ingestPayEvents(j.events || []);
     PayState.lastCheck = nowISO(); PayState.lastError = null; PayState.source = j.scannedAt || null; PayState.phase = 'idle';
     return n;
@@ -3702,8 +3734,8 @@ function setMail(el){
     '<div class="frow f3">'+fld('Ask about new payments', selc('pm-on', [['1','On'],['0','Off']], cfg.on ? '1' : '0'))+fld('Offer payments dated on or after', inp('pm-since', cfg.since, '', 'date'))+fld('Gmail look-back (days)', inp('pm-days', cfg.days, '', 'number'))+'</div>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap" class="mb"><button class="btn prim" id="pm-save">Save</button><button class="btn" id="pm-check">Check now</button><button class="btn" onclick="openInbox()">Open the inbox</button>'+(s.code === 'google' ? '<button class="btn" onclick="window.open(clioRelay()+\'/google/authorize\',\'gauth\',\'width=520,height=640\')">Reconnect Google</button>' : '')+'</div>' +
     '<div class="sec-h">Discarded</div>' + (dis.length ? '<table class="mini"><tbody>'+dis.map(([k, at]) => { const g = grp[k]; return '<tr><td>'+(g ? esc(g.payer)+' · <span class="num">'+moneyc(g.amount)+'</span> · '+shortDate(g.date) : esc(k))+'</td><td class="faint">'+new Date(at).toLocaleDateString()+'</td><td class="r"><button class="btn sm" data-pm-r="'+esc(k)+'">Bring back</button></td></tr>' }).join('')+'</tbody></table>' : '<div class="empty">Nothing discarded.</div>');
-  $('#pm-save').onclick = () => { const d = val('pm-since'); if(!isISODate(d)) return toast('Pick a valid date'); cfg.on = val('pm-on') === '1'; cfg.since = d; cfg.days = Math.max(3, Math.min(120, +val('pm-days') || 45)); markS('payInbox'); save(); paintInboxBadge(); toast('Saved'); renderSet() };
-  $('#pm-check').onclick = async () => { try{ const n = await checkPayEmails(true); applyPayUpdates(); toast(n ? n+' new' : 'Nothing new') }catch(e){ toast(esc(e.message)) } paintInboxBadge(); renderSet(); promptNextPayment() };
+  $('#pm-save').onclick = () => { const d = val('pm-since'); if(!isISODate(d)) return toast('Pick a valid date'); cfg.on = val('pm-on') === '1'; cfg.since = d; cfg.days = Math.max(3, Math.min(400, +val('pm-days') || PAY_LOOKBACK)); markS('payInbox'); save(); paintInboxBadge(); toast('Saved'); renderSet() };
+  $('#pm-check').onclick = async () => { try{ const n = await checkPayEmails(true); applyPayUpdates(); autoLinkRecorded(); toast(n ? n+' new' : 'Nothing new') }catch(e){ toast(esc(e.message)) } paintInboxBadge(); renderSet(); promptNextPayment() };
   $$('[data-pm-r]').forEach(b => b.onclick = () => { restorePayItem(b.dataset.pmR); paintInboxBadge(); renderSet() });
 }
 function setSync(el){
@@ -3994,7 +4026,7 @@ function openInbox(){
       '<textarea class="fi" id="ib-paste" rows="6" placeholder="Subject: Payment submitted from …&#10;&#10;Payment notification&#10;Confirmation #…"></textarea><div style="margin-top:8px"><button class="btn" id="ib-read">Read email</button></div></details>',
     foot:'<button class="btn" id="ib-check">Check email now</button><span style="flex:1"></span><button class="btn" data-close="ov-modal">Close</button>'});
   renderInboxList(); paintInboxStatus();
-  $('#ib-check').onclick = async () => { $('#ib-check').disabled = true; try{ const n = await checkPayEmails(true); const u = applyPayUpdates(); toast(n ? n+' new Clio email'+(n===1?'':'s')+' found' : 'No new Clio payment emails'); if(u.length) invalidate() }catch(e){ toast(esc(e.message)) } $('#ib-check').disabled = false; renderInboxList(); paintInboxStatus(); paintInboxBadge() };
+  $('#ib-check').onclick = async () => { $('#ib-check').disabled = true; try{ const n = await checkPayEmails(true); const u = applyPayUpdates(); if(autoLinkRecorded()) u.push(null); toast(n ? n+' new Clio email'+(n===1?'':'s')+' found' : 'No new Clio payment emails'); if(u.length) invalidate() }catch(e){ toast(esc(e.message)) } $('#ib-check').disabled = false; renderInboxList(); paintInboxStatus(); paintInboxBadge() };
   $('#ib-read').onclick = () => {
     const raw = $('#ib-paste').value; const sub = (raw.match(/^\s*Subject:\s*(.+)$/im) || [])[1] || raw.split('\n').find(l => /payment|installment|refund/i.test(l)) || '';
     const e = parseClioPaymentEmail({id:'paste-'+hashStr(raw).slice(0,10), subject:sub, body:raw, received:nowISO()});
@@ -4025,12 +4057,14 @@ function renderInboxList(){
 async function payTick(){
   if(DEMO || !DB) return;
   const n = await checkPayEmails(false);
-  const upd = applyPayUpdates();
+  const upd = applyPayUpdates(), tied = autoLinkRecorded();
+  if(tied && !upd.length){ invalidate(); refresh() }
   if(upd.length){ invalidate(); refresh(); upd.filter(u => u.what === 'failed').forEach(u => toast('Clio reports the '+moneyc(Math.abs(C(u.p.amount)))+' payment from <b>'+esc(displayName(leadOf(u.c)))+'</b> failed. It no longer counts.', null, 9000)) }
   paintInboxBadge();
   if(n || !payPromptKey) promptNextPayment();
 }
 function payBoot(){
+  if(!DEMO && DB) payLookbackYear();
   paintInboxBadge();
   const b = $('#btn-inbox'); if(b) b.onclick = openInbox;
   setTimeout(payTick, 2500);
